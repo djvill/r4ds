@@ -1,7 +1,8 @@
 bookdown::bs4_book:
   theme:
     primary: "#637238"
-  repo: https://github.com/hadley/r4ds
+  # repo: https://github.com/hadley/r4ds
+  repo: https://github.com/Data-Sci-2021/r4ds
   includes:
     in_header: [ga_script.html]
 
@@ -13,9 +14,9 @@ bookdown::gitbook:
       collapse: section
       before: |
         <li><strong><a href="./">R for Data Science</a></strong></li>
-    edit:
-      link: https://github.com/hadley/r4ds/edit/master/%s
-      text: "Edit"
+    # edit:
+    #   link: https://github.com/hadley/r4ds/edit/master/%s
+    #   text: "Edit"
     sharing: no
   css: r4ds.css
 
