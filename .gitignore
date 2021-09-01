@@ -9,7 +9,7 @@ _book
 # *.html
 !ga_script.html
 search_index.json
-libs
+# libs
 *.rds
 _main.*
 bookdown*
