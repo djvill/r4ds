@@ -1,7 +1,8 @@
 .Rproj.user
 .Rhistory
 *_cache
-*_files
+# *_files
+_bookdown_files
 _main.rds
 _book
 *.md
