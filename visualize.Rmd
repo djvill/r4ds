@@ -258,6 +258,8 @@ If you prefer to not facet in the rows or columns dimension, use a `.` instead o
 
 ### Exercises
 
+<span class="warning">(Dan) Feel free to skip these ones</span>
+
 1.  What happens if you facet on a continuous variable?
 
 1.  What do the empty cells in plot with `facet_grid(drv ~ cyl)` mean?
@@ -454,6 +456,8 @@ ggplot(data = mpg, mapping = aes(x = displ, y = hwy)) +
     ```
 
 ## Statistical transformations
+
+<span class="warning">(Dan) Feel free to skip this section</span>
 
 Next, let's take a look at a bar chart. Bar charts seem simple, but they are interesting because they reveal something subtle about plots. Consider a basic bar chart, as drawn with `geom_bar()`. The following chart displays the total number of diamonds in the `diamonds` dataset, grouped by `cut`. The `diamonds` dataset comes in ggplot2 and contains information about ~54,000 diamonds, including the `price`, `carat`, `color`, `clarity`, and `cut` of each diamond. The chart shows that more diamonds are available with high quality cuts than with low quality cuts. 
 
@@ -661,6 +665,8 @@ To learn more about a position adjustment, look up the help page associated with
     a visualisation of the `mpg` dataset that demonstrates it.
 
 ## Coordinate systems
+
+<span class="warning">(Dan) Feel free to skip this section</span>
 
 Coordinate systems are probably the most complicated part of ggplot2. The default coordinate system is the Cartesian coordinate system where the x and y positions act independently to determine the location of each point. There are a number of other coordinate systems that are occasionally helpful.
 

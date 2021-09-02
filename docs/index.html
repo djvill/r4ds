@@ -34,7 +34,12 @@
       window.onload = function() {
         //Change master branch to main
         var ghSrc = document.querySelectorAll(".book-extra ul a");
-        ghSrc.forEach(a => a.href = a.href.replace("master", "main"));
+        // ghSrc.forEach(a => a.href = a.href.replace("master", "main")).forEach(a => a.target = "_blank");
+        ghSrc.forEach(a => {
+          a.href = a.href.replace("master", "main");
+          a.target = "_blank";
+        });
+        //ghSrc.forEach(a => a.href = a.href.replace("master", "main"));
 
         //Change left-side navigation
         $("header h1").parent().css("flex-direction","column"); //Flex
@@ -42,11 +47,37 @@
         var newTitle = document.createElement("div");
         r4dsTitle.parentNode.insertBefore(newTitle, r4dsTitle);
         r4dsTitle.parentNode.insertBefore(r4dsTitle, newTitle);
-        newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz">Original</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/Data-Sci-2021/r4ds/">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
+        newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz" target="_blank">Original</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/Data-Sci-2021/r4ds/" target="_blank">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
         $(newTitle).css("padding-left", "10px");
         r4dsTitle.querySelector("a").removeAttribute("href");
+
+        //Wrap warning spans in divs (necessary because Md is disabled within divs) to add styling (incl warning icon)
+      	var warn = document.querySelectorAll("span.warning");
+      	//Wrap in divs (https://stackoverflow.com/a/6938316)
+      	warn.forEach(element => {
+      		var parent = element.parentNode;
+      		var wrapper = document.createElement('div');
+
+      		// set the wrapper as child (instead of the element)
+      		parent.replaceChild(wrapper, element);
+      		// set element as child of wrapper
+      		wrapper.appendChild(element);
+
+      		// add class styling to div
+      		wrapper.className = "warning";
+      	})
       }
-    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+    </script><style>
+      /* Warning blocks */
+      div.warning {
+          background-image: url("images/Warning32.png");
+          background-repeat: no-repeat;
+      	text-align: left;
+      	padding: 0px 10px 0px 38px;
+      	background-color: lightyellow;
+      }
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -114,8 +145,11 @@
   </header><main class="col-sm-12 col-md-9 col-lg-7" id="content"><!--bookdown:title:end--><!--bookdown:title:start--><div id="welcome" class="section level1 unnumbered">
 <h1>Welcome<a class="anchor" aria-label="anchor" href="#welcome"><i class="fas fa-link"></i></a>
 </h1>
+<p><span class="warning">
+What you’re reading is a lightly modified version of <em>R for Data Science</em> for the class <a href="https://djvill.github.io/Data-Sci-2021/">Data Science for Linguists</a> at the University of Pittsburgh. <em>R4DS</em> was originally written by Hadley Wickham and Garrett Grolemund (<a href="http://r4ds.had.co.nz">book site</a>, <a href="https://github.com/hadley/r4ds/releases/tag/first-ed">GitHub</a>). It was released under a Creative Commons BY-NC-ND 3.0 License, and this version is being made available under that same license.<br><br>Text in yellow boxes like this one are from Dan. 99.9% of the rest is by the original authors.
+</span></p>
 <p><a href="http://amzn.to/2aHLAQ1"><img src="cover.png" width="250" height="375" alt="Buy from amazon" class="cover"></a> This is the website for <strong>“R for Data Science”</strong>. This book will teach you how to do data science with R: You’ll learn how to get your data into R, get it into the most useful structure, transform it, visualise it and model it. In this book, you will find a practicum of skills for data science. Just as a chemist learns how to clean test tubes and stock a lab, you’ll learn how to clean data and draw plots—and many other things besides. These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R. You’ll learn how to use the grammar of graphics, literate programming, and reproducible research to save time. You’ll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualising, and exploring data.</p>
-<p>This website is (and will always be) <strong>free to use</strong>, and is licensed under the <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/us/">Creative Commons Attribution-NonCommercial-NoDerivs 3.0</a> License. If you’d like a <strong>physical copy</strong> of the book, you can order it from <a href="http://amzn.to/2aHLAQ1">amazon</a>; it was published by O’Reilly in January 2017. If you’d like to <strong>give back</strong>
+<p>This website is (and will always be) <strong>free to use</strong>, and is licensed under the <a href="http://creativecommons.org/licenses/by-nc-nd/3.0/us/">Creative Commons Attribution-NonCommercial-NoDerivs 3.0</a> License. If you’d like a <strong>physical copy</strong> of the book, you can order it from <a href="https://bookshop.org/books/r-for-data-science-import-tidy-transform-visualize-and-model-data/9781491910399">bookshop.org</a>; it was published by O’Reilly in January 2017. If you’d like to <strong>give back</strong>
 please make a donation to <a href="https://www.doc.govt.nz/kakapo-donate">Kākāpō Recovery</a>: the <a href="https://www.youtube.com/watch?v=9T1vfsHYiKY">kākāpō</a> (which appears on the cover of R4DS) is a critically endangered native NZ parrot; there are only 213 left.</p>
 <p>Please note that R4DS uses a <a href="https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html">Contributor Code of Conduct</a>. By contributing to this book, you agree to abide by its terms.</p>
 <div id="acknowledgements" class="section level2 unnumbered">
