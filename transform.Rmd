@@ -87,6 +87,10 @@ R either prints out the results, or saves them to a variable. If you want to do 
 (dec25 <- filter(flights, month == 12, day == 25))
 ```
 
+<span class="warning">
+This is an important point: Running `filter(flights, month == 1, day == 1)` by itself only **displays the output** of the filtering operation; it **_does not_ change the original dataframe**. See [exercise 1](#filter-exx) at the bottom of this section.
+</span>
+
 ### Comparisons
 
 To use filtering effectively, you have to know how to select the observations that you want using the comparison operators. R provides the standard suite: `>`, `>=`, `<`, `<=`, `!=` (not equal), and `==` (equal). 
@@ -189,7 +193,19 @@ filter(df, x > 1)
 filter(df, is.na(x) | x > 1)
 ```
 
-### Exercises
+### Exercises {#filter-exx}
+
+1.  If you have a dataframe named `df`, `nrow(df)` returns the number of rows in `df`. The author of the following code wanted to alter `mpg` (a dataframe built into R for demonstration purposes) so it would contain only rows where `manufacturer == "audi"`. However, `nrow(mpg)` returned the same number of rows after running `filter(mpg, manufacturer == "audi")` that it did before running `filter(...)`. Explain why.
+    
+    ```{r}
+    ##Check number of rows
+    nrow(mpg)
+    ##Only rows where manufacturer is audi
+    filter(mpg, manufacturer == "audi")
+    ##Check number of rows
+    nrow(mpg)
+    ```
+
 
 1.  Find all flights that
 
@@ -538,7 +554,15 @@ This focuses on the transformations, not what's being transformed, which makes t
 
 Behind the scenes, `x %>% f(y)` turns into `f(x, y)`, and `x %>% f(y) %>% g(z)` turns into `g(f(x, y), z)` and so on. You can use the pipe to rewrite multiple operations in a way that you can read left-to-right, top-to-bottom. We'll use piping frequently from now on because it considerably improves the readability of code, and we'll come back to it in more detail in [pipes].
 
+<span class="warning">
+The `%>%` pipe is awkward to type, so there's a shortcut for it in RStudio: Ctrl+Shift+M (Windows) or Cmd+Shift+M (Mac). Being comfortable with keyboard shortcuts is an important part of programming!
+</span>
+
 Working with the pipe is one of the key criteria for belonging to the tidyverse. The only exception is ggplot2: it was written before the pipe was discovered. Unfortunately, the next iteration of ggplot2, ggvis, which does use the pipe, isn't quite ready for prime time yet. 
+
+<span class="warning">
+The `%>%` pipe is not part of base R. It was introduced by the `magrittr` package (the name is a reference to René Magritte's painting [The Treachery of Images](https://en.wikipedia.org/wiki/The_Treachery_of_Images)), and it's since been adopted by all the `tidyverse` packages; when you load `library(tidyverse)`, the `%>%` pipe is automatically loaded too.<br>As of R version 4.1, base R also now has a 'native' pipe operator, which works slightly differently than the `%>%` pipe. We'll be working with the `%>%` pipe because the base R pipe is so new and the `%>%` pipe is so established; however, you should be aware of the other pipe when you're googling pipes in R.
+</span>
 
 ### Missing values
 

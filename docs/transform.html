@@ -34,7 +34,12 @@
       window.onload = function() {
         //Change master branch to main
         var ghSrc = document.querySelectorAll(".book-extra ul a");
-        ghSrc.forEach(a => a.href = a.href.replace("master", "main"));
+        // ghSrc.forEach(a => a.href = a.href.replace("master", "main")).forEach(a => a.target = "_blank");
+        ghSrc.forEach(a => {
+          a.href = a.href.replace("master", "main");
+          a.target = "_blank";
+        });
+        //ghSrc.forEach(a => a.href = a.href.replace("master", "main"));
 
         //Change left-side navigation
         $("header h1").parent().css("flex-direction","column"); //Flex
@@ -42,11 +47,37 @@
         var newTitle = document.createElement("div");
         r4dsTitle.parentNode.insertBefore(newTitle, r4dsTitle);
         r4dsTitle.parentNode.insertBefore(r4dsTitle, newTitle);
-        newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz">Original</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/Data-Sci-2021/r4ds/">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
+        newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz" target="_blank">Original</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/Data-Sci-2021/r4ds/" target="_blank">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
         $(newTitle).css("padding-left", "10px");
         r4dsTitle.querySelector("a").removeAttribute("href");
+
+        //Wrap warning spans in divs (necessary because Md is disabled within divs) to add styling (incl warning icon)
+      	var warn = document.querySelectorAll("span.warning");
+      	//Wrap in divs (https://stackoverflow.com/a/6938316)
+      	warn.forEach(element => {
+      		var parent = element.parentNode;
+      		var wrapper = document.createElement('div');
+
+      		// set the wrapper as child (instead of the element)
+      		parent.replaceChild(wrapper, element);
+      		// set element as child of wrapper
+      		wrapper.appendChild(element);
+
+      		// add class styling to div
+      		wrapper.className = "warning";
+      	})
       }
-    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+    </script><style>
+      /* Warning blocks */
+      div.warning {
+          background-image: url("images/Warning32.png");
+          background-repeat: no-repeat;
+      	text-align: left;
+      	padding: 0px 10px 0px 38px;
+      	background-color: lightyellow;
+      }
+    </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -225,6 +256,9 @@ using the variable names (without quotes).</p></li>
 <span class="co">#&gt; # ... with 713 more rows, and 11 more variables: arr_delay &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,</span>
 <span class="co">#&gt; #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></code></pre></div>
+<p><span class="warning">
+This is an important point: Running <code><a href="https://rdrr.io/r/stats/filter.html">filter(flights, month == 1, day == 1)</a></code> by itself only <strong>displays the output</strong> of the filtering operation; it <strong><em>does not</em> change the original dataframe</strong>. See <a href="transform.html#filter-exx">exercise 1</a> at the bottom of this section.
+</span></p>
 <div id="comparisons" class="section level3" number="5.2.1">
 <h3>
 <span class="header-section-number">5.2.1</span> Comparisons<a class="anchor" aria-label="anchor" href="#comparisons"><i class="fas fa-link"></i></a>
@@ -324,11 +358,33 @@ Figure 5.1: Complete set of boolean operations. <code>x</code> is the left-hand 
 <span class="co">#&gt; 1    NA</span>
 <span class="co">#&gt; 2     3</span></code></pre></div>
 </div>
-<div id="exercises-8" class="section level3" number="5.2.4">
+<div id="filter-exx" class="section level3" number="5.2.4">
 <h3>
-<span class="header-section-number">5.2.4</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-8"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.2.4</span> Exercises<a class="anchor" aria-label="anchor" href="#filter-exx"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
+<li>
+<p>If you have a dataframe named <code>df</code>, <code><a href="https://rdrr.io/r/base/nrow.html">nrow(df)</a></code> returns the number of rows in <code>df</code>. The author of the following code wanted to alter <code>mpg</code> (a dataframe built into R for demonstration purposes) so it would contain only rows where <code>manufacturer == "audi"</code>. However, <code><a href="https://rdrr.io/r/base/nrow.html">nrow(mpg)</a></code> returned the same number of rows after running <code><a href="https://rdrr.io/r/stats/filter.html">filter(mpg, manufacturer == "audi")</a></code> that it did before running <code><a href="https://rdrr.io/r/stats/filter.html">filter(...)</a></code>. Explain why.</p>
+<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co">##Check number of rows</span>
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>
+<span class="co">#&gt; [1] 234</span>
+<span class="co">##Only rows where manufacturer is audi</span>
+<span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">manufacturer</span> <span class="op">==</span> <span class="st">"audi"</span><span class="op">)</span>
+<span class="co">#&gt; # A tibble: 18 x 11</span>
+<span class="co">#&gt;   manufacturer model displ  year   cyl trans      drv     cty   hwy fl    class </span>
+<span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; </span>
+<span class="co">#&gt; 1 audi         a4      1.8  1999     4 auto(l5)   f        18    29 p     compa~</span>
+<span class="co">#&gt; 2 audi         a4      1.8  1999     4 manual(m5) f        21    29 p     compa~</span>
+<span class="co">#&gt; 3 audi         a4      2    2008     4 manual(m6) f        20    31 p     compa~</span>
+<span class="co">#&gt; 4 audi         a4      2    2008     4 auto(av)   f        21    30 p     compa~</span>
+<span class="co">#&gt; 5 audi         a4      2.8  1999     6 auto(l5)   f        16    26 p     compa~</span>
+<span class="co">#&gt; 6 audi         a4      2.8  1999     6 manual(m5) f        18    26 p     compa~</span>
+<span class="co">#&gt; # ... with 12 more rows</span>
+<span class="co">##Check number of rows</span>
+<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>
+<span class="co">#&gt; [1] 234</span></code></pre></div>
+</li>
 <li>
 <p>Find all flights that</p>
 <ol style="list-style-type: decimal">
@@ -357,7 +413,7 @@ rule? (<code>NA * 0</code> is a tricky counterexample!)</p></li>
 <span class="header-section-number">5.3</span> Arrange rows with <code>arrange()</code><a class="anchor" aria-label="anchor" href="#arrange-rows-with-arrange"><i class="fas fa-link"></i></a>
 </h2>
 <p><code>arrange()</code> works similarly to <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> except that instead of selecting rows, it changes their order. It takes a data frame and a set of column names (or more complicated expressions) to order by. If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns:</p>
-<div class="sourceCode" id="cb82"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">arrange</span><span class="op">(</span><span class="va">flights</span>, <span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 336,776 x 19</span>
 <span class="co">#&gt;    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span>
@@ -372,7 +428,7 @@ rule? (<code>NA * 0</code> is a tricky counterexample!)</p></li>
 <span class="co">#&gt; #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,</span>
 <span class="co">#&gt; #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></code></pre></div>
 <p>Use <code>desc()</code> to re-order by a column in descending order:</p>
-<div class="sourceCode" id="cb83"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">arrange</span><span class="op">(</span><span class="va">flights</span>, <span class="fu">desc</span><span class="op">(</span><span class="va">dep_delay</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 336,776 x 19</span>
 <span class="co">#&gt;    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span>
@@ -387,7 +443,7 @@ rule? (<code>NA * 0</code> is a tricky counterexample!)</p></li>
 <span class="co">#&gt; #   carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,</span>
 <span class="co">#&gt; #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></code></pre></div>
 <p>Missing values are always sorted at the end:</p>
-<div class="sourceCode" id="cb84"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">2</span>, <span class="cn">NA</span><span class="op">)</span><span class="op">)</span>
 <span class="fu">arrange</span><span class="op">(</span><span class="va">df</span>, <span class="va">x</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 1</span>
@@ -403,9 +459,9 @@ rule? (<code>NA * 0</code> is a tricky counterexample!)</p></li>
 <span class="co">#&gt; 1     5</span>
 <span class="co">#&gt; 2     2</span>
 <span class="co">#&gt; 3    NA</span></code></pre></div>
-<div id="exercises-9" class="section level3" number="5.3.1">
+<div id="exercises-8" class="section level3" number="5.3.1">
 <h3>
-<span class="header-section-number">5.3.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-9"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.3.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-8"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>How could you use <code>arrange()</code> to sort all missing values to the start?
@@ -423,7 +479,7 @@ left earliest.</p></li>
 </h2>
 <p>It’s not uncommon to get datasets with hundreds or even thousands of variables. In this case, the first challenge is often narrowing in on the variables you’re actually interested in. <code>select()</code> allows you to rapidly zoom in on a useful subset using operations based on the names of the variables.</p>
 <p><code>select()</code> is not terribly useful with the flights data because we only have 19 variables, but you can still get the general idea:</p>
-<div class="sourceCode" id="cb85"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Select columns by name</span>
 <span class="fu">select</span><span class="op">(</span><span class="va">flights</span>, <span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 336,776 x 3</span>
@@ -474,7 +530,7 @@ learn more about regular expressions in <a href="strings.html#strings">strings</
 </ul>
 <p>See <code>?select</code> for more details.</p>
 <p><code>select()</code> can be used to rename variables, but it’s rarely useful because it drops all of the variables not explicitly mentioned. Instead, use <code>rename()</code>, which is a variant of <code>select()</code> that keeps all the variables that aren’t explicitly mentioned:</p>
-<div class="sourceCode" id="cb86"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">rename</span><span class="op">(</span><span class="va">flights</span>, tail_num <span class="op">=</span> <span class="va">tailnum</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 336,776 x 19</span>
 <span class="co">#&gt;    year month   day dep_time sched_dep_time dep_delay arr_time sched_arr_time</span>
@@ -489,7 +545,7 @@ learn more about regular expressions in <a href="strings.html#strings">strings</
 <span class="co">#&gt; #   carrier &lt;chr&gt;, flight &lt;int&gt;, tail_num &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;,</span>
 <span class="co">#&gt; #   air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</span></code></pre></div>
 <p>Another option is to use <code>select()</code> in conjunction with the <code>everything()</code> helper. This is useful if you have a handful of variables you’d like to move to the start of the data frame.</p>
-<div class="sourceCode" id="cb87"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">select</span><span class="op">(</span><span class="va">flights</span>, <span class="va">time_hour</span>, <span class="va">air_time</span>, <span class="fu">everything</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 336,776 x 19</span>
 <span class="co">#&gt;   time_hour           air_time  year month   day dep_time sched_dep_time</span>
@@ -504,9 +560,9 @@ learn more about regular expressions in <a href="strings.html#strings">strings</
 <span class="co">#&gt; #   arr_time &lt;int&gt;, sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,</span>
 <span class="co">#&gt; #   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, distance &lt;dbl&gt;,</span>
 <span class="co">#&gt; #   hour &lt;dbl&gt;, minute &lt;dbl&gt;</span></code></pre></div>
-<div id="exercises-10" class="section level3" number="5.4.1">
+<div id="exercises-9" class="section level3" number="5.4.1">
 <h3>
-<span class="header-section-number">5.4.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-10"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.4.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-9"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>Brainstorm as many ways as possible to select <code>dep_time</code>, <code>dep_delay</code>,
@@ -516,13 +572,13 @@ a <code>select()</code> call?</p></li>
 <li>
 <p>What does the <code>any_of()</code> function do? Why might it be helpful in conjunction
 with this vector?</p>
-<div class="sourceCode" id="cb88"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"month"</span>, <span class="st">"day"</span>, <span class="st">"dep_delay"</span>, <span class="st">"arr_delay"</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
 <p>Does the result of running the following code surprise you? How do the
 select helpers deal with case by default? How can you change that default?</p>
-<div class="sourceCode" id="cb89"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">select</span><span class="op">(</span><span class="va">flights</span>, <span class="fu">contains</span><span class="op">(</span><span class="st">"TIME"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </li>
 </ol>
@@ -534,7 +590,7 @@ select helpers deal with case by default? How can you change that default?</p>
 </h2>
 <p>Besides selecting sets of existing columns, it’s often useful to add new columns that are functions of existing columns. That’s the job of <code>mutate()</code>.</p>
 <p><code>mutate()</code> always adds new columns at the end of your dataset so we’ll start by creating a narrower dataset so we can see the new variables. Remember that when you’re in RStudio, the easiest way to see all the columns is <code><a href="https://rdrr.io/r/utils/View.html">View()</a></code>.</p>
-<div class="sourceCode" id="cb90"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">flights_sml</span> <span class="op">&lt;-</span> <span class="fu">select</span><span class="op">(</span><span class="va">flights</span>, 
   <span class="va">year</span><span class="op">:</span><span class="va">day</span>, 
   <span class="fu">ends_with</span><span class="op">(</span><span class="st">"delay"</span><span class="op">)</span>, 
@@ -556,7 +612,7 @@ select helpers deal with case by default? How can you change that default?</p>
 <span class="co">#&gt; 6  2013     1     1        -4        12      719      150   -16  288.</span>
 <span class="co">#&gt; # ... with 336,770 more rows</span></code></pre></div>
 <p>Note that you can refer to columns that you’ve just created:</p>
-<div class="sourceCode" id="cb91"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">mutate</span><span class="op">(</span><span class="va">flights_sml</span>,
   gain <span class="op">=</span> <span class="va">dep_delay</span> <span class="op">-</span> <span class="va">arr_delay</span>,
   hours <span class="op">=</span> <span class="va">air_time</span> <span class="op">/</span> <span class="fl">60</span>,
@@ -573,7 +629,7 @@ select helpers deal with case by default? How can you change that default?</p>
 <span class="co">#&gt; 6  2013     1     1        -4        12      719      150   -16  2.5 </span>
 <span class="co">#&gt; # ... with 336,770 more rows, and 1 more variable: gain_per_hour &lt;dbl&gt;</span></code></pre></div>
 <p>If you only want to keep the new variables, use <code>transmute()</code>:</p>
-<div class="sourceCode" id="cb92"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">transmute</span><span class="op">(</span><span class="va">flights</span>,
   gain <span class="op">=</span> <span class="va">dep_delay</span> <span class="op">-</span> <span class="va">arr_delay</span>,
   hours <span class="op">=</span> <span class="va">air_time</span> <span class="op">/</span> <span class="fl">60</span>,
@@ -611,7 +667,7 @@ the mean.</p>
 <code>x == y * (x %/% y) + (x %% y)</code>. Modular arithmetic is a handy tool because
 it allows you to break integers up into pieces. For example, in the
 flights dataset, you can compute <code>hour</code> and <code>minute</code> from <code>dep_time</code> with:</p>
-<div class="sourceCode" id="cb93"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">transmute</span><span class="op">(</span><span class="va">flights</span>,
   <span class="va">dep_time</span>,
   hour <span class="op">=</span> <span class="va">dep_time</span> <span class="op">%/%</span> <span class="fl">100</span>,
@@ -642,7 +698,7 @@ the original scale and a difference of -1 corresponds to halving.</p>
 values. This allows you to compute running differences (e.g. <code>x - lag(x)</code>)
 or find when values change (<code>x != lag(x)</code>). They are most useful in
 conjunction with <code>group_by()</code>, which you’ll learn about shortly.</p>
-<div class="sourceCode" id="cb94"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="op">(</span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
 <span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/lag.html">lag</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -656,7 +712,7 @@ products, mins and maxes: <code><a href="https://rdrr.io/r/base/cumsum.html">cum
 and dplyr provides <code>cummean()</code> for cumulative means. If you need rolling
 aggregates (i.e. a sum computed over a rolling window), try the RcppRoll
 package.</p>
-<div class="sourceCode" id="cb95"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span>
 <span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span>
 <span class="fu"><a href="https://rdrr.io/r/base/cumsum.html">cumsum</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
@@ -673,7 +729,7 @@ check that each step is working as expected.</p></li>
 start with <code>min_rank()</code>. It does the most usual type of ranking
 (e.g. 1st, 2nd, 2nd, 4th). The default gives smallest values the small
 ranks; use <code>desc(x)</code> to give the largest values the smallest ranks.</p>
-<div class="sourceCode" id="cb96"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="cn">NA</span>, <span class="fl">3</span>, <span class="fl">4</span><span class="op">)</span>
 <span class="fu">min_rank</span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
 <span class="co">#&gt; [1]  1  2  2 NA  4  5</span>
@@ -682,7 +738,7 @@ ranks; use <code>desc(x)</code> to give the largest values the smallest ranks.</
 <p>If <code>min_rank()</code> doesn’t do what you need, look at the variants
 <code>row_number()</code>, <code>dense_rank()</code>, <code>percent_rank()</code>, <code>cume_dist()</code>,
 <code>ntile()</code>. See their help pages for more details.</p>
-<div class="sourceCode" id="cb97"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">row_number</span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
 <span class="co">#&gt; [1]  1  2  3 NA  4  5</span>
 <span class="fu">dense_rank</span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
@@ -694,9 +750,9 @@ ranks; use <code>desc(x)</code> to give the largest values the smallest ranks.</
 </li>
 </ul>
 </div>
-<div id="exercises-11" class="section level3" number="5.5.2">
+<div id="exercises-10" class="section level3" number="5.5.2">
 <h3>
-<span class="header-section-number">5.5.2</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-11"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.5.2</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-10"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>Currently <code>dep_time</code> and <code>sched_dep_time</code> are convenient to look at, but
@@ -719,7 +775,7 @@ to handle ties? Carefully read the documentation for <code>min_rank()</code>.</p
 <span class="header-section-number">5.6</span> Grouped summaries with <code>summarise()</code><a class="anchor" aria-label="anchor" href="#grouped-summaries-with-summarise"><i class="fas fa-link"></i></a>
 </h2>
 <p>The last key verb is <code>summarise()</code>. It collapses a data frame to a single row:</p>
-<div class="sourceCode" id="cb98"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">summarise</span><span class="op">(</span><span class="va">flights</span>, delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 1 x 1</span>
 <span class="co">#&gt;   delay</span>
@@ -727,7 +783,7 @@ to handle ties? Carefully read the documentation for <code>min_rank()</code>.</p
 <span class="co">#&gt; 1  12.6</span></code></pre></div>
 <p>(We’ll come back to what that <code>na.rm = TRUE</code> means very shortly.)</p>
 <p><code>summarise()</code> is not terribly useful unless we pair it with <code>group_by()</code>. This changes the unit of analysis from the complete dataset to individual groups. Then, when you use the dplyr verbs on a grouped data frame they’ll be automatically applied “by group”. For example, if we applied exactly the same code to a data frame grouped by date, we get the average delay per date:</p>
-<div class="sourceCode" id="cb99"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">by_day</span> <span class="op">&lt;-</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">flights</span>, <span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span>
 <span class="fu">summarise</span><span class="op">(</span><span class="va">by_day</span>, delay <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; `summarise()` has grouped output by 'year', 'month'. You can override using the `.groups` argument.</span>
@@ -748,7 +804,7 @@ to handle ties? Carefully read the documentation for <code>min_rank()</code>.</p
 <span class="header-section-number">5.6.1</span> Combining multiple operations with the pipe<a class="anchor" aria-label="anchor" href="#combining-multiple-operations-with-the-pipe"><i class="fas fa-link"></i></a>
 </h3>
 <p>Imagine that we want to explore the relationship between the distance and average delay for each location. Using what you know about dplyr, you might write code like this:</p>
-<div class="sourceCode" id="cb100"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">by_dest</span> <span class="op">&lt;-</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">flights</span>, <span class="va">dest</span><span class="op">)</span>
 <span class="va">delay</span> <span class="op">&lt;-</span> <span class="fu">summarise</span><span class="op">(</span><span class="va">by_dest</span>,
   count <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span>,
@@ -764,7 +820,7 @@ to handle ties? Carefully read the documentation for <code>min_rank()</code>.</p
   <span class="fu">geom_point</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>size <span class="op">=</span> <span class="va">count</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu">geom_smooth</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; `geom_smooth()` using method = 'loess' and formula 'y ~ x'</span></code></pre></div>
-<div class="inline-figure"><img src="transform_files/figure-html/unnamed-chunk-35-1.png" width="70%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="transform_files/figure-html/unnamed-chunk-36-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>There are three steps to prepare this data:</p>
 <ol style="list-style-type: decimal">
 <li><p>Group flights by destination.</p></li>
@@ -774,7 +830,7 @@ twice as far away as the next closest airport.</p></li>
 </ol>
 <p>This code is a little frustrating to write because we have to give each intermediate data frame a name, even though we don’t care about it. Naming things is hard, so this slows down our analysis.</p>
 <p>There’s another way to tackle the same problem with the pipe, <code>%&gt;%</code>:</p>
-<div class="sourceCode" id="cb101"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">delays</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">dest</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarise</span><span class="op">(</span>
@@ -785,14 +841,20 @@ twice as far away as the next closest airport.</p></li>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">count</span> <span class="op">&gt;</span> <span class="fl">20</span>, <span class="va">dest</span> <span class="op">!=</span> <span class="st">"HNL"</span><span class="op">)</span></code></pre></div>
 <p>This focuses on the transformations, not what’s being transformed, which makes the code easier to read. You can read it as a series of imperative statements: group, then summarise, then filter. As suggested by this reading, a good way to pronounce <code>%&gt;%</code> when reading code is “then”.</p>
 <p>Behind the scenes, <code>x %&gt;% f(y)</code> turns into <code>f(x, y)</code>, and <code>x %&gt;% f(y) %&gt;% g(z)</code> turns into <code>g(f(x, y), z)</code> and so on. You can use the pipe to rewrite multiple operations in a way that you can read left-to-right, top-to-bottom. We’ll use piping frequently from now on because it considerably improves the readability of code, and we’ll come back to it in more detail in <a href="pipes.html#pipes">pipes</a>.</p>
+<p><span class="warning">
+The <code>%&gt;%</code> pipe is awkward to type, so there’s a shortcut for it in RStudio: Ctrl+Shift+M (Windows) or Cmd+Shift+M (Mac). Being comfortable with keyboard shortcuts is an important part of programming!
+</span></p>
 <p>Working with the pipe is one of the key criteria for belonging to the tidyverse. The only exception is ggplot2: it was written before the pipe was discovered. Unfortunately, the next iteration of ggplot2, ggvis, which does use the pipe, isn’t quite ready for prime time yet.</p>
+<p><span class="warning">
+The <code>%&gt;%</code> pipe is not part of base R. It was introduced by the <code>magrittr</code> package (the name is a reference to René Magritte’s painting <a href="https://en.wikipedia.org/wiki/The_Treachery_of_Images">The Treachery of Images</a>), and it’s since been adopted by all the <code>tidyverse</code> packages; when you load <code><a href="https://tidyverse.tidyverse.org">library(tidyverse)</a></code>, the <code>%&gt;%</code> pipe is automatically loaded too.<br>As of R version 4.1, base R also now has a ‘native’ pipe operator, which works slightly differently than the <code>%&gt;%</code> pipe. We’ll be working with the <code>%&gt;%</code> pipe because the base R pipe is so new and the <code>%&gt;%</code> pipe is so established; however, you should be aware of the other pipe when you’re googling pipes in R.
+</span></p>
 </div>
 <div id="missing-values-1" class="section level3" number="5.6.2">
 <h3>
 <span class="header-section-number">5.6.2</span> Missing values<a class="anchor" aria-label="anchor" href="#missing-values-1"><i class="fas fa-link"></i></a>
 </h3>
 <p>You may have wondered about the <code>na.rm</code> argument we used above. What happens if we don’t set it?</p>
-<div class="sourceCode" id="cb102"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">flights</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarise</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span><span class="op">)</span><span class="op">)</span>
@@ -809,7 +871,7 @@ twice as far away as the next closest airport.</p></li>
 <span class="co">#&gt; 6  2013     1     6    NA</span>
 <span class="co">#&gt; # ... with 359 more rows</span></code></pre></div>
 <p>We get a lot of missing values! That’s because aggregation functions obey the usual rule of missing values: if there’s any missing value in the input, the output will be a missing value. Fortunately, all aggregation functions have an <code>na.rm</code> argument which removes the missing values prior to computation:</p>
-<div class="sourceCode" id="cb103"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">flights</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarise</span><span class="op">(</span>mean <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">dep_delay</span>, na.rm <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
@@ -826,7 +888,7 @@ twice as far away as the next closest airport.</p></li>
 <span class="co">#&gt; 6  2013     1     6  7.15</span>
 <span class="co">#&gt; # ... with 359 more rows</span></code></pre></div>
 <p>In this case, where missing values represent cancelled flights, we could also tackle the problem by first removing the cancelled flights. We’ll save this dataset so we can reuse it in the next few examples.</p>
-<div class="sourceCode" id="cb104"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">not_cancelled</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">dep_delay</span><span class="op">)</span>, <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">arr_delay</span><span class="op">)</span><span class="op">)</span>
 
@@ -851,7 +913,7 @@ twice as far away as the next closest airport.</p></li>
 <span class="header-section-number">5.6.3</span> Counts<a class="anchor" aria-label="anchor" href="#counts"><i class="fas fa-link"></i></a>
 </h3>
 <p>Whenever you do any aggregation, it’s always a good idea to include either a count (<code>n()</code>), or a count of non-missing values (<code><a href="https://rdrr.io/r/base/sum.html">sum(!is.na(x))</a></code>). That way you can check that you’re not drawing conclusions based on very small amounts of data. For example, let’s look at the planes (identified by their tail number) that have the highest average delays:</p>
-<div class="sourceCode" id="cb105"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">delays</span> <span class="op">&lt;-</span> <span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">tailnum</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarise</span><span class="op">(</span>
@@ -860,10 +922,10 @@ twice as far away as the next closest airport.</p></li>
 
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">delays</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">delay</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_freqpoly</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="transform_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="transform_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Wow, there are some planes that have an <em>average</em> delay of 5 hours (300 minutes)!</p>
 <p>The story is actually a little more nuanced. We can get more insight if we draw a scatterplot of number of flights vs. average delay:</p>
-<div class="sourceCode" id="cb106"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">delays</span> <span class="op">&lt;-</span> <span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">tailnum</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarise</span><span class="op">(</span>
@@ -873,15 +935,15 @@ twice as far away as the next closest airport.</p></li>
 
 <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">delays</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">n</span>, y <span class="op">=</span> <span class="va">delay</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
   <span class="fu">geom_point</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="transform_files/figure-html/unnamed-chunk-41-1.png" width="70%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="transform_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Not surprisingly, there is much greater variation in the average delay when there are few flights. The shape of this plot is very characteristic: whenever you plot a mean (or other summary) vs. group size, you’ll see that the variation decreases as the sample size increases.</p>
 <p>When looking at this sort of plot, it’s often useful to filter out the groups with the smallest numbers of observations, so you can see more of the pattern and less of the extreme variation in the smallest groups. This is what the following code does, as well as showing you a handy pattern for integrating ggplot2 into dplyr flows. It’s a bit painful that you have to switch from <code>%&gt;%</code> to <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, but once you get the hang of it, it’s quite convenient.</p>
-<div class="sourceCode" id="cb107"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">delays</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">n</span> <span class="op">&gt;</span> <span class="fl">25</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">ggplot</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">n</span>, y <span class="op">=</span> <span class="va">delay</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu">geom_point</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
-<div class="inline-figure"><img src="transform_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="transform_files/figure-html/unnamed-chunk-43-1.png" width="70%" style="display: block; margin: auto;"></div>
 <hr>
 <p>RStudio tip: a useful keyboard shortcut is Cmd/Ctrl + Shift + P. This resends the previously sent chunk from the editor to the console. This is very convenient when you’re (e.g.) exploring the value of <code>n</code> in the example above. You send the whole block once with Cmd/Ctrl + Enter, then you modify the value of <code>n</code> and press Cmd/Ctrl + Shift + P to resend the complete block.</p>
 <hr>
@@ -894,7 +956,7 @@ data points.</p></li>
 hit the ball (<code>ab</code>). This is because teams control who gets to play,
 and obviously they’ll pick their best players.</p></li>
 </ol>
-<div class="sourceCode" id="cb108"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Convert to a tibble so it prints nicely</span>
 <span class="va">batting</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="fu">Lahman</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/Lahman/man/Batting.html">Batting</a></span><span class="op">)</span>
 
@@ -911,9 +973,9 @@ and obviously they’ll pick their best players.</p></li>
     <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
     <span class="fu">geom_smooth</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
 <span class="co">#&gt; `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'</span></code></pre></div>
-<div class="inline-figure"><img src="transform_files/figure-html/unnamed-chunk-43-1.png" width="70%" style="display: block; margin: auto;"></div>
+<div class="inline-figure"><img src="transform_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>This also has important implications for ranking. If you naively sort on <code>desc(ba)</code>, the people with the best batting averages are clearly lucky, not skilled:</p>
-<div class="sourceCode" id="cb109"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">batters</span> <span class="op">%&gt;%</span> 
   <span class="fu">arrange</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">ba</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 19,898 x 3</span>
@@ -941,7 +1003,7 @@ where 50% of <code>x</code> is above it, and 50% is below it.</p>
 <p>It’s sometimes useful to combine aggregation with logical subsetting.
 We haven’t talked about this sort of subsetting yet, but you’ll learn more
 about it in <a href="vectors.html#subsetting-1">subsetting</a>.</p>
-<div class="sourceCode" id="cb110"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarise</span><span class="op">(</span>
@@ -966,7 +1028,7 @@ about it in <a href="vectors.html#subsetting-1">subsetting</a>.</p>
 or standard deviation <code><a href="https://rdrr.io/r/stats/sd.html">sd(x)</a></code>, is the standard measure of spread.
 The interquartile range <code><a href="https://rdrr.io/r/stats/IQR.html">IQR(x)</a></code> and median absolute deviation <code><a href="https://rdrr.io/r/stats/mad.html">mad(x)</a></code>
 are robust equivalents that may be more useful if you have outliers.</p>
-<div class="sourceCode" id="cb111"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Why is distance to some destinations more variable than to others?</span>
 <span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">dest</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -988,7 +1050,7 @@ are robust equivalents that may be more useful if you have outliers.</p>
 are a generalisation of the median. For example, <code><a href="https://rdrr.io/r/stats/quantile.html">quantile(x, 0.25)</a></code>
 will find a value of <code>x</code> that is greater than 25% of the values,
 and less than the remaining 75%.</p>
-<div class="sourceCode" id="cb112"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># When do the first and last flights leave each day?</span>
 <span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1015,7 +1077,7 @@ similarly to <code>x[1]</code>, <code>x[2]</code>, and <code>x[length(x)]</code>
 value if that position does not exist (i.e. you’re trying to get the 3rd
 element from a group that only has two elements). For example, we can
 find the first and last departure for each day:</p>
-<div class="sourceCode" id="cb113"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">summarise</span><span class="op">(</span>
@@ -1036,7 +1098,7 @@ find the first and last departure for each day:</p>
 <span class="co">#&gt; # ... with 359 more rows</span></code></pre></div>
 <p>These functions are complementary to filtering on ranks. Filtering gives
 you all variables, with each observation in a separate row:</p>
-<div class="sourceCode" id="cb114"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">mutate</span><span class="op">(</span>r <span class="op">=</span> <span class="fu">min_rank</span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">dep_time</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1061,7 +1123,7 @@ you all variables, with each observation in a separate row:</p>
 size of the current group. To count the number of non-missing values, use
 <code><a href="https://rdrr.io/r/base/sum.html">sum(!is.na(x))</a></code>. To count the number of distinct (unique) values, use
 <code>n_distinct(x)</code>.</p>
-<div class="sourceCode" id="cb115"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Which destinations have the most carriers?</span>
 <span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">dest</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1079,7 +1141,7 @@ size of the current group. To count the number of non-missing values, use
 <span class="co">#&gt; # ... with 98 more rows</span></code></pre></div>
 <p>Counts are so useful that dplyr provides a simple helper if all you want is
 a count:</p>
-<div class="sourceCode" id="cb116"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
   <span class="fu">count</span><span class="op">(</span><span class="va">dest</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 104 x 2</span>
@@ -1094,7 +1156,7 @@ a count:</p>
 <span class="co">#&gt; # ... with 98 more rows</span></code></pre></div>
 <p>You can optionally provide a weight variable. For example, you could use
 this to “count” (sum) the total number of miles a plane flew:</p>
-<div class="sourceCode" id="cb117"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
   <span class="fu">count</span><span class="op">(</span><span class="va">tailnum</span>, wt <span class="op">=</span> <span class="va">distance</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 4,037 x 2</span>
@@ -1113,7 +1175,7 @@ this to “count” (sum) the total number of miles a plane flew:</p>
 When used with numeric functions, <code>TRUE</code> is converted to 1 and <code>FALSE</code> to 0.
 This makes <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> and <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> very useful: <code><a href="https://rdrr.io/r/base/sum.html">sum(x)</a></code> gives the number of
 <code>TRUE</code>s in <code>x</code>, and <code><a href="https://rdrr.io/r/base/mean.html">mean(x)</a></code> gives the proportion.</p>
-<div class="sourceCode" id="cb118"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># How many flights left before 5am? (these usually indicate delayed</span>
 <span class="co"># flights from the previous day)</span>
 <span class="va">not_cancelled</span> <span class="op">%&gt;%</span> 
@@ -1156,7 +1218,7 @@ This makes <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> and 
 <span class="header-section-number">5.6.5</span> Grouping by multiple variables<a class="anchor" aria-label="anchor" href="#grouping-by-multiple-variables"><i class="fas fa-link"></i></a>
 </h3>
 <p>When you group by multiple variables, each summary peels off one level of the grouping. That makes it easy to progressively roll up a dataset:</p>
-<div class="sourceCode" id="cb119"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">daily</span> <span class="op">&lt;-</span> <span class="fu">group_by</span><span class="op">(</span><span class="va">flights</span>, <span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span>
 <span class="op">(</span><span class="va">per_day</span>   <span class="op">&lt;-</span> <span class="fu">summarise</span><span class="op">(</span><span class="va">daily</span>, flights <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; `summarise()` has grouped output by 'year', 'month'. You can override using the `.groups` argument.</span>
@@ -1196,7 +1258,7 @@ This makes <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> and 
 <span class="header-section-number">5.6.6</span> Ungrouping<a class="anchor" aria-label="anchor" href="#ungrouping"><i class="fas fa-link"></i></a>
 </h3>
 <p>If you need to remove grouping, and return to operations on ungrouped data, use <code>ungroup()</code>.</p>
-<div class="sourceCode" id="cb120"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">daily</span> <span class="op">%&gt;%</span> 
   <span class="fu">ungroup</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>             <span class="co"># no longer grouped by date</span>
   <span class="fu">summarise</span><span class="op">(</span>flights <span class="op">=</span> <span class="fu">n</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>  <span class="co"># all flights</span>
@@ -1205,9 +1267,9 @@ This makes <code><a href="https://rdrr.io/r/base/sum.html">sum()</a></code> and 
 <span class="co">#&gt;     &lt;int&gt;</span>
 <span class="co">#&gt; 1  336776</span></code></pre></div>
 </div>
-<div id="exercises-12" class="section level3" number="5.6.7">
+<div id="exercises-11" class="section level3" number="5.6.7">
 <h3>
-<span class="header-section-number">5.6.7</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-12"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.6.7</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-11"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li>
@@ -1246,7 +1308,7 @@ effects of bad airports vs. bad carriers? Why/why not? (Hint: think about
 <ul>
 <li>
 <p>Find the worst members of each group:</p>
-<div class="sourceCode" id="cb121"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">flights_sml</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">year</span>, <span class="va">month</span>, <span class="va">day</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rank.html">rank</a></span><span class="op">(</span><span class="fu">desc</span><span class="op">(</span><span class="va">arr_delay</span><span class="op">)</span><span class="op">)</span> <span class="op">&lt;</span> <span class="fl">10</span><span class="op">)</span>
@@ -1264,7 +1326,7 @@ effects of bad airports vs. bad carriers? Why/why not? (Hint: think about
 </li>
 <li>
 <p>Find all groups bigger than a threshold:</p>
-<div class="sourceCode" id="cb122"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">popular_dests</span> <span class="op">&lt;-</span> <span class="va">flights</span> <span class="op">%&gt;%</span> 
   <span class="fu">group_by</span><span class="op">(</span><span class="va">dest</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="fu">n</span><span class="op">(</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">365</span><span class="op">)</span>
@@ -1285,7 +1347,7 @@ effects of bad airports vs. bad carriers? Why/why not? (Hint: think about
 </li>
 <li>
 <p>Standardise to compute per group metrics:</p>
-<div class="sourceCode" id="cb123"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb124"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">popular_dests</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">arr_delay</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">mutate</span><span class="op">(</span>prop_delay <span class="op">=</span> <span class="va">arr_delay</span> <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html">sum</a></span><span class="op">(</span><span class="va">arr_delay</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -1305,9 +1367,9 @@ effects of bad airports vs. bad carriers? Why/why not? (Hint: think about
 </ul>
 <p>A grouped filter is a grouped mutate followed by an ungrouped filter. I generally avoid them except for quick and dirty manipulations: otherwise it’s hard to check that you’ve done the manipulation correctly.</p>
 <p>Functions that work most naturally in grouped mutates and filters are known as window functions (vs. the summary functions used for summaries). You can learn more about useful window functions in the corresponding vignette: <code>vignette("window-functions")</code>.</p>
-<div id="exercises-13" class="section level3" number="5.7.1">
+<div id="exercises-12" class="section level3" number="5.7.1">
 <h3>
-<span class="header-section-number">5.7.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-13"><i class="fas fa-link"></i></a>
+<span class="header-section-number">5.7.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-12"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>Refer back to the lists of useful mutate and filtering functions.
@@ -1352,19 +1414,19 @@ of greater than 1 hour.</p></li>
 <li><a class="nav-link" href="#comparisons"><span class="header-section-number">5.2.1</span> Comparisons</a></li>
 <li><a class="nav-link" href="#logical-operators"><span class="header-section-number">5.2.2</span> Logical operators</a></li>
 <li><a class="nav-link" href="#missing-values"><span class="header-section-number">5.2.3</span> Missing values</a></li>
-<li><a class="nav-link" href="#exercises-8"><span class="header-section-number">5.2.4</span> Exercises</a></li>
+<li><a class="nav-link" href="#filter-exx"><span class="header-section-number">5.2.4</span> Exercises</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#arrange-rows-with-arrange"><span class="header-section-number">5.3</span> Arrange rows with arrange()</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-9"><span class="header-section-number">5.3.1</span> Exercises</a></li></ul>
+<a class="nav-link" href="#arrange-rows-with-arrange"><span class="header-section-number">5.3</span> Arrange rows with arrange()</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-8"><span class="header-section-number">5.3.1</span> Exercises</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#select"><span class="header-section-number">5.4</span> Select columns with select()</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-10"><span class="header-section-number">5.4.1</span> Exercises</a></li></ul>
+<a class="nav-link" href="#select"><span class="header-section-number">5.4</span> Select columns with select()</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-9"><span class="header-section-number">5.4.1</span> Exercises</a></li></ul>
 </li>
 <li>
 <a class="nav-link" href="#add-new-variables-with-mutate"><span class="header-section-number">5.5</span> Add new variables with mutate()</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#mutate-funs"><span class="header-section-number">5.5.1</span> Useful creation functions</a></li>
-<li><a class="nav-link" href="#exercises-11"><span class="header-section-number">5.5.2</span> Exercises</a></li>
+<li><a class="nav-link" href="#exercises-10"><span class="header-section-number">5.5.2</span> Exercises</a></li>
 </ul>
 </li>
 <li>
@@ -1375,11 +1437,11 @@ of greater than 1 hour.</p></li>
 <li><a class="nav-link" href="#summarise-funs"><span class="header-section-number">5.6.4</span> Useful summary functions</a></li>
 <li><a class="nav-link" href="#grouping-by-multiple-variables"><span class="header-section-number">5.6.5</span> Grouping by multiple variables</a></li>
 <li><a class="nav-link" href="#ungrouping"><span class="header-section-number">5.6.6</span> Ungrouping</a></li>
-<li><a class="nav-link" href="#exercises-12"><span class="header-section-number">5.6.7</span> Exercises</a></li>
+<li><a class="nav-link" href="#exercises-11"><span class="header-section-number">5.6.7</span> Exercises</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#grouped-mutates-and-filters"><span class="header-section-number">5.7</span> Grouped mutates (and filters)</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-13"><span class="header-section-number">5.7.1</span> Exercises</a></li></ul>
+<a class="nav-link" href="#grouped-mutates-and-filters"><span class="header-section-number">5.7</span> Grouped mutates (and filters)</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-12"><span class="header-section-number">5.7.1</span> Exercises</a></li></ul>
 </li>
 </ul>
 
