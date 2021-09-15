@@ -30,23 +30,7 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-115082821-1');
-    </script><script>
-      window.onload = function() {
-        //Change master branch to main
-        var ghSrc = document.querySelectorAll(".book-extra ul a");
-        ghSrc.forEach(a => a.href = a.href.replace("master", "main"));
-
-        //Change left-side navigation
-        $("header h1").parent().css("flex-direction","column"); //Flex
-        var r4dsTitle = document.querySelector("header h1");
-        var newTitle = document.createElement("div");
-        r4dsTitle.parentNode.insertBefore(newTitle, r4dsTitle);
-        r4dsTitle.parentNode.insertBefore(r4dsTitle, newTitle);
-        newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz">Original</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/Data-Sci-2021/r4ds/">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
-        $(newTitle).css("padding-left", "10px");
-        r4dsTitle.querySelector("a").removeAttribute("href");
-      }
-    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+    </script><script src="more-js.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -126,7 +110,7 @@
 <span class="header-section-number">10.1.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-4"><i class="fas fa-link"></i></a>
 </h3>
 <p>In this chapter we’ll explore the <strong>tibble</strong> package, part of the core tidyverse.</p>
-<div class="sourceCode" id="cb168"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
 </div>
 </div>
@@ -135,7 +119,7 @@
 <span class="header-section-number">10.2</span> Creating tibbles<a class="anchor" aria-label="anchor" href="#creating-tibbles"><i class="fas fa-link"></i></a>
 </h2>
 <p>Almost all of the functions that you’ll use in this book produce tibbles, as tibbles are one of the unifying features of the tidyverse. Most other R packages use regular data frames, so you might want to coerce a data frame to a tibble. You can do that with <code>as_tibble()</code>:</p>
-<div class="sourceCode" id="cb169"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">as_tibble</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 150 x 5</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
@@ -147,8 +131,9 @@
 <span class="co">#&gt; 5          5           3.6          1.4         0.2 setosa </span>
 <span class="co">#&gt; 6          5.4         3.9          1.7         0.4 setosa </span>
 <span class="co">#&gt; # ... with 144 more rows</span></code></pre></div>
+<p><span class="warning"><code>iris</code> is one of the datasets built-into R (without needing to load any data or packages). You can check out all the datasets available from all loaded packages by running <code><a href="https://rdrr.io/r/utils/data.html">data()</a></code></span></p>
 <p>You can create a new tibble from individual vectors with <code>tibble()</code>. <code>tibble()</code> will automatically recycle inputs of length 1, and allows you to refer to variables that you just created, as shown below.</p>
-<div class="sourceCode" id="cb170"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span>
   x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, 
   y <span class="op">=</span> <span class="fl">1</span>, 
@@ -162,9 +147,12 @@
 <span class="co">#&gt; 3     3     1    10</span>
 <span class="co">#&gt; 4     4     1    17</span>
 <span class="co">#&gt; 5     5     1    26</span></code></pre></div>
+<p><span class="warning">
+<code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> does <em>not</em> allow you to refer to variables that you just created. Try running the code above with <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> in place of <code>tibble()</code> to see for yourself.
+</span></p>
 <p>If you’re already familiar with <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code>, note that <code>tibble()</code> does much less: it never changes the type of the inputs (e.g. it never converts strings to factors!), it never changes the names of variables, and it never creates row names.</p>
 <p>It’s possible for a tibble to have column names that are not valid R variable names, aka <strong>non-syntactic</strong> names. For example, they might not start with a letter, or they might contain unusual characters like a space. To refer to these variables, you need to surround them with backticks, <code>`</code>:</p>
-<div class="sourceCode" id="cb171"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">tb</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
   `:)` <span class="op">=</span> <span class="st">"smile"</span>, 
   ` ` <span class="op">=</span> <span class="st">"space"</span>,
@@ -177,7 +165,7 @@
 <span class="co">#&gt; 1 smile space number</span></code></pre></div>
 <p>You’ll also need the backticks when working with these variables in other packages, like ggplot2, dplyr, and tidyr.</p>
 <p>Another way to create a tibble is with <code>tribble()</code>, short for <strong>tr</strong>ansposed tibble. <code>tribble()</code> is customised for data entry in code: column headings are defined by formulas (i.e. they start with <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>), and entries are separated by commas. This makes it possible to lay out small amounts of data in easy to read form.</p>
-<div class="sourceCode" id="cb172"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tribble</span><span class="op">(</span>
   <span class="op">~</span><span class="va">x</span>, <span class="op">~</span><span class="va">y</span>, <span class="op">~</span><span class="va">z</span>,
   <span class="co">#--|--|----</span>
@@ -201,7 +189,7 @@
 <span class="header-section-number">10.3.1</span> Printing<a class="anchor" aria-label="anchor" href="#printing"><i class="fas fa-link"></i></a>
 </h3>
 <p>Tibbles have a refined print method that shows only the first 10 rows, and all the columns that fit on screen. This makes it much easier to work with large data. In addition to its name, each column reports its type, a nice feature borrowed from <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code>:</p>
-<div class="sourceCode" id="cb173"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">tibble</span><span class="op">(</span>
   a <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/now.html">now</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e3</span><span class="op">)</span> <span class="op">*</span> <span class="fl">86400</span>,
   b <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="http://lubridate.tidyverse.org/reference/now.html">today</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">1e3</span><span class="op">)</span> <span class="op">*</span> <span class="fl">30</span>,
@@ -212,16 +200,16 @@
 <span class="co">#&gt; # A tibble: 1,000 x 5</span>
 <span class="co">#&gt;   a                   b              c     d e    </span>
 <span class="co">#&gt;   &lt;dttm&gt;              &lt;date&gt;     &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;</span>
-<span class="co">#&gt; 1 2021-09-01 16:00:06 2021-09-08     1 0.368 n    </span>
-<span class="co">#&gt; 2 2021-09-02 10:05:16 2021-09-13     2 0.612 l    </span>
-<span class="co">#&gt; 3 2021-09-02 04:28:55 2021-09-23     3 0.415 p    </span>
-<span class="co">#&gt; 4 2021-09-01 17:50:12 2021-09-22     4 0.212 m    </span>
-<span class="co">#&gt; 5 2021-09-01 14:14:28 2021-09-19     5 0.733 i    </span>
-<span class="co">#&gt; 6 2021-09-02 01:15:26 2021-09-15     6 0.460 n    </span>
+<span class="co">#&gt; 1 2021-09-07 13:51:41 2021-09-14     1 0.368 n    </span>
+<span class="co">#&gt; 2 2021-09-08 07:56:50 2021-09-19     2 0.612 l    </span>
+<span class="co">#&gt; 3 2021-09-08 02:20:30 2021-09-29     3 0.415 p    </span>
+<span class="co">#&gt; 4 2021-09-07 15:41:47 2021-09-28     4 0.212 m    </span>
+<span class="co">#&gt; 5 2021-09-07 12:06:03 2021-09-25     5 0.733 i    </span>
+<span class="co">#&gt; 6 2021-09-07 23:07:00 2021-09-21     6 0.460 n    </span>
 <span class="co">#&gt; # ... with 994 more rows</span></code></pre></div>
 <p>Tibbles are designed so that you don’t accidentally overwhelm your console when you print large data frames. But sometimes you need more output than the default display. There are a few options that can help.</p>
 <p>First, you can explicitly <code><a href="https://rdrr.io/r/base/print.html">print()</a></code> the data frame and control the number of rows (<code>n</code>) and the <code>width</code> of the display. <code>width = Inf</code> will display all columns:</p>
-<div class="sourceCode" id="cb174"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">flights</a></span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">10</span>, width <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></code></pre></div>
 <p>You can also control the default print behaviour by setting options:</p>
@@ -234,7 +222,7 @@ of the width of the screen.</p></li>
 </ul>
 <p>You can see a complete list of options by looking at the package help with <code>package?tibble</code>.</p>
 <p>A final option is to use RStudio’s built-in data viewer to get a scrollable view of the complete dataset. This is also often useful at the end of a long chain of manipulations.</p>
-<div class="sourceCode" id="cb175"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">nycflights13</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/nycflights13/man/flights.html">flights</a></span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/View.html">View</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 </div>
@@ -243,7 +231,7 @@ of the width of the screen.</p></li>
 <span class="header-section-number">10.3.2</span> Subsetting<a class="anchor" aria-label="anchor" href="#subsetting"><i class="fas fa-link"></i></a>
 </h3>
 <p>So far all the tools you’ve learned have worked with complete data frames. If you want to pull out a single variable, you need some new tools, <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> and <code><a href="https://rdrr.io/r/base/Extract.html">[[</a></code>. <code><a href="https://rdrr.io/r/base/Extract.html">[[</a></code> can extract by name or position; <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> only extracts by name but is a little less typing.</p>
-<div class="sourceCode" id="cb176"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
   x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>,
   y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span>
@@ -259,11 +247,14 @@ of the width of the screen.</p></li>
 <span class="va">df</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; [1] 0.73296674 0.23436542 0.66035540 0.03285612 0.46049161</span></code></pre></div>
 <p>To use these in a pipe, you’ll need to use the special placeholder <code>.</code>:</p>
-<div class="sourceCode" id="cb177"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> <span class="va">.</span><span class="op">$</span><span class="va">x</span>
 <span class="co">#&gt; [1] 0.73296674 0.23436542 0.66035540 0.03285612 0.46049161</span>
 <span class="va">df</span> <span class="op">%&gt;%</span> <span class="va">.</span><span class="op">[[</span><span class="st">"x"</span><span class="op">]</span><span class="op">]</span>
 <span class="co">#&gt; [1] 0.73296674 0.23436542 0.66035540 0.03285612 0.46049161</span></code></pre></div>
+<p><span class="warning">
+A better option is to use <code>dplyr</code>’s <code>pull()</code>, which works like <code><a href="https://rdrr.io/r/base/Extract.html">$</a></code> in that it extracts by name: <code>df %&gt;% pull(x)</code> is the same as <code>df$x</code>. The <code>magrittr</code> package also has the <code><a href="https://rdrr.io/r/base/Extract.html">[[</a></code> alias <code>extract2()</code> (2 for a double square bracket): <code>df %&gt;% magrittr::extract2("x")</code> is the same as <code>df[["x"]]</code>.
+</span></p>
 <p>Compared to a <code>data.frame</code>, tibbles are more strict: they never do partial matching, and they will generate a warning if the column you are trying to access does not exist.</p>
 </div>
 </div>
@@ -272,14 +263,14 @@ of the width of the screen.</p></li>
 <span class="header-section-number">10.4</span> Interacting with older code<a class="anchor" aria-label="anchor" href="#interacting-with-older-code"><i class="fas fa-link"></i></a>
 </h2>
 <p>Some older functions don’t work with tibbles. If you encounter one of these functions, use <code><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame()</a></code> to turn a tibble back to a <code>data.frame</code>:</p>
-<div class="sourceCode" id="cb178"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span><span class="op">(</span><span class="va">tb</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] "data.frame"</span></code></pre></div>
 <p>The main reason that some older functions don’t work with tibble is the <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> function. We don’t use <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> much in this book because <code><a href="https://dplyr.tidyverse.org/reference/filter.html">dplyr::filter()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> allow you to solve the same problems with clearer code (but you will learn a little about it in <a href="vectors.html#vector-subsetting">vector subsetting</a>). With base R data frames, <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> sometimes returns a data frame, and sometimes returns a vector. With tibbles, <code><a href="https://rdrr.io/r/base/Extract.html">[</a></code> always returns another tibble.</p>
 </div>
-<div id="exercises-20" class="section level2" number="10.5">
+<div id="exercises-19" class="section level2" number="10.5">
 <h2>
-<span class="header-section-number">10.5</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-20"><i class="fas fa-link"></i></a>
+<span class="header-section-number">10.5</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-19"><i class="fas fa-link"></i></a>
 </h2>
 <ol style="list-style-type: decimal">
 <li><p>How can you tell if an object is a tibble? (Hint: try printing <code>mtcars</code>,
@@ -288,7 +279,7 @@ which is a regular data frame).</p></li>
 <p>Compare and contrast the following operations on a <code>data.frame</code> and
 equivalent tibble. What is different? Why might the default data frame
 behaviours cause you frustration?</p>
-<div class="sourceCode" id="cb179"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>abc <span class="op">=</span> <span class="fl">1</span>, xyz <span class="op">=</span> <span class="st">"a"</span><span class="op">)</span>
 <span class="va">df</span><span class="op">$</span><span class="va">x</span>
 <span class="va">df</span><span class="op">[</span>, <span class="st">"xyz"</span><span class="op">]</span>
@@ -304,7 +295,7 @@ how can you extract the reference variable from a tibble?</p></li>
 <li><p>Creating a new column called <code>3</code> which is <code>2</code> divided by <code>1</code>.</p></li>
 <li><p>Renaming the columns to <code>one</code>, <code>two</code> and <code>three</code>.</p></li>
 </ol>
-<div class="sourceCode" id="cb180"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb181"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">annoying</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
   `1` <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span>,
   `2` <span class="op">=</span> <span class="va">`1`</span> <span class="op">*</span> <span class="fl">2</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">`1`</span><span class="op">)</span><span class="op">)</span>
@@ -334,7 +325,7 @@ at the footer of a tibble?</p></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#interacting-with-older-code"><span class="header-section-number">10.4</span> Interacting with older code</a></li>
-<li><a class="nav-link" href="#exercises-20"><span class="header-section-number">10.5</span> Exercises</a></li>
+<li><a class="nav-link" href="#exercises-19"><span class="header-section-number">10.5</span> Exercises</a></li>
 </ul>
 
       <div class="book-extra">

@@ -63,7 +63,7 @@ Why ensure that your data is tidy? There are two main advantages:
     
 1.  There's a specific advantage to placing variables in columns because
     it allows R's vectorised nature to shine. As you learned in
-    [mutate](#mutate-funs) and [summary functions](#summary-funs), most 
+    [mutate](#mutate-funs) and [summary functions](#summarise-funs), most 
     built-in R functions work with vectors of values. That makes transforming 
     tidy data feel particularly natural.
 
