@@ -553,13 +553,3 @@ img.cover {
     margin: 0 auto 1rem auto;
   }
 }
-
-
-/* Warning blocks */
-div.warning {
-    background-image: url("Warning32.png");
-    background-repeat: no-repeat;
-	text-align: left;
-	padding: 0px 10px 0px 38px;
-	background-color: lightyellow;
-}

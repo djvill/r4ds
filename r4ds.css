@@ -13,12 +13,3 @@
 #header h4.author em {
   font-style: normal;
 }
-
-/* Warning blocks */
-div.warning {
-    background-image: url("Warning32.png");
-    background-repeat: no-repeat;
-	text-align: left;
-	padding: 0px 10px 0px 38px;
-	background-color: lightyellow;
-}
