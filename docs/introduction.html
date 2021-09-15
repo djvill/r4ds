@@ -30,23 +30,7 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-115082821-1');
-    </script><script>
-      window.onload = function() {
-        //Change master branch to main
-        var ghSrc = document.querySelectorAll(".book-extra ul a");
-        ghSrc.forEach(a => a.href = a.href.replace("master", "main"));
-
-        //Change left-side navigation
-        $("header h1").parent().css("flex-direction","column"); //Flex
-        var r4dsTitle = document.querySelector("header h1");
-        var newTitle = document.createElement("div");
-        r4dsTitle.parentNode.insertBefore(newTitle, r4dsTitle);
-        r4dsTitle.parentNode.insertBefore(r4dsTitle, newTitle);
-        newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz">Original</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/Data-Sci-2021/r4ds/">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
-        $(newTitle).css("padding-left", "10px");
-        r4dsTitle.querySelector("a").removeAttribute("href");
-      }
-    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+    </script><script src="more-js.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -365,7 +349,7 @@ and provided tons of useful feedback.</p></li>
 <span class="co">#&gt;  collate  English_United States.1252  </span>
 <span class="co">#&gt;  ctype    English_United States.1252  </span>
 <span class="co">#&gt;  tz       America/New_York            </span>
-<span class="co">#&gt;  date     2021-09-01                  </span>
+<span class="co">#&gt;  date     2021-09-07                  </span>
 <span class="co">#&gt; </span>
 <span class="co">#&gt; - Packages -------------------------------------------------------------------</span>
 <span class="co">#&gt;  package       * version date       lib source        </span>
@@ -469,7 +453,7 @@ and provided tons of useful feedback.</p></li>
 <span class="co">#&gt;  xml2            1.3.2   2020-04-23 [1] CRAN (R 4.1.0)</span>
 <span class="co">#&gt;  yaml            2.2.1   2020-02-01 [1] CRAN (R 4.1.0)</span>
 <span class="co">#&gt; </span>
-<span class="co">#&gt; [1] C:/Users/DAV49/OneDrive/OneDrive - University of Pittsburgh/Documents/R/win-library/4.1</span>
+<span class="co">#&gt; [1] C:/Users/DAV49/OneDrive - University of Pittsburgh/Documents/R/win-library/4.1</span>
 <span class="co">#&gt; [2] C:/Program Files/R/R-4.1.1/library</span></code></pre></div>
 
 </div>

@@ -30,23 +30,7 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-115082821-1');
-    </script><script>
-      window.onload = function() {
-        //Change master branch to main
-        var ghSrc = document.querySelectorAll(".book-extra ul a");
-        ghSrc.forEach(a => a.href = a.href.replace("master", "main"));
-
-        //Change left-side navigation
-        $("header h1").parent().css("flex-direction","column"); //Flex
-        var r4dsTitle = document.querySelector("header h1");
-        var newTitle = document.createElement("div");
-        r4dsTitle.parentNode.insertBefore(newTitle, r4dsTitle);
-        r4dsTitle.parentNode.insertBefore(r4dsTitle, newTitle);
-        newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz">Original</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/Data-Sci-2021/r4ds/">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
-        $(newTitle).css("padding-left", "10px");
-        r4dsTitle.querySelector("a").removeAttribute("href");
-      }
-    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+    </script><script src="more-js.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -137,7 +121,7 @@ first paragraph that briefly describes the aims of the analysis.</p></li>
 <li>
 <p>Use the YAML header date field to record the date you started working on the
 notebook:</p>
-<div class="sourceCode" id="cb783"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb783-1"><a href="r-markdown-workflow.html#cb783-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> 2016-08-23</span></span></code></pre></div>
+<div class="sourceCode" id="cb784"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb784-1"><a href="r-markdown-workflow.html#cb784-1" aria-hidden="true" tabindex="-1"></a><span class="fu">date</span><span class="kw">:</span><span class="at"> 2016-08-23</span></span></code></pre></div>
 <p>Use ISO8601 YYYY-MM-DD format so that’s there no ambiguity. Use it
 even if you don’t normally write dates that way!</p>
 </li>

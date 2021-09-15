@@ -30,23 +30,7 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-115082821-1');
-    </script><script>
-      window.onload = function() {
-        //Change master branch to main
-        var ghSrc = document.querySelectorAll(".book-extra ul a");
-        ghSrc.forEach(a => a.href = a.href.replace("master", "main"));
-
-        //Change left-side navigation
-        $("header h1").parent().css("flex-direction","column"); //Flex
-        var r4dsTitle = document.querySelector("header h1");
-        var newTitle = document.createElement("div");
-        r4dsTitle.parentNode.insertBefore(newTitle, r4dsTitle);
-        r4dsTitle.parentNode.insertBefore(r4dsTitle, newTitle);
-        newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz">Original</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/Data-Sci-2021/r4ds/">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
-        $(newTitle).css("padding-left", "10px");
-        r4dsTitle.querySelector("a").removeAttribute("href");
-      }
-    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+    </script><script src="more-js.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -137,7 +121,7 @@ In this chapter you’ll learn about two important iteration paradigms: imperati
 <span class="header-section-number">21.1.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-14"><i class="fas fa-link"></i></a>
 </h3>
 <p>Once you’ve mastered the for loops provided by base R, you’ll learn some of the powerful programming tools provided by purrr, one of the tidyverse core packages.</p>
-<div class="sourceCode" id="cb539"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb540"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
 </div>
 </div>
@@ -146,7 +130,7 @@ In this chapter you’ll learn about two important iteration paradigms: imperati
 <span class="header-section-number">21.2</span> For loops<a class="anchor" aria-label="anchor" href="#for-loops"><i class="fas fa-link"></i></a>
 </h2>
 <p>Imagine we have this simple tibble:</p>
-<div class="sourceCode" id="cb540"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb541"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
   a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
   b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
@@ -154,7 +138,7 @@ In this chapter you’ll learn about two important iteration paradigms: imperati
   d <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>We want to compute the median of each column. You <em>could</em> do with copy-and-paste:</p>
-<div class="sourceCode" id="cb541"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb542"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">a</span><span class="op">)</span>
 <span class="co">#&gt; [1] -0.2457625</span>
 <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">b</span><span class="op">)</span>
@@ -164,7 +148,7 @@ In this chapter you’ll learn about two important iteration paradigms: imperati
 <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">df</span><span class="op">$</span><span class="va">d</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.1442633</span></code></pre></div>
 <p>But that breaks our rule of thumb: never copy and paste more than twice. Instead, we could use a for loop:</p>
-<div class="sourceCode" id="cb542"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb543"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"double"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>  <span class="co"># 1. output</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>            <span class="co"># 2. sequence</span>
   <span class="va">output</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/median.html">median</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>      <span class="co"># 3. body</span>
@@ -190,7 +174,7 @@ each run of the for loop will assign <code>i</code> to a different value from
 <p>You might not have seen <code><a href="https://rdrr.io/r/base/seq.html">seq_along()</a></code> before. It’s a safe version of the
 familiar <code>1:length(l)</code>, with an important difference: if you have a
 zero-length vector, <code><a href="https://rdrr.io/r/base/seq.html">seq_along()</a></code> does the right thing:</p>
-<div class="sourceCode" id="cb543"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"double"</span>, <span class="fl">0</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
 <span class="co">#&gt; integer(0)</span>
@@ -206,9 +190,9 @@ The first iteration will run <code>output[[1]] &lt;- median(df[[1]])</code>,
 the second will run <code>output[[2]] &lt;- median(df[[2]])</code>, and so on.</p></li>
 </ol>
 <p>That’s all there is to the for loop! Now is a good time to practice creating some basic (and not so basic) for loops using the exercises below. Then we’ll move on some variations of the for loop that help you solve other problems that will crop up in practice.</p>
-<div id="exercises-58" class="section level3" number="21.2.1">
+<div id="exercises-57" class="section level3" number="21.2.1">
 <h3>
-<span class="header-section-number">21.2.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-58"><i class="fas fa-link"></i></a>
+<span class="header-section-number">21.2.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-57"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li>
@@ -225,7 +209,7 @@ the loop.</p>
 <li>
 <p>Eliminate the for loop in each of the following examples by taking
 advantage of an existing function that works with vectors:</p>
-<div class="sourceCode" id="cb544"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb545"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="st">""</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">x</span> <span class="kw">in</span> <span class="va">letters</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="va">out</span>, <span class="va">x</span><span class="op">)</span>
@@ -260,7 +244,7 @@ any surface.</p></li>
 <li>
 <p>It’s common to see for loops that don’t preallocate the output and instead
 increase the length of a vector at each step:</p>
-<div class="sourceCode" id="cb545"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"integer"</span>, <span class="fl">0</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">output</span>, <span class="fu"><a href="https://rdrr.io/r/base/lengths.html">lengths</a></span><span class="op">(</span><span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span>
@@ -288,7 +272,7 @@ increase the length of a vector at each step:</p>
 <span class="header-section-number">21.3.1</span> Modifying an existing object<a class="anchor" aria-label="anchor" href="#modifying-an-existing-object"><i class="fas fa-link"></i></a>
 </h3>
 <p>Sometimes you want to use a for loop to modify an existing object. For example, remember our challenge from <a href="functions.html#functions">functions</a>. We wanted to rescale every column in a data frame:</p>
-<div class="sourceCode" id="cb546"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb547"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
   a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
   b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
@@ -312,7 +296,7 @@ we can iterate over each column with <code><a href="https://rdrr.io/r/base/seq.h
 <li><p><strong>Body</strong>: apply <code>rescale01()</code>.</p></li>
 </ol>
 <p>This gives us:</p>
-<div class="sourceCode" id="cb547"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb548"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">df</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu">rescale01</span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
@@ -332,13 +316,13 @@ difficult to save the output efficiently.</p></li>
 you can use to access the value with <code>x[[nm]]</code>. This is useful if you want
 to use the name in a plot title or a file name. If you’re creating
 named output, make sure to name the results vector like so:</p>
-<div class="sourceCode" id="cb548"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb549"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">results</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">results</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></code></pre></div>
 </li>
 </ol>
 <p>Iteration over the numeric indices is the most general form, because given the position you can extract both the name and the value:</p>
-<div class="sourceCode" id="cb549"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb550"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>
   <span class="va">value</span> <span class="op">&lt;-</span> <span class="va">x</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span>
@@ -349,7 +333,7 @@ named output, make sure to name the results vector like so:</p>
 <span class="header-section-number">21.3.3</span> Unknown output length<a class="anchor" aria-label="anchor" href="#unknown-output-length"><i class="fas fa-link"></i></a>
 </h3>
 <p>Sometimes you might not know how long the output will be. For example, imagine you want to simulate some random vectors of random lengths. You might be tempted to solve this problem by progressively growing the vector:</p>
-<div class="sourceCode" id="cb550"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb551"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">means</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>
 
 <span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/double.html">double</a></span><span class="op">(</span><span class="op">)</span>
@@ -361,7 +345,7 @@ named output, make sure to name the results vector like so:</p>
 <span class="co">#&gt;  num [1:138] 0.912 0.205 2.584 -0.789 0.588 ...</span></code></pre></div>
 <p>But this is not very efficient because in each iteration, R has to copy all the data from the previous iterations. In technical terms you get “quadratic” (<span class="math inline">\(O(n^2)\)</span>) behaviour which means that a loop with three times as many elements would take nine (<span class="math inline">\(3^2\)</span>) times as long to run.</p>
 <p>A better solution to save the results in a list, and then combine into a single vector after the loop is done:</p>
-<div class="sourceCode" id="cb551"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb552"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">means</span><span class="op">)</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">means</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">100</span>, <span class="fl">1</span><span class="op">)</span>
@@ -393,12 +377,12 @@ data frame.</p></li>
 <span class="header-section-number">21.3.4</span> Unknown sequence length<a class="anchor" aria-label="anchor" href="#unknown-sequence-length"><i class="fas fa-link"></i></a>
 </h3>
 <p>Sometimes you don’t even know how long the input sequence should run for. This is common when doing simulations. For example, you might want to loop until you get three heads in a row. You can’t do that sort of iteration with the for loop. Instead, you can use a while loop. A while loop is simpler than for loop because it only has two components, a condition and a body:</p>
-<div class="sourceCode" id="cb552"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb553"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">while</span> <span class="op">(</span><span class="va">condition</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># body</span>
 <span class="op">}</span></code></pre></div>
 <p>A while loop is also more general than a for loop, because you can rewrite any for loop as a while loop, but you can’t rewrite every while loop as a for loop:</p>
-<div class="sourceCode" id="cb553"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb554"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="co"># body</span>
 <span class="op">}</span>
@@ -410,7 +394,7 @@ data frame.</p></li>
   <span class="va">i</span> <span class="op">&lt;-</span> <span class="va">i</span> <span class="op">+</span> <span class="fl">1</span> 
 <span class="op">}</span></code></pre></div>
 <p>Here’s how we could use a while loop to find how many tries it takes to get three heads in a row:</p>
-<div class="sourceCode" id="cb554"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb555"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">flip</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"H"</span><span class="op">)</span>, <span class="fl">1</span><span class="op">)</span>
 
 <span class="va">flips</span> <span class="op">&lt;-</span> <span class="fl">0</span>
@@ -428,9 +412,9 @@ data frame.</p></li>
 <span class="co">#&gt; [1] 21</span></code></pre></div>
 <p>I mention while loops only briefly, because I hardly ever use them. They’re most often used for simulation, which is outside the scope of this book. However, it is good to know they exist so that you’re prepared for problems where the number of iterations is not known in advance.</p>
 </div>
-<div id="exercises-59" class="section level3" number="21.3.5">
+<div id="exercises-58" class="section level3" number="21.3.5">
 <h3>
-<span class="header-section-number">21.3.5</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-59"><i class="fas fa-link"></i></a>
+<span class="header-section-number">21.3.5</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-58"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>Imagine you have a directory full of CSV files that you want to read in.
@@ -444,7 +428,7 @@ not unique?</p></li>
 <li>
 <p>Write a function that prints the mean of each numeric column in a data
 frame, along with its name. For example, <code>show_mean(iris)</code> would print:</p>
-<div class="sourceCode" id="cb555"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb556"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">show_mean</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="co">#&gt; Sepal.Length: 5.84</span>
 <span class="co">#&gt; Sepal.Width:  3.06</span>
@@ -455,7 +439,7 @@ lined up nicely, even though the variable names had different lengths?)</p>
 </li>
 <li>
 <p>What does this code do? How does it work?</p>
-<div class="sourceCode" id="cb556"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb557"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trans</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span> 
   disp <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">0.0163871</span>,
   am <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
@@ -475,7 +459,7 @@ lined up nicely, even though the variable names had different lengths?)</p>
 </h2>
 <p>For loops are not as important in R as they are in other languages because R is a functional programming language. This means that it’s possible to wrap up for loops in a function, and call that function instead of using the for loop directly.</p>
 <p>To see why this is important, consider (again) this simple data frame:</p>
-<div class="sourceCode" id="cb557"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb558"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
   a <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
   b <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>,
@@ -483,7 +467,7 @@ lined up nicely, even though the variable names had different lengths?)</p>
   d <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>Imagine you want to compute the mean of every column. You could do that with a for loop:</p>
-<div class="sourceCode" id="cb558"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb559"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"double"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">output</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">df</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
@@ -491,7 +475,7 @@ lined up nicely, even though the variable names had different lengths?)</p>
 <span class="va">output</span>
 <span class="co">#&gt; [1] -0.3260369  0.1356639  0.4291403 -0.2498034</span></code></pre></div>
 <p>You realise that you’re going to want to compute the means of every column pretty frequently, so you extract it out into a function:</p>
-<div class="sourceCode" id="cb559"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb560"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">col_mean</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"double"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -500,7 +484,7 @@ lined up nicely, even though the variable names had different lengths?)</p>
   <span class="va">output</span>
 <span class="op">}</span></code></pre></div>
 <p>But then you think it’d also be helpful to be able to compute the median, and the standard deviation, so you copy and paste your <code>col_mean()</code> function and replace the <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code> with <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code> and <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>:</p>
-<div class="sourceCode" id="cb560"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb561"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">col_median</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">output</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"double"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -517,16 +501,16 @@ lined up nicely, even though the variable names had different lengths?)</p>
 <span class="op">}</span></code></pre></div>
 <p>Uh oh! You’ve copied-and-pasted this code twice, so it’s time to think about how to generalise it. Notice that most of this code is for-loop boilerplate and it’s hard to see the one thing (<code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>, <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>) that is different between the functions.</p>
 <p>What would you do if you saw a set of functions like this:</p>
-<div class="sourceCode" id="cb561"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb562"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">^</span> <span class="fl">1</span>
 <span class="va">f2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">^</span> <span class="fl">2</span>
 <span class="va">f3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">^</span> <span class="fl">3</span></code></pre></div>
 <p>Hopefully, you’d notice that there’s a lot of duplication, and extract it out into an additional argument:</p>
-<div class="sourceCode" id="cb562"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb563"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">i</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">x</span> <span class="op">-</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">^</span> <span class="va">i</span></code></pre></div>
 <p>You’ve reduced the chance of bugs (because you now have 1/3 of the original code), and made it easy to generalise to new situations.</p>
 <p>We can do exactly the same thing with <code>col_mean()</code>, <code>col_median()</code> and <code>col_sd()</code> by adding an argument that supplies the function to apply to each column:</p>
-<div class="sourceCode" id="cb563"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb564"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">col_summary</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">fun</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"double"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -550,9 +534,9 @@ solution? With purrr, you get lots of small pieces that you can
 compose together with the pipe.</p></li>
 </ol>
 <p>This structure makes it easier to solve new problems. It also makes it easier to understand your solutions to old problems when you re-read your old code.</p>
-<div id="exercises-60" class="section level3" number="21.4.1">
+<div id="exercises-59" class="section level3" number="21.4.1">
 <h3>
-<span class="header-section-number">21.4.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-60"><i class="fas fa-link"></i></a>
+<span class="header-section-number">21.4.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-59"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>Read the documentation for <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code>. In the 2d case, what two for loops
@@ -584,7 +568,7 @@ a logical vector that has a TRUE corresponding to each numeric column.</p></li>
 <p>Once you master these functions, you’ll find it takes much less time to solve iteration problems. But you should never feel bad about using a for loop instead of a map function. The map functions are a step up a tower of abstraction, and it can take a long time to get your head around how they work. The important thing is that you solve the problem that you’re working on, not write the most concise and elegant code (although that’s definitely something you want to strive towards!).</p>
 <p>Some people will tell you to avoid for loops because they are slow. They’re wrong! (Well at least they’re rather out of date, as for loops haven’t been slow for many years.) The chief benefits of using functions like <code>map()</code> is not speed, but clarity: they make your code easier to write and to read.</p>
 <p>We can use these functions to perform the same computations as the last for loop. Those summary functions returned doubles, so we need to use <code>map_dbl()</code>:</p>
-<div class="sourceCode" id="cb564"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb565"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">map_dbl</span><span class="op">(</span><span class="va">df</span>, <span class="va">mean</span><span class="op">)</span>
 <span class="co">#&gt;          a          b          c          d </span>
 <span class="co">#&gt; -0.3260369  0.1356639  0.4291403 -0.2498034</span>
@@ -595,7 +579,7 @@ a logical vector that has a TRUE corresponding to each numeric column.</p></li>
 <span class="co">#&gt;         a         b         c         d </span>
 <span class="co">#&gt; 0.9214834 0.4848945 0.9816016 1.1563324</span></code></pre></div>
 <p>Compared to using a for loop, focus is on the operation being performed (i.e. <code><a href="https://rdrr.io/r/base/mean.html">mean()</a></code>, <code><a href="https://rdrr.io/r/stats/median.html">median()</a></code>, <code><a href="https://rdrr.io/r/stats/sd.html">sd()</a></code>), not the bookkeeping required to loop over every element and store the output. This is even more apparent if we use the pipe:</p>
-<div class="sourceCode" id="cb565"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb566"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">%&gt;%</span> <span class="fu">map_dbl</span><span class="op">(</span><span class="va">mean</span><span class="op">)</span>
 <span class="co">#&gt;          a          b          c          d </span>
 <span class="co">#&gt; -0.3260369  0.1356639  0.4291403 -0.2498034</span>
@@ -615,14 +599,14 @@ shortcuts in the next section.</p></li>
 <li>
 <p><code>map_*()</code> uses … ([dot dot dot]) to pass along additional arguments
 to <code>.f</code> each time it’s called:</p>
-<div class="sourceCode" id="cb566"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb567"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">map_dbl</span><span class="op">(</span><span class="va">df</span>, <span class="va">mean</span>, trim <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
 <span class="co">#&gt;           a           b           c           d </span>
 <span class="co">#&gt; -0.51850298  0.02779864  0.17295591 -0.61163819</span></code></pre></div>
 </li>
 <li>
 <p>The map functions also preserve names:</p>
-<div class="sourceCode" id="cb567"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb568"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">z</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>
 <span class="fu">map_int</span><span class="op">(</span><span class="va">z</span>, <span class="va">length</span><span class="op">)</span>
 <span class="co">#&gt; x y </span>
@@ -634,32 +618,32 @@ to <code>.f</code> each time it’s called:</p>
 <span class="header-section-number">21.5.1</span> Shortcuts<a class="anchor" aria-label="anchor" href="#shortcuts"><i class="fas fa-link"></i></a>
 </h3>
 <p>There are a few shortcuts that you can use with <code>.f</code> in order to save a little typing. Imagine you want to fit a linear model to each group in a dataset. The following toy example splits up the <code>mtcars</code> dataset into three pieces (one for each value of cylinder) and fits the same linear model to each piece:</p>
-<div class="sourceCode" id="cb568"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb569"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">models</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">map</span><span class="op">(</span><span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The syntax for creating an anonymous function in R is quite verbose so purrr provides a convenient shortcut: a one-sided formula.</p>
-<div class="sourceCode" id="cb569"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb570"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">models</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">map</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">mpg</span> <span class="op">~</span> <span class="va">wt</span>, data <span class="op">=</span> <span class="va">.</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>Here I’ve used <code>.</code> as a pronoun: it refers to the current list element (in the same way that <code>i</code> referred to the current index in the for loop).</p>
 <p>When you’re looking at many models, you might want to extract a summary statistic like the <span class="math inline">\(R^2\)</span>. To do that we need to first run <code><a href="https://rdrr.io/r/base/summary.html">summary()</a></code> and then extract the component called <code>r.squared</code>. We could do that using the shorthand for anonymous functions:</p>
-<div class="sourceCode" id="cb570"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb571"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">models</span> <span class="op">%&gt;%</span> 
   <span class="fu">map</span><span class="op">(</span><span class="va">summary</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">map_dbl</span><span class="op">(</span><span class="op">~</span><span class="va">.</span><span class="op">$</span><span class="va">r.squared</span><span class="op">)</span>
 <span class="co">#&gt;         4         6         8 </span>
 <span class="co">#&gt; 0.5086326 0.4645102 0.4229655</span></code></pre></div>
 <p>But extracting named components is a common operation, so purrr provides an even shorter shortcut: you can use a string.</p>
-<div class="sourceCode" id="cb571"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb572"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">models</span> <span class="op">%&gt;%</span> 
   <span class="fu">map</span><span class="op">(</span><span class="va">summary</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">map_dbl</span><span class="op">(</span><span class="st">"r.squared"</span><span class="op">)</span>
 <span class="co">#&gt;         4         6         8 </span>
 <span class="co">#&gt; 0.5086326 0.4645102 0.4229655</span></code></pre></div>
 <p>You can also use an integer to select elements by position:</p>
-<div class="sourceCode" id="cb572"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb573"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">6</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">9</span><span class="op">)</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu">map_dbl</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span>
 <span class="co">#&gt; [1] 2 5 8</span></code></pre></div>
@@ -678,7 +662,7 @@ shortcuts for <code>.f</code>.</p></li>
 simplifies the output. This is useful for interactive work but is
 problematic in a function because you never know what sort of output
 you’ll get:</p>
-<div class="sourceCode" id="cb573"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb574"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.27</span>, <span class="fl">0.37</span>, <span class="fl">0.57</span>, <span class="fl">0.91</span>, <span class="fl">0.20</span><span class="op">)</span>,
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.90</span>, <span class="fl">0.94</span>, <span class="fl">0.66</span>, <span class="fl">0.63</span>, <span class="fl">0.06</span><span class="op">)</span>, 
@@ -709,9 +693,9 @@ ever produce vectors.</p></li>
 </ul>
 <p>I focus on purrr functions here because they have more consistent names and arguments, helpful shortcuts, and in the future will provide easy parallelism and progress bars.</p>
 </div>
-<div id="exercises-61" class="section level3" number="21.5.3">
+<div id="exercises-60" class="section level3" number="21.5.3">
 <h3>
-<span class="header-section-number">21.5.3</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-61"><i class="fas fa-link"></i></a>
+<span class="header-section-number">21.5.3</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-60"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li>
@@ -747,7 +731,7 @@ anonymous function.</p></li>
 </ol>
 <p>(You might be familiar with the <code><a href="https://rdrr.io/r/base/try.html">try()</a></code> function in base R. It’s similar, but because it sometimes returns the original result and it sometimes returns an error object it’s more difficult to work with.)</p>
 <p>Let’s illustrate this with a simple example: <code><a href="https://rdrr.io/r/base/Log.html">log()</a></code>:</p>
-<div class="sourceCode" id="cb574"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb575"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">safe_log</span> <span class="op">&lt;-</span> <span class="fu">safely</span><span class="op">(</span><span class="va">log</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu">safe_log</span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; List of 2</span>
@@ -762,7 +746,7 @@ anonymous function.</p></li>
 <span class="co">#&gt;   ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"</span></code></pre></div>
 <p>When the function succeeds, the <code>result</code> element contains the result and the <code>error</code> element is <code>NULL</code>. When the function fails, the <code>result</code> element is <code>NULL</code> and the <code>error</code> element contains an error object.</p>
 <p><code>safely()</code> is designed to work with map:</p>
-<div class="sourceCode" id="cb575"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb576"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="st">"a"</span><span class="op">)</span>
 <span class="va">y</span> <span class="op">&lt;-</span> <span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu">map</span><span class="op">(</span><span class="fu">safely</span><span class="op">(</span><span class="va">log</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
@@ -780,7 +764,7 @@ anonymous function.</p></li>
 <span class="co">#&gt;   .. ..$ call   : language .Primitive("log")(x, base)</span>
 <span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"</span></code></pre></div>
 <p>This would be easier to work with if we had two lists: one of all the errors and one of all the output. That’s easy to get with <code><a href="https://purrr.tidyverse.org/reference/transpose.html">purrr::transpose()</a></code>:</p>
-<div class="sourceCode" id="cb576"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb577"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="va">y</span> <span class="op">%&gt;%</span> <span class="fu">transpose</span><span class="op">(</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
 <span class="co">#&gt; List of 2</span>
@@ -796,7 +780,7 @@ anonymous function.</p></li>
 <span class="co">#&gt;   .. ..$ call   : language .Primitive("log")(x, base)</span>
 <span class="co">#&gt;   .. ..- attr(*, "class")= chr [1:3] "simpleError" "error" "condition"</span></code></pre></div>
 <p>It’s up to you how to deal with the errors, but typically you’ll either look at the values of <code>x</code> where <code>y</code> is an error, or work with the values of <code>y</code> that are ok:</p>
-<div class="sourceCode" id="cb577"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb578"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">is_ok</span> <span class="op">&lt;-</span> <span class="va">y</span><span class="op">$</span><span class="va">error</span> <span class="op">%&gt;%</span> <span class="fu">map_lgl</span><span class="op">(</span><span class="va">is_null</span><span class="op">)</span>
 <span class="va">x</span><span class="op">[</span><span class="op">!</span><span class="va">is_ok</span><span class="op">]</span>
 <span class="co">#&gt; [[1]]</span>
@@ -808,7 +792,7 @@ anonymous function.</p></li>
 <li>
 <p>Like <code>safely()</code>, <code>possibly()</code> always succeeds. It’s simpler than <code>safely()</code>,
 because you give it a default value to return when there is an error.</p>
-<div class="sourceCode" id="cb578"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb579"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, <span class="st">"a"</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu">map_dbl</span><span class="op">(</span><span class="fu">possibly</span><span class="op">(</span><span class="va">log</span>, <span class="cn">NA_real_</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; [1] 0.000000 2.302585       NA</span></code></pre></div>
@@ -816,7 +800,7 @@ because you give it a default value to return when there is an error.</p>
 <li>
 <p><code>quietly()</code> performs a similar role to <code>safely()</code>, but instead of capturing
 errors, it captures printed output, messages, and warnings:</p>
-<div class="sourceCode" id="cb579"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb580"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="op">-</span><span class="fl">1</span><span class="op">)</span>
 <span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu">map</span><span class="op">(</span><span class="fu">quietly</span><span class="op">(</span><span class="va">log</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; List of 2</span>
@@ -838,7 +822,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <span class="header-section-number">21.7</span> Mapping over multiple arguments<a class="anchor" aria-label="anchor" href="#mapping-over-multiple-arguments"><i class="fas fa-link"></i></a>
 </h2>
 <p>So far we’ve mapped along a single input. But often you have multiple related inputs that you need iterate along in parallel. That’s the job of the <code>map2()</code> and <code>pmap()</code> functions. For example, imagine you want to simulate some random normals with different means. You know how to do that with <code>map()</code>:</p>
-<div class="sourceCode" id="cb580"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb581"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mu</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">5</span>, <span class="fl">10</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span>
 <span class="va">mu</span> <span class="op">%&gt;%</span> 
   <span class="fu">map</span><span class="op">(</span><span class="va">rnorm</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -848,7 +832,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <span class="co">#&gt;  $ : num [1:5] 9.34 9.33 9.52 11.32 10.64</span>
 <span class="co">#&gt;  $ : num [1:5] -2.49 -4.75 -2.11 -2.78 -2.42</span></code></pre></div>
 <p>What if you also want to vary the standard deviation? One way to do that would be to iterate over the indices and index into vectors of means and sds:</p>
-<div class="sourceCode" id="cb581"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb582"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sigma</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">mu</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu">map</span><span class="op">(</span><span class="op">~</span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">5</span>, <span class="va">mu</span><span class="op">[[</span><span class="va">.</span><span class="op">]</span><span class="op">]</span>, <span class="va">sigma</span><span class="op">[[</span><span class="va">.</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -858,7 +842,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <span class="co">#&gt;  $ : num [1:5] 6.51 0.529 10.381 14.377 12.269</span>
 <span class="co">#&gt;  $ : num [1:5] -11.51 2.66 8.52 -10.56 -7.89</span></code></pre></div>
 <p>But that obfuscates the intent of the code. Instead we could use <code>map2()</code> which iterates over two vectors in parallel:</p>
-<div class="sourceCode" id="cb582"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb583"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">map2</span><span class="op">(</span><span class="va">mu</span>, <span class="va">sigma</span>, <span class="va">rnorm</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; List of 3</span>
 <span class="co">#&gt;  $ : num [1:5] 3.83 4.52 5.12 3.23 3.59</span>
@@ -868,7 +852,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <div class="inline-figure"><img src="diagrams/lists-map2.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Note that the arguments that vary for each call come <em>before</em> the function; arguments that are the same for every call come <em>after</em>.</p>
 <p>Like <code>map()</code>, <code>map2()</code> is just a wrapper around a for loop:</p>
-<div class="sourceCode" id="cb583"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb584"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">map2</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span>, <span class="va">f</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/vector.html">vector</a></span><span class="op">(</span><span class="st">"list"</span>, <span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
   <span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq_along</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span>
@@ -877,7 +861,7 @@ errors, it captures printed output, messages, and warnings:</p>
   <span class="va">out</span>
 <span class="op">}</span></code></pre></div>
 <p>You could also imagine <code>map3()</code>, <code>map4()</code>, <code>map5()</code>, <code>map6()</code> etc, but that would get tedious quickly. Instead, purrr provides <code>pmap()</code> which takes a list of arguments. You might use that if you wanted to vary the mean, standard deviation, and number of samples:</p>
-<div class="sourceCode" id="cb584"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb585"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">5</span><span class="op">)</span>
 <span class="va">args1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">n</span>, <span class="va">mu</span>, <span class="va">sigma</span><span class="op">)</span>
 <span class="va">args1</span> <span class="op">%&gt;%</span>
@@ -890,7 +874,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <p>That looks like:</p>
 <div class="inline-figure"><img src="diagrams/lists-pmap-unnamed.png" width="70%" style="display: block; margin: auto;"></div>
 <p>If you don’t name the list’s elements, <code>pmap()</code> will use positional matching when calling the function. That’s a little fragile, and makes the code harder to read, so it’s better to name the arguments:</p>
-<div class="sourceCode" id="cb585"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb586"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">args2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>mean <span class="op">=</span> <span class="va">mu</span>, sd <span class="op">=</span> <span class="va">sigma</span>, n <span class="op">=</span> <span class="va">n</span><span class="op">)</span>
 <span class="va">args2</span> <span class="op">%&gt;%</span> 
   <span class="fu">pmap</span><span class="op">(</span><span class="va">rnorm</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -898,7 +882,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <p>That generates longer, but safer, calls:</p>
 <div class="inline-figure"><img src="diagrams/lists-pmap-named.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Since the arguments are all the same length, it makes sense to store them in a data frame:</p>
-<div class="sourceCode" id="cb586"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb587"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">params</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span>
   <span class="op">~</span><span class="va">mean</span>, <span class="op">~</span><span class="va">sd</span>, <span class="op">~</span><span class="va">n</span>,
     <span class="fl">5</span>,     <span class="fl">1</span>,  <span class="fl">1</span>,
@@ -921,7 +905,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <span class="header-section-number">21.7.1</span> Invoking different functions<a class="anchor" aria-label="anchor" href="#invoking-different-functions"><i class="fas fa-link"></i></a>
 </h3>
 <p>There’s one more step up in complexity - as well as varying the arguments to the function you might also vary the function itself:</p>
-<div class="sourceCode" id="cb587"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb588"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"runif"</span>, <span class="st">"rnorm"</span>, <span class="st">"rpois"</span><span class="op">)</span>
 <span class="va">param</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>, 
@@ -929,7 +913,7 @@ errors, it captures printed output, messages, and warnings:</p>
   <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>lambda <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>To handle this case, you can use <code>invoke_map()</code>:</p>
-<div class="sourceCode" id="cb588"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb589"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">invoke_map</span><span class="op">(</span><span class="va">f</span>, <span class="va">param</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span>
 <span class="co">#&gt; List of 3</span>
 <span class="co">#&gt;  $ : num [1:5] 0.479 0.439 -0.471 0.348 -0.581</span>
@@ -938,7 +922,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <div class="inline-figure"><img src="diagrams/lists-invoke.png" width="1110" style="display: block; margin: auto;"></div>
 <p>The first argument is a list of functions or character vector of function names. The second argument is a list of lists giving the arguments that vary for each function. The subsequent arguments are passed on to every function.</p>
 <p>And again, you can use <code>tribble()</code> to make creating these matching pairs a little easier:</p>
-<div class="sourceCode" id="cb589"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb590"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span>
   <span class="op">~</span><span class="va">f</span>,      <span class="op">~</span><span class="va">params</span>,
   <span class="st">"runif"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,
@@ -954,7 +938,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <span class="header-section-number">21.8</span> Walk<a class="anchor" aria-label="anchor" href="#walk"><i class="fas fa-link"></i></a>
 </h2>
 <p>Walk is an alternative to map that you use when you want to call a function for its side effects, rather than for its return value. You typically do this because you want to render output to the screen or save files to disk - the important thing is the action, not the return value. Here’s a very simple example:</p>
-<div class="sourceCode" id="cb590"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb591"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span>, <span class="st">"a"</span>, <span class="fl">3</span><span class="op">)</span>
 
 <span class="va">x</span> <span class="op">%&gt;%</span> 
@@ -963,7 +947,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <span class="co">#&gt; [1] "a"</span>
 <span class="co">#&gt; [1] 3</span></code></pre></div>
 <p><code>walk()</code> is generally not that useful compared to <code>walk2()</code> or <code>pwalk()</code>. For example, if you had a list of plots and a vector of file names, you could use <code>pwalk()</code> to save each file to the corresponding location on disk:</p>
-<div class="sourceCode" id="cb591"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb592"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org">ggplot2</a></span><span class="op">)</span>
 <span class="va">plots</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/base/split.html">split</a></span><span class="op">(</span><span class="va">.</span><span class="op">$</span><span class="va">cyl</span><span class="op">)</span> <span class="op">%&gt;%</span> 
@@ -984,7 +968,7 @@ errors, it captures printed output, messages, and warnings:</p>
 </h3>
 <p>A number of functions work with <strong>predicate</strong> functions that return either a single <code>TRUE</code> or <code>FALSE</code>.</p>
 <p><code>keep()</code> and <code>discard()</code> keep elements of the input where the predicate is <code>TRUE</code> or <code>FALSE</code> respectively:</p>
-<div class="sourceCode" id="cb592"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb593"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">iris</span> <span class="op">%&gt;%</span> 
   <span class="fu">keep</span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span> <span class="op">%&gt;%</span> 
   <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span>
@@ -1001,7 +985,7 @@ errors, it captures printed output, messages, and warnings:</p>
 <span class="co">#&gt;  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...</span></code></pre></div>
 <p><code>some()</code> and <code>every()</code> determine if the predicate is true for any or for all of
 the elements.</p>
-<div class="sourceCode" id="cb593"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb594"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="va">letters</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span>
 
 <span class="va">x</span> <span class="op">%&gt;%</span> 
@@ -1012,7 +996,7 @@ the elements.</p>
   <span class="fu">every</span><span class="op">(</span><span class="va">is_vector</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
 <p><code>detect()</code> finds the first element where the predicate is true; <code>detect_index()</code> returns its position.</p>
-<div class="sourceCode" id="cb594"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb595"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
 <span class="va">x</span>
 <span class="co">#&gt;  [1] 10  6  1  3  2  4  5  8  9  7</span>
@@ -1025,7 +1009,7 @@ the elements.</p>
   <span class="fu">detect_index</span><span class="op">(</span><span class="op">~</span> <span class="va">.</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; [1] 1</span></code></pre></div>
 <p><code>head_while()</code> and <code>tail_while()</code> take elements from the start or end of a vector while a predicate is true:</p>
-<div class="sourceCode" id="cb595"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb596"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">%&gt;%</span> 
   <span class="fu">head_while</span><span class="op">(</span><span class="op">~</span> <span class="va">.</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">)</span>
 <span class="co">#&gt; [1] 10  6</span>
@@ -1039,7 +1023,7 @@ the elements.</p>
 <span class="header-section-number">21.9.2</span> Reduce and accumulate<a class="anchor" aria-label="anchor" href="#reduce-and-accumulate"><i class="fas fa-link"></i></a>
 </h3>
 <p>Sometimes you have a complex list that you want to reduce to a simple list by repeatedly applying a function that reduces a pair to a singleton. This is useful if you want to apply a two-table dplyr verb to multiple tables. For example, you might have a list of data frames, and you want to reduce to a single data frame by joining the elements together:</p>
-<div class="sourceCode" id="cb596"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb597"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dfs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   age <span class="op">=</span> <span class="fu">tibble</span><span class="op">(</span>name <span class="op">=</span> <span class="st">"John"</span>, age <span class="op">=</span> <span class="fl">30</span><span class="op">)</span>,
   sex <span class="op">=</span> <span class="fu">tibble</span><span class="op">(</span>name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"John"</span>, <span class="st">"Mary"</span><span class="op">)</span>, sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"M"</span>, <span class="st">"F"</span><span class="op">)</span><span class="op">)</span>,
@@ -1055,7 +1039,7 @@ the elements.</p>
 <span class="co">#&gt; 1 John     30 M     &lt;NA&gt;     </span>
 <span class="co">#&gt; 2 Mary     NA F     A</span></code></pre></div>
 <p>Or maybe you have a list of vectors, and want to find the intersection:</p>
-<div class="sourceCode" id="cb597"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb598"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">vs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">6</span>, <span class="fl">10</span><span class="op">)</span>,
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">7</span>, <span class="fl">8</span>, <span class="fl">10</span><span class="op">)</span>,
@@ -1066,16 +1050,16 @@ the elements.</p>
 <span class="co">#&gt; [1]  1  3 10</span></code></pre></div>
 <p><code>reduce()</code> takes a “binary” function (i.e. a function with two primary inputs), and applies it repeatedly to a list until there is only a single element left.</p>
 <p><code>accumulate()</code> is similar but it keeps all the interim results. You could use it to implement a cumulative sum:</p>
-<div class="sourceCode" id="cb598"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb599"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html">sample</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span>
 <span class="va">x</span>
 <span class="co">#&gt;  [1]  7  5 10  9  8  3  1  4  2  6</span>
 <span class="va">x</span> <span class="op">%&gt;%</span> <span class="fu">accumulate</span><span class="op">(</span><span class="va">`+`</span><span class="op">)</span>
 <span class="co">#&gt;  [1]  7 12 22 31 39 42 43 47 49 55</span></code></pre></div>
 </div>
-<div id="exercises-62" class="section level3" number="21.9.3">
+<div id="exercises-61" class="section level3" number="21.9.3">
 <h3>
-<span class="header-section-number">21.9.3</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-62"><i class="fas fa-link"></i></a>
+<span class="header-section-number">21.9.3</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-61"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>Implement your own version of <code>every()</code> using a for loop. Compare it with
@@ -1084,7 +1068,7 @@ the elements.</p>
 numeric column in a data frame.</p></li>
 <li>
 <p>A possible base R equivalent of <code>col_summary()</code> is:</p>
-<div class="sourceCode" id="cb599"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb600"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">col_sum3</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span>, <span class="va">f</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">is_num</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">is.numeric</span><span class="op">)</span>
   <span class="va">df_num</span> <span class="op">&lt;-</span> <span class="va">df</span><span class="op">[</span>, <span class="va">is_num</span><span class="op">]</span>
@@ -1092,7 +1076,7 @@ numeric column in a data frame.</p></li>
   <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span><span class="op">(</span><span class="va">df_num</span>, <span class="va">f</span><span class="op">)</span>
 <span class="op">}</span></code></pre></div>
 <p>But it has a number of bugs as illustrated with the following inputs:</p>
-<div class="sourceCode" id="cb600"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb601"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>
   x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, 
   y <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">1</span>,
@@ -1124,7 +1108,7 @@ numeric column in a data frame.</p></li>
 <a class="nav-link" href="#introduction-14"><span class="header-section-number">21.1</span> Introduction</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#prerequisites-14"><span class="header-section-number">21.1.1</span> Prerequisites</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#for-loops"><span class="header-section-number">21.2</span> For loops</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-58"><span class="header-section-number">21.2.1</span> Exercises</a></li></ul>
+<a class="nav-link" href="#for-loops"><span class="header-section-number">21.2</span> For loops</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-57"><span class="header-section-number">21.2.1</span> Exercises</a></li></ul>
 </li>
 <li>
 <a class="nav-link" href="#for-loop-variations"><span class="header-section-number">21.3</span> For loop variations</a><ul class="nav navbar-nav">
@@ -1132,17 +1116,17 @@ numeric column in a data frame.</p></li>
 <li><a class="nav-link" href="#looping-patterns"><span class="header-section-number">21.3.2</span> Looping patterns</a></li>
 <li><a class="nav-link" href="#unknown-output-length"><span class="header-section-number">21.3.3</span> Unknown output length</a></li>
 <li><a class="nav-link" href="#unknown-sequence-length"><span class="header-section-number">21.3.4</span> Unknown sequence length</a></li>
-<li><a class="nav-link" href="#exercises-59"><span class="header-section-number">21.3.5</span> Exercises</a></li>
+<li><a class="nav-link" href="#exercises-58"><span class="header-section-number">21.3.5</span> Exercises</a></li>
 </ul>
 </li>
 <li>
-<a class="nav-link" href="#for-loops-vs.-functionals"><span class="header-section-number">21.4</span> For loops vs. functionals</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-60"><span class="header-section-number">21.4.1</span> Exercises</a></li></ul>
+<a class="nav-link" href="#for-loops-vs.-functionals"><span class="header-section-number">21.4</span> For loops vs. functionals</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-59"><span class="header-section-number">21.4.1</span> Exercises</a></li></ul>
 </li>
 <li>
 <a class="nav-link" href="#the-map-functions"><span class="header-section-number">21.5</span> The map functions</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#shortcuts"><span class="header-section-number">21.5.1</span> Shortcuts</a></li>
 <li><a class="nav-link" href="#base-r"><span class="header-section-number">21.5.2</span> Base R</a></li>
-<li><a class="nav-link" href="#exercises-61"><span class="header-section-number">21.5.3</span> Exercises</a></li>
+<li><a class="nav-link" href="#exercises-60"><span class="header-section-number">21.5.3</span> Exercises</a></li>
 </ul>
 </li>
 <li><a class="nav-link" href="#dealing-with-failure"><span class="header-section-number">21.6</span> Dealing with failure</a></li>
@@ -1154,7 +1138,7 @@ numeric column in a data frame.</p></li>
 <a class="nav-link" href="#other-patterns-of-for-loops"><span class="header-section-number">21.9</span> Other patterns of for loops</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#predicate-functions"><span class="header-section-number">21.9.1</span> Predicate functions</a></li>
 <li><a class="nav-link" href="#reduce-and-accumulate"><span class="header-section-number">21.9.2</span> Reduce and accumulate</a></li>
-<li><a class="nav-link" href="#exercises-62"><span class="header-section-number">21.9.3</span> Exercises</a></li>
+<li><a class="nav-link" href="#exercises-61"><span class="header-section-number">21.9.3</span> Exercises</a></li>
 </ul>
 </li>
 </ul>

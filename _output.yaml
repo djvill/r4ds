@@ -4,11 +4,11 @@ bookdown::bs4_book:
   # repo: https://github.com/hadley/r4ds
   repo: https://github.com/Data-Sci-2021/r4ds
   includes:
-    in_header: [ga_script.html, more-js.html]
+    in_header: [ga_script.html]
 
 bookdown::gitbook:
   includes:
-    in_header: [ga_script.html, more-js.html]
+    in_header: [ga_script.html]
   config:
     toc:
       collapse: section

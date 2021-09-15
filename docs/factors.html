@@ -30,23 +30,7 @@
       gtag('js', new Date());
 
       gtag('config', 'UA-115082821-1');
-    </script><script>
-      window.onload = function() {
-        //Change master branch to main
-        var ghSrc = document.querySelectorAll(".book-extra ul a");
-        ghSrc.forEach(a => a.href = a.href.replace("master", "main"));
-
-        //Change left-side navigation
-        $("header h1").parent().css("flex-direction","column"); //Flex
-        var r4dsTitle = document.querySelector("header h1");
-        var newTitle = document.createElement("div");
-        r4dsTitle.parentNode.insertBefore(newTitle, r4dsTitle);
-        r4dsTitle.parentNode.insertBefore(r4dsTitle, newTitle);
-        newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz">Original</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/Data-Sci-2021/r4ds/">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
-        $(newTitle).css("padding-left", "10px");
-        r4dsTitle.querySelector("a").removeAttribute("href");
-      }
-    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+    </script><script src="more-js.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -126,7 +110,7 @@
 <span class="header-section-number">15.1.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-9"><i class="fas fa-link"></i></a>
 </h3>
 <p>To work with factors, we’ll use the <strong>forcats</strong> package, which is part of the core tidyverse. It provides tools for dealing with <strong>cat</strong>egorical variables (and it’s an anagram of factors!) using a wide range of helpers for working with factors.</p>
-<div class="sourceCode" id="cb351"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb352"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
 </div>
 <div id="learning-more-1" class="section level3" number="15.1.2">
@@ -141,31 +125,31 @@
 <span class="header-section-number">15.2</span> Creating factors<a class="anchor" aria-label="anchor" href="#creating-factors"><i class="fas fa-link"></i></a>
 </h2>
 <p>Imagine that you have a variable that records month:</p>
-<div class="sourceCode" id="cb352"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb353"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Dec"</span>, <span class="st">"Apr"</span>, <span class="st">"Jan"</span>, <span class="st">"Mar"</span><span class="op">)</span></code></pre></div>
 <p>Using a string to record this variable has two problems:</p>
 <ol style="list-style-type: decimal">
 <li>
 <p>There are only twelve possible months, and there’s nothing saving you
 from typos:</p>
-<div class="sourceCode" id="cb353"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb354"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"Dec"</span>, <span class="st">"Apr"</span>, <span class="st">"Jam"</span>, <span class="st">"Mar"</span><span class="op">)</span></code></pre></div>
 </li>
 <li>
 <p>It doesn’t sort in a useful way:</p>
-<div class="sourceCode" id="cb354"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb355"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/sort.html">sort</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Apr" "Dec" "Jan" "Mar"</span></code></pre></div>
 </li>
 </ol>
 <p>You can fix both of these problems with a factor. To create a factor you must start by creating a list of the valid <strong>levels</strong>:</p>
-<div class="sourceCode" id="cb355"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb356"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">month_levels</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span>
   <span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>, 
   <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>
 <span class="op">)</span></code></pre></div>
 <p>Now you can create a factor:</p>
-<div class="sourceCode" id="cb356"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb357"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x1</span>, levels <span class="op">=</span> <span class="va">month_levels</span><span class="op">)</span>
 <span class="va">y1</span>
 <span class="co">#&gt; [1] Dec Apr Jan Mar</span>
@@ -174,24 +158,24 @@ from typos:</p>
 <span class="co">#&gt; [1] Jan Mar Apr Dec</span>
 <span class="co">#&gt; Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</span></code></pre></div>
 <p>And any values not in the set will be silently converted to NA:</p>
-<div class="sourceCode" id="cb357"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb358"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x2</span>, levels <span class="op">=</span> <span class="va">month_levels</span><span class="op">)</span>
 <span class="va">y2</span>
 <span class="co">#&gt; [1] Dec  Apr  &lt;NA&gt; Mar </span>
 <span class="co">#&gt; Levels: Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec</span></code></pre></div>
 <p>If you want a warning, you can use <code><a href="https://readr.tidyverse.org/reference/parse_factor.html">readr::parse_factor()</a></code>:</p>
-<div class="sourceCode" id="cb358"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb359"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">y2</span> <span class="op">&lt;-</span> <span class="fu">parse_factor</span><span class="op">(</span><span class="va">x2</span>, levels <span class="op">=</span> <span class="va">month_levels</span><span class="op">)</span>
 <span class="co">#&gt; Warning: 1 parsing failure.</span>
 <span class="co">#&gt; row col           expected actual</span>
 <span class="co">#&gt;   3  -- value in level set    Jam</span></code></pre></div>
 <p>If you omit the levels, they’ll be taken from the data in alphabetical order:</p>
-<div class="sourceCode" id="cb359"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb360"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span>
 <span class="co">#&gt; [1] Dec Apr Jan Mar</span>
 <span class="co">#&gt; Levels: Apr Dec Jan Mar</span></code></pre></div>
 <p>Sometimes you’d prefer that the order of the levels match the order of the first appearance in the data. You can do that when creating the factor by setting levels to <code><a href="https://rdrr.io/r/base/unique.html">unique(x)</a></code>, or after the fact, with <code>fct_inorder()</code>:</p>
-<div class="sourceCode" id="cb360"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb361"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">f1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/factor.html">factor</a></span><span class="op">(</span><span class="va">x1</span>, levels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span><span class="op">)</span>
 <span class="va">f1</span>
 <span class="co">#&gt; [1] Dec Apr Jan Mar</span>
@@ -202,7 +186,7 @@ from typos:</p>
 <span class="co">#&gt; [1] Dec Apr Jan Mar</span>
 <span class="co">#&gt; Levels: Dec Apr Jan Mar</span></code></pre></div>
 <p>If you ever need to access the set of valid levels directly, you can do so with <code><a href="https://rdrr.io/r/base/levels.html">levels()</a></code>:</p>
-<div class="sourceCode" id="cb361"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb362"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/levels.html">levels</a></span><span class="op">(</span><span class="va">f2</span><span class="op">)</span>
 <span class="co">#&gt; [1] "Dec" "Apr" "Jan" "Mar"</span></code></pre></div>
 </div>
@@ -211,7 +195,7 @@ from typos:</p>
 <span class="header-section-number">15.3</span> General Social Survey<a class="anchor" aria-label="anchor" href="#general-social-survey"><i class="fas fa-link"></i></a>
 </h2>
 <p>For the rest of this chapter, we’re going to focus on <code><a href="https://forcats.tidyverse.org/reference/gss_cat.html">forcats::gss_cat</a></code>. It’s a sample of data from the <a href="http://gss.norc.org">General Social Survey</a>, which is a long-running US survey conducted by the independent research organization NORC at the University of Chicago. The survey has thousands of questions, so in <code>gss_cat</code> I’ve selected a handful that will illustrate some common challenges you’ll encounter when working with factors.</p>
-<div class="sourceCode" id="cb362"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb363"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gss_cat</span>
 <span class="co">#&gt; # A tibble: 21,483 x 9</span>
 <span class="co">#&gt;    year marital         age race  rincome        partyid   relig  denom  tvhours</span>
@@ -225,7 +209,7 @@ from typos:</p>
 <span class="co">#&gt; # ... with 21,477 more rows</span></code></pre></div>
 <p>(Remember, since this dataset is provided by a package, you can get more information about the variables with <code>?gss_cat</code>.)</p>
 <p>When factors are stored in a tibble, you can’t see their levels so easily. One way to see them is with <code>count()</code>:</p>
-<div class="sourceCode" id="cb363"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb364"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gss_cat</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">race</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 3 x 2</span>
@@ -235,12 +219,12 @@ from typos:</p>
 <span class="co">#&gt; 2 Black  3129</span>
 <span class="co">#&gt; 3 White 16395</span></code></pre></div>
 <p>Or with a bar chart:</p>
-<div class="sourceCode" id="cb364"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb365"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">gss_cat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">race</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="factors_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>By default, ggplot2 will drop levels that don’t have any values. You can force them to display with:</p>
-<div class="sourceCode" id="cb365"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb366"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">gss_cat</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">race</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_discrete.html">scale_x_discrete</a></span><span class="op">(</span>drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
@@ -266,7 +250,7 @@ out with a table? How can you find out with a visualisation?</p></li>
 <span class="header-section-number">15.4</span> Modifying factor order<a class="anchor" aria-label="anchor" href="#modifying-factor-order"><i class="fas fa-link"></i></a>
 </h2>
 <p>It’s often useful to change the order of the factor levels in a visualisation. For example, imagine you want to explore the average number of hours spent watching TV per day across religions:</p>
-<div class="sourceCode" id="cb366"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb367"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relig_summary</span> <span class="op">&lt;-</span> <span class="va">gss_cat</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">relig</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">summarise</span><span class="op">(</span>
@@ -286,19 +270,19 @@ out with a table? How can you find out with a visualisation?</p></li>
 <li>Optionally, <code>fun</code>, a function that’s used if there are multiple values of
 <code>x</code> for each value of <code>f</code>. The default value is <code>median</code>.</li>
 </ul>
-<div class="sourceCode" id="cb367"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb368"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">relig_summary</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">tvhours</span>, <span class="fu">fct_reorder</span><span class="op">(</span><span class="va">relig</span>, <span class="va">tvhours</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="factors_files/figure-html/unnamed-chunk-16-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Reordering religion makes it much easier to see that people in the “Don’t know” category watch much more TV, and Hinduism &amp; Other Eastern religions watch much less.</p>
 <p>As you start making more complicated transformations, I’d recommend moving them out of <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> and into a separate <code>mutate()</code> step. For example, you could rewrite the plot above as:</p>
-<div class="sourceCode" id="cb368"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb369"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">relig_summary</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>relig <span class="op">=</span> <span class="fu">fct_reorder</span><span class="op">(</span><span class="va">relig</span>, <span class="va">tvhours</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">tvhours</span>, <span class="va">relig</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>What if we create a similar plot looking at how average age varies across reported income level?</p>
-<div class="sourceCode" id="cb369"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb370"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">rincome_summary</span> <span class="op">&lt;-</span> <span class="va">gss_cat</span> <span class="op">%&gt;%</span>
   <span class="fu">group_by</span><span class="op">(</span><span class="va">rincome</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">summarise</span><span class="op">(</span>
@@ -311,13 +295,13 @@ out with a table? How can you find out with a visualisation?</p></li>
 <div class="inline-figure"><img src="factors_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Here, arbitrarily reordering the levels isn’t a good idea! That’s because <code>rincome</code> already has a principled order that we shouldn’t mess with. Reserve <code>fct_reorder()</code> for factors whose levels are arbitrarily ordered.</p>
 <p>However, it does make sense to pull “Not applicable” to the front with the other special levels. You can use <code>fct_relevel()</code>. It takes a factor, <code>f</code>, and then any number of levels that you want to move to the front of the line.</p>
-<div class="sourceCode" id="cb370"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb371"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">rincome_summary</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">age</span>, <span class="fu">fct_relevel</span><span class="op">(</span><span class="va">rincome</span>, <span class="st">"Not applicable"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="factors_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Why do you think the average age for “Not applicable” is so high?</p>
 <p>Another type of reordering is useful when you are colouring the lines on a plot. <code>fct_reorder2()</code> reorders the factor by the <code>y</code> values associated with the largest <code>x</code> values. This makes the plot easier to read because the line colours line up with the legend.</p>
-<div class="sourceCode" id="cb371"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb372"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">by_age</span> <span class="op">&lt;-</span> <span class="va">gss_cat</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">age</span>, <span class="va">marital</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -332,15 +316,15 @@ out with a table? How can you find out with a visualisation?</p></li>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="st">"marital"</span><span class="op">)</span></code></pre></div>
 <p><img src="factors_files/figure-html/unnamed-chunk-20-1.png" width="50%"><img src="factors_files/figure-html/unnamed-chunk-20-2.png" width="50%"></p>
 <p>Finally, for bar plots, you can use <code>fct_infreq()</code> to order levels in increasing frequency: this is the simplest type of reordering because it doesn’t need any extra variables. You may want to combine with <code>fct_rev()</code>.</p>
-<div class="sourceCode" id="cb372"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb373"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gss_cat</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>marital <span class="op">=</span> <span class="va">marital</span> <span class="op">%&gt;%</span> <span class="fu">fct_infreq</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">fct_rev</span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">marital</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
     <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="inline-figure"><img src="factors_files/figure-html/unnamed-chunk-21-1.png" width="70%" style="display: block; margin: auto;"></div>
-<div id="exercises-45" class="section level3" number="15.4.1">
+<div id="exercises-44" class="section level3" number="15.4.1">
 <h3>
-<span class="header-section-number">15.4.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-45"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.4.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-44"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>There are some suspiciously high numbers in <code>tvhours</code>. Is the mean a good
@@ -357,7 +341,7 @@ bottom of the plot?</p></li>
 <span class="header-section-number">15.5</span> Modifying factor levels<a class="anchor" aria-label="anchor" href="#modifying-factor-levels"><i class="fas fa-link"></i></a>
 </h2>
 <p>More powerful than changing the orders of the levels is changing their values. This allows you to clarify labels for publication, and collapse levels for high-level displays. The most general and powerful tool is <code>fct_recode()</code>. It allows you to recode, or change, the value of each level. For example, take the <code>gss_cat$partyid</code>:</p>
-<div class="sourceCode" id="cb373"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb374"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gss_cat</span> <span class="op">%&gt;%</span> <span class="fu">count</span><span class="op">(</span><span class="va">partyid</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 10 x 2</span>
 <span class="co">#&gt;   partyid                n</span>
@@ -370,7 +354,7 @@ bottom of the plot?</p></li>
 <span class="co">#&gt; 6 Ind,near rep        1791</span>
 <span class="co">#&gt; # ... with 4 more rows</span></code></pre></div>
 <p>The levels are terse and inconsistent. Let’s tweak them to be longer and use a parallel construction.</p>
-<div class="sourceCode" id="cb374"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb375"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gss_cat</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>partyid <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">partyid</span>,
     <span class="st">"Republican, strong"</span>    <span class="op">=</span> <span class="st">"Strong republican"</span>,
@@ -393,7 +377,7 @@ bottom of the plot?</p></li>
 <span class="co">#&gt; # ... with 4 more rows</span></code></pre></div>
 <p><code>fct_recode()</code> will leave levels that aren’t explicitly mentioned as is, and will warn you if you accidentally refer to a level that doesn’t exist.</p>
 <p>To combine groups, you can assign multiple old levels to the same new level:</p>
-<div class="sourceCode" id="cb375"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb376"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gss_cat</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>partyid <span class="op">=</span> <span class="fu">fct_recode</span><span class="op">(</span><span class="va">partyid</span>,
     <span class="st">"Republican, strong"</span>    <span class="op">=</span> <span class="st">"Strong republican"</span>,
@@ -419,7 +403,7 @@ bottom of the plot?</p></li>
 <span class="co">#&gt; # ... with 2 more rows</span></code></pre></div>
 <p>You must use this technique with care: if you group together categories that are truly different you will end up with misleading results.</p>
 <p>If you want to collapse a lot of levels, <code>fct_collapse()</code> is a useful variant of <code>fct_recode()</code>. For each new variable, you can provide a vector of old levels:</p>
-<div class="sourceCode" id="cb376"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb377"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gss_cat</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>partyid <span class="op">=</span> <span class="fu">fct_collapse</span><span class="op">(</span><span class="va">partyid</span>,
     other <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"No answer"</span>, <span class="st">"Don't know"</span>, <span class="st">"Other party"</span><span class="op">)</span>,
@@ -436,7 +420,7 @@ bottom of the plot?</p></li>
 <span class="co">#&gt; 3 ind      8409</span>
 <span class="co">#&gt; 4 dem      7180</span></code></pre></div>
 <p>Sometimes you just want to lump together all the small groups to make a plot or table simpler. That’s the job of <code>fct_lump()</code>:</p>
-<div class="sourceCode" id="cb377"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb378"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gss_cat</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>relig <span class="op">=</span> <span class="fu">fct_lump</span><span class="op">(</span><span class="va">relig</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">relig</span><span class="op">)</span>
@@ -447,7 +431,7 @@ bottom of the plot?</p></li>
 <span class="co">#&gt; 2 Other      10637</span></code></pre></div>
 <p>The default behaviour is to progressively lump together the smallest groups, ensuring that the aggregate is still the smallest group. In this case it’s not very helpful: it is true that the majority of Americans in this survey are Protestant, but we’ve probably over collapsed.</p>
 <p>Instead, we can use the <code>n</code> parameter to specify how many groups (excluding other) we want to keep:</p>
-<div class="sourceCode" id="cb378"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb379"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">gss_cat</span> <span class="op">%&gt;%</span>
   <span class="fu">mutate</span><span class="op">(</span>relig <span class="op">=</span> <span class="fu">fct_lump</span><span class="op">(</span><span class="va">relig</span>, n <span class="op">=</span> <span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
   <span class="fu">count</span><span class="op">(</span><span class="va">relig</span>, sort <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">%&gt;%</span>
@@ -465,9 +449,9 @@ bottom of the plot?</p></li>
 <span class="co">#&gt;  8 Inter-nondenominational   109</span>
 <span class="co">#&gt;  9 Moslem/islam              104</span>
 <span class="co">#&gt; 10 Orthodox-christian         95</span></code></pre></div>
-<div id="exercises-46" class="section level3" number="15.5.1">
+<div id="exercises-45" class="section level3" number="15.5.1">
 <h3>
-<span class="header-section-number">15.5.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-46"><i class="fas fa-link"></i></a>
+<span class="header-section-number">15.5.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-45"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
 <li><p>How have the proportions of people identifying as Democrat, Republican, and
@@ -495,10 +479,10 @@ Independent changed over time?</p></li>
 <a class="nav-link" href="#general-social-survey"><span class="header-section-number">15.3</span> General Social Survey</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercise"><span class="header-section-number">15.3.1</span> Exercise</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#modifying-factor-order"><span class="header-section-number">15.4</span> Modifying factor order</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-45"><span class="header-section-number">15.4.1</span> Exercises</a></li></ul>
+<a class="nav-link" href="#modifying-factor-order"><span class="header-section-number">15.4</span> Modifying factor order</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-44"><span class="header-section-number">15.4.1</span> Exercises</a></li></ul>
 </li>
 <li>
-<a class="nav-link" href="#modifying-factor-levels"><span class="header-section-number">15.5</span> Modifying factor levels</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-46"><span class="header-section-number">15.5.1</span> Exercises</a></li></ul>
+<a class="nav-link" href="#modifying-factor-levels"><span class="header-section-number">15.5</span> Modifying factor levels</a><ul class="nav navbar-nav"><li><a class="nav-link" href="#exercises-45"><span class="header-section-number">15.5.1</span> Exercises</a></li></ul>
 </li>
 </ul>
 
