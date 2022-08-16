@@ -7,31 +7,34 @@
 <title>3 Data visualisation | R for Data Science</title>
 <meta name="author" content="Hadley Wickham and Garrett Grolemund">
 <meta name="description" content="3.1 Introduction  “The simple graph has brought more information to the data analyst’s mind than any other device.” — John Tukey This chapter will teach you how to visualise your data using...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="generator" content="bookdown 0.28 with bs4_book()">
 <meta property="og:title" content="3 Data visualisation | R for Data Science">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://r4ds.had.co.nz/data-visualisation.html">
-<meta property="og:image" content="https://r4ds.had.co.nz//cover.png">
+<meta property="og:url" content="https://djvill.github.io/r4ds/data-visualisation.html">
+<meta property="og:image" content="https://djvill.github.io/r4ds//cover.png">
 <meta property="og:description" content="3.1 Introduction  “The simple graph has brought more information to the data analyst’s mind than any other device.” — John Tukey This chapter will teach you how to visualise your data using...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="3 Data visualisation | R for Data Science">
 <meta name="twitter:description" content="3.1 Introduction  “The simple graph has brought more information to the data analyst’s mind than any other device.” — John Tukey This chapter will teach you how to visualise your data using...">
-<meta name="twitter:image" content="https://r4ds.had.co.nz//cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="twitter:image" content="https://djvill.github.io/r4ds//cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
 <script src="libs/str_view-binding-1.4.0/str_view.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
       gtag('config', 'UA-115082821-1');
     </script><!-- Dan's additional code --><script src="more-js.js"></script><link href="more-css.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -92,7 +95,7 @@
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/Data-Sci-2021/r4ds">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="https://github.com/djvill/r4ds">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -116,22 +119,22 @@ than any other device.” — John Tukey</p>
 </h3>
 <p>This chapter focusses on ggplot2, one of the core members of the tidyverse. To access the datasets, help pages, and functions that we will use in this chapter, load the tidyverse by running this code:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-<span class="co">#&gt; -- Attaching packages --------------------------------------- tidyverse 1.3.1 --</span>
-<span class="co">#&gt; v ggplot2 3.3.5     v purrr   0.3.4</span>
-<span class="co">#&gt; v tibble  3.1.4     v dplyr   1.0.7</span>
-<span class="co">#&gt; v tidyr   1.1.3     v stringr 1.4.0</span>
-<span class="co">#&gt; v readr   2.0.1     v forcats 0.5.1</span>
-<span class="co">#&gt; -- Conflicts ------------------------------------------ tidyverse_conflicts() --</span>
-<span class="co">#&gt; x dplyr::filter() masks stats::filter()</span>
-<span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="co">#&gt; -- Attaching packages -------------------------------------- tidyverse 1.3.1 --</span></span>
+<span><span class="co">#&gt; v ggplot2 3.3.6     v purrr   0.3.4</span></span>
+<span><span class="co">#&gt; v tibble  3.1.7     v dplyr   1.0.9</span></span>
+<span><span class="co">#&gt; v tidyr   1.2.0     v stringr 1.4.0</span></span>
+<span><span class="co">#&gt; v readr   2.1.2     v forcats 0.5.1</span></span>
+<span><span class="co">#&gt; -- Conflicts ----------------------------------------- tidyverse_conflicts() --</span></span>
+<span><span class="co">#&gt; x dplyr::filter() masks stats::filter()</span></span>
+<span><span class="co">#&gt; x dplyr::lag()    masks stats::lag()</span></span></code></pre></div>
 <p>That one line of code loads the core tidyverse; packages which you will use in almost every data analysis. It also tells you which functions from the tidyverse conflict with functions in base R (or from other packages you might have loaded).</p>
 <p>If you run this code and get the error message “there is no package called ‘tidyverse’”, you’ll need to first install it, then run <code><a href="https://rdrr.io/r/base/library.html">library()</a></code> once again.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidyverse"</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 <p>You only need to install a package once, but you need to reload it every time you start a new session.</p>
-<p>If we need to be explicit about where a function (or dataset) comes from, we’ll use the special form <code>package::function()</code>. For example, <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> tells you explicitly that we’re using the <code>ggplot()</code> function from the ggplot2 package.</p>
+<p>If we need to be explicit about where a function (or dataset) comes from, we’ll use the special form <code>package::function()</code>. For example, <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot2::ggplot()</a></code> tells you explicitly that we’re using the <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> function from the ggplot2 package.</p>
 </div>
 </div>
 <div id="first-steps" class="section level2" number="3.2">
@@ -145,17 +148,17 @@ than any other device.” — John Tukey</p>
 </h3>
 <p>You can test your answer with the <code>mpg</code> <strong>data frame</strong> found in ggplot2 (aka <code><a href="https://ggplot2.tidyverse.org/reference/mpg.html">ggplot2::mpg</a></code>). A data frame is a rectangular collection of variables (in the columns) and observations (in the rows). <code>mpg</code> contains observations collected by the US Environmental Protection Agency on 38 models of car.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mpg</span>
-<span class="co">#&gt; # A tibble: 234 x 11</span>
-<span class="co">#&gt;   manufacturer model displ  year   cyl trans      drv     cty   hwy fl    class </span>
-<span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; </span>
-<span class="co">#&gt; 1 audi         a4      1.8  1999     4 auto(l5)   f        18    29 p     compa~</span>
-<span class="co">#&gt; 2 audi         a4      1.8  1999     4 manual(m5) f        21    29 p     compa~</span>
-<span class="co">#&gt; 3 audi         a4      2    2008     4 manual(m6) f        20    31 p     compa~</span>
-<span class="co">#&gt; 4 audi         a4      2    2008     4 auto(av)   f        21    30 p     compa~</span>
-<span class="co">#&gt; 5 audi         a4      2.8  1999     6 auto(l5)   f        16    26 p     compa~</span>
-<span class="co">#&gt; 6 audi         a4      2.8  1999     6 manual(m5) f        18    26 p     compa~</span>
-<span class="co">#&gt; # ... with 228 more rows</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mpg</span></span>
+<span><span class="co">#&gt; # A tibble: 234 x 11</span></span>
+<span><span class="co">#&gt;   manufacturer model displ  year   cyl trans      drv     cty   hwy fl    class </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;        &lt;chr&gt; &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;      &lt;chr&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt; &lt;chr&gt; </span></span>
+<span><span class="co">#&gt; 1 audi         a4      1.8  1999     4 auto(l5)   f        18    29 p     compa~</span></span>
+<span><span class="co">#&gt; 2 audi         a4      1.8  1999     4 manual(m5) f        21    29 p     compa~</span></span>
+<span><span class="co">#&gt; 3 audi         a4      2    2008     4 manual(m6) f        20    31 p     compa~</span></span>
+<span><span class="co">#&gt; 4 audi         a4      2    2008     4 auto(av)   f        21    30 p     compa~</span></span>
+<span><span class="co">#&gt; 5 audi         a4      2.8  1999     6 auto(l5)   f        16    26 p     compa~</span></span>
+<span><span class="co">#&gt; 6 audi         a4      2.8  1999     6 manual(m5) f        18    26 p     compa~</span></span>
+<span><span class="co">#&gt; # ... with 228 more rows</span></span></code></pre></div>
 <p>Among the variables in <code>mpg</code> are:</p>
 <ol style="list-style-type: decimal">
 <li><p><code>displ</code>, a car’s engine size, in litres.</p></li>
@@ -163,7 +166,7 @@ than any other device.” — John Tukey</p>
 A car with a low fuel efficiency consumes more fuel than a car with a high
 fuel efficiency when they travel the same distance.</p></li>
 </ol>
-<p>To learn more about <code>mpg</code>, open its help page by running <code>?mpg</code>.</p>
+<p>To learn more about <code>mpg</code>, open its help page by running <code><a href="https://ggplot2.tidyverse.org/reference/mpg.html">?mpg</a></code>.</p>
 </div>
 <div id="creating-a-ggplot" class="section level3" number="3.2.2">
 <h3>
@@ -171,13 +174,13 @@ fuel efficiency when they travel the same distance.</p></li>
 </h3>
 <p>To plot <code>mpg</code>, run this code to put <code>displ</code> on the x-axis and <code>hwy</code> on the y-axis:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>The plot shows a negative relationship between engine size (<code>displ</code>) and fuel efficiency (<code>hwy</code>). In other words, cars with big engines use more fuel. Does this confirm or refute your hypothesis about fuel efficiency and engine size?</p>
-<p>With ggplot2, you begin a plot with the function <code>ggplot()</code>. <code>ggplot()</code> creates a coordinate system that you can add layers to. The first argument of <code>ggplot()</code> is the dataset to use in the graph. So <code>ggplot(data = mpg)</code> creates an empty graph, but it’s not very interesting so I’m not going to show it here.</p>
-<p>You complete your graph by adding one or more layers to <code>ggplot()</code>. The function <code>geom_point()</code> adds a layer of points to your plot, which creates a scatterplot. ggplot2 comes with many geom functions that each add a different type of layer to a plot. You’ll learn a whole bunch of them throughout this chapter.</p>
-<p>Each geom function in ggplot2 takes a <code>mapping</code> argument. This defines how variables in your dataset are mapped to visual properties. The <code>mapping</code> argument is always paired with <code>aes()</code>, and the <code>x</code> and <code>y</code> arguments of <code>aes()</code> specify which variables to map to the x and y axes. ggplot2 looks for the mapped variables in the <code>data</code> argument, in this case, <code>mpg</code>.</p>
+<p>With ggplot2, you begin a plot with the function <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>. <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> creates a coordinate system that you can add layers to. The first argument of <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> is the dataset to use in the graph. So <code>ggplot(data = mpg)</code> creates an empty graph, but it’s not very interesting so I’m not going to show it here.</p>
+<p>You complete your graph by adding one or more layers to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>. The function <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point()</a></code> adds a layer of points to your plot, which creates a scatterplot. ggplot2 comes with many geom functions that each add a different type of layer to a plot. You’ll learn a whole bunch of them throughout this chapter.</p>
+<p>Each geom function in ggplot2 takes a <code>mapping</code> argument. This defines how variables in your dataset are mapped to visual properties. The <code>mapping</code> argument is always paired with <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>, and the <code>x</code> and <code>y</code> arguments of <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> specify which variables to map to the x and y axes. ggplot2 looks for the mapped variables in the <code>data</code> argument, in this case, <code>mpg</code>.</p>
 </div>
 <div id="a-graphing-template" class="section level3" number="3.2.3">
 <h3>
@@ -195,7 +198,7 @@ fuel efficiency when they travel the same distance.</p></li>
 <ol style="list-style-type: decimal">
 <li><p>Run <code>ggplot(data = mpg)</code>. What do you see?</p></li>
 <li><p>How many rows are in <code>mpg</code>? How many columns?</p></li>
-<li><p>What does the <code>drv</code> variable describe? Read the help for <code>?mpg</code> to find
+<li><p>What does the <code>drv</code> variable describe? Read the help for <code><a href="https://ggplot2.tidyverse.org/reference/mpg.html">?mpg</a></code> to find
 out.</p></li>
 <li><p>Make a scatterplot of <code>hwy</code> vs <code>cyl</code>.</p></li>
 <li><p>What happens if you make a scatterplot of <code>class</code> vs <code>drv</code>? Why is
@@ -218,37 +221,37 @@ never expected to see.” — John Tukey</p>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-6-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>You can convey information about your data by mapping the aesthetics in your plot to the variables in your dataset. For example, you can map the colors of your points to the <code>class</code> variable to reveal the class of each car.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>(If you prefer British English, like Hadley, you can use <code>colour</code> instead of <code>color</code>.)</p>
-<p>To map an aesthetic to a variable, associate the name of the aesthetic to the name of the variable inside <code>aes()</code>. ggplot2 will automatically assign a unique level of the aesthetic (here a unique color) to each unique value of the variable, a process known as <strong>scaling</strong>. ggplot2 will also add a legend that explains which levels correspond to which values.</p>
+<p>To map an aesthetic to a variable, associate the name of the aesthetic to the name of the variable inside <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>. ggplot2 will automatically assign a unique level of the aesthetic (here a unique color) to each unique value of the variable, a process known as <strong>scaling</strong>. ggplot2 will also add a legend that explains which levels correspond to which values.</p>
 <p>The colors reveal that many of the unusual points are two-seater cars. These cars don’t seem like hybrids, and are, in fact, sports cars! Sports cars have large engines like SUVs and pickup trucks, but small bodies like midsize and compact cars, which improves their gas mileage. In hindsight, these cars were unlikely to be hybrids since they have large engines.</p>
 <p>In the above example, we mapped <code>class</code> to the color aesthetic, but we could have mapped <code>class</code> to the size aesthetic in the same way. In this case, the exact size of each point would reveal its class affiliation. We get a <em>warning</em> here, because mapping an unordered variable (<code>class</code>) to an ordered aesthetic (<code>size</code>) is not a good idea.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, size <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Using size for a discrete variable is not advised.</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, size <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Using size for a discrete variable is not advised.</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Or we could have mapped <code>class</code> to the <em>alpha</em> aesthetic, which controls the transparency of the points, or to the shape aesthetic, which controls the shape of the points.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Left</span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, alpha <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># Right</span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, shape <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># Left</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, alpha <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># Right</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, shape <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualize_files/figure-html/unnamed-chunk-9-1.png" width="50%"><img src="visualize_files/figure-html/unnamed-chunk-9-2.png" width="50%"></p>
 <p>What happened to the SUVs? ggplot2 will only use six shapes at a time. By default, additional groups will go unplotted when you use the shape aesthetic.</p>
-<p>For each aesthetic, you use <code>aes()</code> to associate the name of the aesthetic with a variable to display. The <code>aes()</code> function gathers together each of the aesthetic mappings used by a layer and passes them to the layer’s mapping argument. The syntax highlights a useful insight about <code>x</code> and <code>y</code>: the x and y locations of a point are themselves aesthetics, visual properties that you can map to variables to display information about the data.</p>
+<p>For each aesthetic, you use <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> to associate the name of the aesthetic with a variable to display. The <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code> function gathers together each of the aesthetic mappings used by a layer and passes them to the layer’s mapping argument. The syntax highlights a useful insight about <code>x</code> and <code>y</code>: the x and y locations of a point are themselves aesthetics, visual properties that you can map to variables to display information about the data.</p>
 <p>Once you map an aesthetic, ggplot2 takes care of the rest. It selects a reasonable scale to use with the aesthetic, and it constructs a legend that explains the mapping between levels and values. For x and y aesthetics, ggplot2 does not create a legend, but it creates an axis line with tick marks and a label. The axis line acts as a legend; it explains the mapping between locations and values.</p>
 <p>You can also <em>set</em> the aesthetic properties of your geom manually. For example, we can make all of the points in our plot blue:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;"></div>
-<p>Here, the color doesn’t convey information about a variable, but only changes the appearance of the plot. To set an aesthetic manually, set the aesthetic by name as an argument of your geom function; i.e. it goes <em>outside</em> of <code>aes()</code>. You’ll need to pick a level that makes sense for that aesthetic:</p>
+<p>Here, the color doesn’t convey information about a variable, but only changes the appearance of the plot. To set an aesthetic manually, set the aesthetic by name as an argument of your geom function; i.e. it goes <em>outside</em> of <code><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes()</a></code>. You’ll need to pick a level that makes sense for that aesthetic:</p>
 <ul>
 <li><p>The name of a color as a character string.</p></li>
 <li><p>The size of a point in mm.</p></li>
@@ -268,19 +271,19 @@ Figure 3.1: R has 25 built in shapes that are identified by numbers. There are s
 <li>
 <p>What’s gone wrong with this code? Why are the points not blue?</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, color <span class="op">=</span> <span class="st">"blue"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;"></div>
 </li>
 <li><p>Which variables in <code>mpg</code> are categorical? Which variables are continuous?
-(Hint: type <code>?mpg</code> to read the documentation for the dataset). How
+(Hint: type <code><a href="https://ggplot2.tidyverse.org/reference/mpg.html">?mpg</a></code> to read the documentation for the dataset). How
 can you see this information when you run <code>mpg</code>?</p></li>
 <li><p>Map a continuous variable to <code>color</code>, <code>size</code>, and <code>shape</code>. How do
 these aesthetics behave differently for categorical vs. continuous
 variables?</p></li>
 <li><p>What happens if you map the same variable to multiple aesthetics?</p></li>
 <li><p>What does the <code>stroke</code> aesthetic do? What shapes does it work with?
-(Hint: use <code>?geom_point</code>)</p></li>
+(Hint: use <code><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">?geom_point</a></code>)</p></li>
 <li><p>What happens if you map an aesthetic to something other than a variable
 name, like <code>aes(colour = displ &lt; 5)</code>? Note, you’ll also need to specify x and y.</p></li>
 </ol>
@@ -291,11 +294,11 @@ name, like <code>aes(colour = displ &lt; 5)</code>? Note, you’ll also need to 
 <span class="header-section-number">3.4</span> Common problems<a class="anchor" aria-label="anchor" href="#common-problems"><i class="fas fa-link"></i></a>
 </h2>
 <p>As you start to run R code, you’re likely to run into problems. Don’t worry — it happens to everyone. I have been writing R code for years, and every day I still write code that doesn’t work!</p>
-<p>Start by carefully comparing the code that you’re running to the code in the book. R is extremely picky, and a misplaced character can make all the difference. Make sure that every <code>(</code> is matched with a <code>)</code> and every <code>"</code> is paired with another <code>"</code>. Sometimes you’ll run the code and nothing happens. Check the left-hand of your console: if it’s a <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, it means that R doesn’t think you’ve typed a complete expression and it’s waiting for you to finish it. In this case, it’s usually easy to start from scratch again by pressing ESCAPE to abort processing the current command.</p>
-<p>One common problem when creating ggplot2 graphics is to put the <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> in the wrong place: it has to come at the end of the line, not the start. In other words, make sure you haven’t accidentally written code like this:</p>
+<p>Start by carefully comparing the code that you’re running to the code in the book. R is extremely picky, and a misplaced character can make all the difference. Make sure that every <code>(</code> is matched with a <code>)</code> and every <code>"</code> is paired with another <code>"</code>. Sometimes you’ll run the code and nothing happens. Check the left-hand of your console: if it’s a <code>+</code>, it means that R doesn’t think you’ve typed a complete expression and it’s waiting for you to finish it. In this case, it’s usually easy to start from scratch again by pressing ESCAPE to abort processing the current command.</p>
+<p>One common problem when creating ggplot2 graphics is to put the <code>+</code> in the wrong place: it has to come at the end of the line, not the start. In other words, make sure you haven’t accidentally written code like this:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> 
-<span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> </span>
+<span><span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>If you’re still stuck, try the help. You can get help about any R function by running <code>?function_name</code> in the console, or selecting the function name and pressing F1 in RStudio. Don’t worry if the help doesn’t seem that helpful - instead skip down to the examples and look for code that matches what you’re trying to do.</p>
 <p>If that doesn’t help, carefully read the error message. Sometimes the answer will be buried there! But when you’re new to R, the answer might be in the error message but you don’t yet know how to understand it. Another great tool is Google: try googling the error message, as it’s likely someone else has had the same problem, and has gotten help online.</p>
 </div>
@@ -304,17 +307,17 @@ name, like <code>aes(colour = displ &lt; 5)</code>? Note, you’ll also need to 
 <span class="header-section-number">3.5</span> Facets<a class="anchor" aria-label="anchor" href="#facets"><i class="fas fa-link"></i></a>
 </h2>
 <p>One way to add additional variables is with aesthetics. Another way, particularly useful for categorical variables, is to split your plot into <strong>facets</strong>, subplots that each display one subset of the data.</p>
-<p>To facet your plot by a single variable, use <code>facet_wrap()</code>. The first argument of <code>facet_wrap()</code> should be a formula, which you create with <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code> followed by a variable name (here “formula” is the name of a data structure in R, not a synonym for “equation”). The variable that you pass to <code>facet_wrap()</code> should be discrete.</p>
+<p>To facet your plot by a single variable, use <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap()</a></code>. The first argument of <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap()</a></code> should be a formula, which you create with <code>~</code> followed by a variable name (here “formula” is the name of a data structure in R, not a synonym for “equation”). The variable that you pass to <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap()</a></code> should be discrete.</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">class</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">class</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;"></div>
-<p>To facet your plot on the combination of two variables, add <code>facet_grid()</code> to your plot call. The first argument of <code>facet_grid()</code> is also a formula. This time the formula should contain two variable names separated by a <code><a href="https://rdrr.io/r/base/tilde.html">~</a></code>.</p>
+<p>To facet your plot on the combination of two variables, add <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code> to your plot call. The first argument of <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code> is also a formula. This time the formula should contain two variable names separated by a <code>~</code>.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">drv</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">drv</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-13-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>If you prefer to not facet in the rows or columns dimension, use a <code>.</code> instead of a variable name, e.g. <code>+ facet_grid(. ~ cyl)</code>.</p>
 <div id="exercises-2" class="section level3" number="3.5.1">
@@ -328,34 +331,34 @@ name, like <code>aes(colour = displ &lt; 5)</code>? Note, you’ll also need to 
 <p>What do the empty cells in plot with <code>facet_grid(drv ~ cyl)</code> mean?
 How do they relate to this plot?</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">drv</span>, y <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">drv</span>, y <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>What plots does the following code make? What does <code>.</code> do?</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">drv</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span>
-
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">facet_grid</span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">drv</span> <span class="op">~</span> <span class="va">.</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid</a></span><span class="op">(</span><span class="va">.</span> <span class="op">~</span> <span class="va">cyl</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Take the first faceted plot in this section:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">facet_wrap</span><span class="op">(</span><span class="op">~</span> <span class="va">class</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">class</span>, nrow <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>What are the advantages to using faceting instead of the colour aesthetic?
 What are the disadvantages? How might the balance change if you had a
 larger dataset?</p>
 </li>
-<li><p>Read <code>?facet_wrap</code>. What does <code>nrow</code> do? What does <code>ncol</code> do? What other
+<li><p>Read <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">?facet_wrap</a></code>. What does <code>nrow</code> do? What does <code>ncol</code> do? What other
 options control the layout of the individual panels? Why doesn’t
-<code>facet_grid()</code> have <code>nrow</code> and <code>ncol</code> arguments?</p></li>
-<li><p>When using <code>facet_grid()</code> you should usually put the variable with more
+<code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code> have <code>nrow</code> and <code>ncol</code> arguments?</p></li>
+<li><p>When using <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code> you should usually put the variable with more
 unique levels in the columns. Why?</p></li>
 </ol>
 </div>
@@ -368,63 +371,63 @@ unique levels in the columns. Why?</p></li>
 <p><img src="visualize_files/figure-html/unnamed-chunk-17-1.png" width="50%"><img src="visualize_files/figure-html/unnamed-chunk-17-2.png" width="50%"></p>
 <p>Both plots contain the same x variable, the same y variable, and both describe the same data. But the plots are not identical. Each plot uses a different visual object to represent the data. In ggplot2 syntax, we say that they use different <strong>geoms</strong>.</p>
 <p>A <strong>geom</strong> is the geometrical object that a plot uses to represent data. People often describe plots by the type of geom that the plot uses. For example, bar charts use bar geoms, line charts use line geoms, boxplots use boxplot geoms, and so on. Scatterplots break the trend; they use the point geom. As we see above, you can use different geoms to plot the same data. The plot on the left uses the point geom, and the plot on the right uses the smooth geom, a smooth line fitted to the data.</p>
-<p>To change the geom in your plot, change the geom function that you add to <code>ggplot()</code>. For instance, to make the plots above, you can use this code:</p>
+<p>To change the geom in your plot, change the geom function that you add to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>. For instance, to make the plots above, you can use this code:</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># left</span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># right</span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_smooth</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p>Every geom function in ggplot2 takes a <code>mapping</code> argument. However, not every aesthetic works with every geom. You could set the shape of a point, but you couldn’t set the “shape” of a line. On the other hand, you <em>could</em> set the linetype of a line. <code>geom_smooth()</code> will draw a different line, with a different linetype, for each unique value of the variable that you map to linetype.</p>
+<code class="sourceCode R"><span><span class="co"># left</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># right</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<p>Every geom function in ggplot2 takes a <code>mapping</code> argument. However, not every aesthetic works with every geom. You could set the shape of a point, but you couldn’t set the “shape” of a line. On the other hand, you <em>could</em> set the linetype of a line. <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> will draw a different line, with a different linetype, for each unique value of the variable that you map to linetype.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_smooth</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, linetype <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, linetype <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-19-1.png" width="70%" style="display: block; margin: auto;"></div>
-<p>Here <code>geom_smooth()</code> separates the cars into three lines based on their <code>drv</code> value, which describes a car’s drivetrain. One line describes all of the points with a <code>4</code> value, one line describes all of the points with an <code>f</code> value, and one line describes all of the points with an <code>r</code> value. Here, <code>4</code> stands for four-wheel drive, <code>f</code> for front-wheel drive, and <code>r</code> for rear-wheel drive.</p>
+<p>Here <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> separates the cars into three lines based on their <code>drv</code> value, which describes a car’s drivetrain. One line describes all of the points with a <code>4</code> value, one line describes all of the points with an <code>f</code> value, and one line describes all of the points with an <code>r</code> value. Here, <code>4</code> stands for four-wheel drive, <code>f</code> for front-wheel drive, and <code>r</code> for rear-wheel drive.</p>
 <p>If this sounds strange, we can make it more clear by overlaying the lines on top of the raw data and then coloring everything according to <code>drv</code>.</p>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Notice that this plot contains two geoms in the same graph! If this makes you excited, buckle up. We will learn how to place multiple geoms in the same plot very soon.</p>
-<p>ggplot2 provides over 40 geoms, and extension packages provide even more (see <a href="https://exts.ggplot2.tidyverse.org/gallery/" class="uri">https://exts.ggplot2.tidyverse.org/gallery/</a> for a sampling). The best way to get a comprehensive overview is the ggplot2 cheatsheet, which you can find at <a href="http://rstudio.com/resources/cheatsheets" class="uri">http://rstudio.com/resources/cheatsheets</a>. To learn more about any single geom, use help: <code>?geom_smooth</code>.</p>
-<p>Many geoms, like <code>geom_smooth()</code>, use a single geometric object to display multiple rows of data. For these geoms, you can set the <code>group</code> aesthetic to a categorical variable to draw multiple objects. ggplot2 will draw a separate object for each unique value of the grouping variable. In practice, ggplot2 will automatically group the data for these geoms whenever you map an aesthetic to a discrete variable (as in the <code>linetype</code> example). It is convenient to rely on this feature because the group aesthetic by itself does not add a legend or distinguishing features to the geoms.</p>
+<p>ggplot2 provides over 40 geoms, and extension packages provide even more (see <a href="https://exts.ggplot2.tidyverse.org/gallery/" class="uri">https://exts.ggplot2.tidyverse.org/gallery/</a> for a sampling). The best way to get a comprehensive overview is the ggplot2 cheatsheet, which you can find at <a href="http://rstudio.com/resources/cheatsheets" class="uri">http://rstudio.com/resources/cheatsheets</a>. To learn more about any single geom, use help: <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">?geom_smooth</a></code>.</p>
+<p>Many geoms, like <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code>, use a single geometric object to display multiple rows of data. For these geoms, you can set the <code>group</code> aesthetic to a categorical variable to draw multiple objects. ggplot2 will draw a separate object for each unique value of the grouping variable. In practice, ggplot2 will automatically group the data for these geoms whenever you map an aesthetic to a discrete variable (as in the <code>linetype</code> example). It is convenient to rely on this feature because the group aesthetic by itself does not add a legend or distinguishing features to the geoms.</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_smooth</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span>
-              
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_smooth</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, group <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span>
-    
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_smooth</span><span class="op">(</span>
-    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span>,
-    show.legend <span class="op">=</span> <span class="cn">FALSE</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span>
+<span>              </span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, group <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span></span>
+<span>    </span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span></span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span>,</span>
+<span>    show.legend <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="visualize_files/figure-html/unnamed-chunk-21-1.png" width="33%"><img src="visualize_files/figure-html/unnamed-chunk-21-2.png" width="33%"><img src="visualize_files/figure-html/unnamed-chunk-21-3.png" width="33%"></p>
-<p>To display multiple geoms in the same plot, add multiple geom functions to <code>ggplot()</code>:</p>
+<p>To display multiple geoms in the same plot, add multiple geom functions to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_smooth</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-22-1.png" width="70%" style="display: block; margin: auto;"></div>
-<p>This, however, introduces some duplication in our code. Imagine if you wanted to change the y-axis to display <code>cty</code> instead of <code>hwy</code>. You’d need to change the variable in two places, and you might forget to update one. You can avoid this type of repetition by passing a set of mappings to <code>ggplot()</code>. ggplot2 will treat these mappings as global mappings that apply to each geom in the graph. In other words, this code will produce the same plot as the previous code:</p>
+<p>This, however, introduces some duplication in our code. Imagine if you wanted to change the y-axis to display <code>cty</code> instead of <code>hwy</code>. You’d need to change the variable in two places, and you might forget to update one. You can avoid this type of repetition by passing a set of mappings to <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code>. ggplot2 will treat these mappings as global mappings that apply to each geom in the graph. In other words, this code will produce the same plot as the previous code:</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>If you place mappings in a geom function, ggplot2 will treat them as local mappings for the layer. It will use these mappings to extend or overwrite the global mappings <em>for that layer only</em>. This makes it possible to display different aesthetics in different layers.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-24-1.png" width="70%" style="display: block; margin: auto;"></div>
-<p>You can use the same idea to specify different <code>data</code> for each layer. Here, our smooth line displays just a subset of the <code>mpg</code> dataset, the subcompact cars. The local data argument in <code>geom_smooth()</code> overrides the global data argument in <code>ggplot()</code> for that layer only.</p>
+<p>You can use the same idea to specify different <code>data</code> for each layer. Here, our smooth line displays just a subset of the <code>mpg</code> dataset, the subcompact cars. The local data argument in <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> overrides the global data argument in <code><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot()</a></code> for that layer only.</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>color <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_smooth</span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">class</span> <span class="op">==</span> <span class="st">"subcompact"</span><span class="op">)</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>color <span class="op">=</span> <span class="va">class</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">class</span> <span class="op">==</span> <span class="st">"subcompact"</span><span class="op">)</span>, se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-25-1.png" width="70%" style="display: block; margin: auto;"></div>
-<p>(You’ll learn how <code><a href="https://rdrr.io/r/stats/filter.html">filter()</a></code> works in the chapter on data transformations: for now, just know that this command selects only the subcompact cars.)</p>
+<p>(You’ll learn how <code><a href="https://dplyr.tidyverse.org/reference/filter.html">filter()</a></code> works in the chapter on data transformations: for now, just know that this command selects only the subcompact cars.)</p>
 <div id="exercises-3" class="section level3" number="3.6.1">
 <h3>
 <span class="header-section-number">3.6.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-3"><i class="fas fa-link"></i></a>
@@ -436,23 +439,23 @@ A histogram? An area chart?</p></li>
 <p>Run this code in your head and predict what the output will look like.
 Then, run the code in R and check your predictions.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_smooth</span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span>, color <span class="op">=</span> <span class="va">drv</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>se <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li><p>What does <code>show.legend = FALSE</code> do? What happens if you remove it?<br>
 Why do you think I used it earlier in the chapter?</p></li>
-<li><p>What does the <code>se</code> argument to <code>geom_smooth()</code> do?</p></li>
+<li><p>What does the <code>se</code> argument to <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth()</a></code> do?</p></li>
 <li>
 <p>Will these two graphs look different? Why/why not?</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_smooth</span><span class="op">(</span><span class="op">)</span>
-
-<span class="fu">ggplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_smooth</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">geom_smooth</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li>
 <p>Recreate the R code necessary to generate the following graphs.</p>
@@ -466,10 +469,10 @@ Why do you think I used it earlier in the chapter?</p></li>
 <span class="header-section-number">3.7</span> Statistical transformations<a class="anchor" aria-label="anchor" href="#statistical-transformations"><i class="fas fa-link"></i></a>
 </h2>
 <p><span class="warning">(Dan) Feel free to skip this section</span></p>
-<p>Next, let’s take a look at a bar chart. Bar charts seem simple, but they are interesting because they reveal something subtle about plots. Consider a basic bar chart, as drawn with <code>geom_bar()</code>. The following chart displays the total number of diamonds in the <code>diamonds</code> dataset, grouped by <code>cut</code>. The <code>diamonds</code> dataset comes in ggplot2 and contains information about ~54,000 diamonds, including the <code>price</code>, <code>carat</code>, <code>color</code>, <code>clarity</code>, and <code>cut</code> of each diamond. The chart shows that more diamonds are available with high quality cuts than with low quality cuts.</p>
+<p>Next, let’s take a look at a bar chart. Bar charts seem simple, but they are interesting because they reveal something subtle about plots. Consider a basic bar chart, as drawn with <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>. The following chart displays the total number of diamonds in the <code>diamonds</code> dataset, grouped by <code>cut</code>. The <code>diamonds</code> dataset comes in ggplot2 and contains information about ~54,000 diamonds, including the <code>price</code>, <code>carat</code>, <code>color</code>, <code>clarity</code>, and <code>cut</code> of each diamond. The chart shows that more diamonds are available with high quality cuts than with low quality cuts.</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-29-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>On the x-axis, the chart displays <code>cut</code>, a variable from <code>diamonds</code>. On the y-axis, it displays count, but count is not a variable in <code>diamonds</code>! Where does count come from? Many graphs, like scatterplots, plot the raw values of your dataset. Other graphs, like bar charts, calculate new values to plot:</p>
 <ul>
@@ -480,38 +483,38 @@ model.</p></li>
 <li><p>boxplots compute a robust summary of the distribution and then display a
 specially formatted box.</p></li>
 </ul>
-<p>The algorithm used to calculate new values for a graph is called a <strong>stat</strong>, short for statistical transformation. The figure below describes how this process works with <code>geom_bar()</code>.</p>
+<p>The algorithm used to calculate new values for a graph is called a <strong>stat</strong>, short for statistical transformation. The figure below describes how this process works with <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>.</p>
 <div class="inline-figure"><img src="images/visualization-stat-bar.png" width="100%" style="display: block; margin: auto;"></div>
-<p>You can learn which stat a geom uses by inspecting the default value for the <code>stat</code> argument. For example, <code>?geom_bar</code> shows that the default value for <code>stat</code> is “count”, which means that <code>geom_bar()</code> uses <code>stat_count()</code>. <code>stat_count()</code> is documented on the same page as <code>geom_bar()</code>, and if you scroll down you can find a section called “Computed variables”. That describes how it computes two new variables: <code>count</code> and <code>prop</code>.</p>
-<p>You can generally use geoms and stats interchangeably. For example, you can recreate the previous plot using <code>stat_count()</code> instead of <code>geom_bar()</code>:</p>
+<p>You can learn which stat a geom uses by inspecting the default value for the <code>stat</code> argument. For example, <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">?geom_bar</a></code> shows that the default value for <code>stat</code> is “count”, which means that <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> uses <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">stat_count()</a></code>. <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">stat_count()</a></code> is documented on the same page as <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>, and if you scroll down you can find a section called “Computed variables”. That describes how it computes two new variables: <code>count</code> and <code>prop</code>.</p>
+<p>You can generally use geoms and stats interchangeably. For example, you can recreate the previous plot using <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">stat_count()</a></code> instead of <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">stat_count</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">stat_count</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-31-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>This works because every geom has a default stat; and every stat has a default geom. This means that you can typically use geoms without worrying about the underlying statistical transformation. There are three reasons you might need to use a stat explicitly:</p>
 <ol style="list-style-type: decimal">
 <li>
 <p>You might want to override the default stat. In the code below, I change
-the stat of <code>geom_bar()</code> from count (the default) to identity. This lets
+the stat of <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code> from count (the default) to identity. This lets
 me map the height of the bars to the raw values of a <span class="math inline">\(y\)</span> variable.
 Unfortunately when people talk about bar charts casually, they might be
 referring to this type of bar chart, where the height of the bar is already
 present in the data, or the previous bar chart where the height of the bar
 is generated by counting rows.</p>
 <div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">demo</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span>
-  <span class="op">~</span><span class="va">cut</span>,         <span class="op">~</span><span class="va">freq</span>,
-  <span class="st">"Fair"</span>,       <span class="fl">1610</span>,
-  <span class="st">"Good"</span>,       <span class="fl">4906</span>,
-  <span class="st">"Very Good"</span>,  <span class="fl">12082</span>,
-  <span class="st">"Premium"</span>,    <span class="fl">13791</span>,
-  <span class="st">"Ideal"</span>,      <span class="fl">21551</span>
-<span class="op">)</span>
-
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">demo</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">freq</span><span class="op">)</span>, stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">demo</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">cut</span>,         <span class="op">~</span><span class="va">freq</span>,</span>
+<span>  <span class="st">"Fair"</span>,       <span class="fl">1610</span>,</span>
+<span>  <span class="st">"Good"</span>,       <span class="fl">4906</span>,</span>
+<span>  <span class="st">"Very Good"</span>,  <span class="fl">12082</span>,</span>
+<span>  <span class="st">"Premium"</span>,    <span class="fl">13791</span>,</span>
+<span>  <span class="st">"Ideal"</span>,      <span class="fl">21551</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">demo</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">freq</span><span class="op">)</span>, stat <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-32-1.png" width="70%" style="display: block; margin: auto;"></div>
-<p>(Don’t worry that you haven’t seen <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> or <code>tribble()</code> before. You might be
+<p>(Don’t worry that you haven’t seen <code>&lt;-</code> or <code><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble()</a></code> before. You might be
 able to guess at their meaning from the context, and you’ll learn exactly
 what they do soon!)</p>
 </li>
@@ -520,51 +523,51 @@ what they do soon!)</p>
 to aesthetics. For example, you might want to display a bar chart of
 proportion, rather than count:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="fu">stat</span><span class="op">(</span><span class="va">prop</span><span class="op">)</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">stat</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span>, group <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-33-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>To find the variables computed by the stat, look for the help section
 titled “computed variables”.</p>
 </li>
 <li>
 <p>You might want to draw greater attention to the statistical transformation
-in your code. For example, you might use <code>stat_summary()</code>, which
+in your code. For example, you might use <code><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary()</a></code>, which
 summarises the y values for each unique x value, to draw
 attention to the summary that you’re computing:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">stat_summary</span><span class="op">(</span>
-    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span>,
-    fun.min <span class="op">=</span> <span class="va">min</span>,
-    fun.max <span class="op">=</span> <span class="va">max</span>,
-    fun <span class="op">=</span> <span class="va">median</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary</a></span><span class="op">(</span></span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="va">depth</span><span class="op">)</span>,</span>
+<span>    fun.min <span class="op">=</span> <span class="va">min</span>,</span>
+<span>    fun.max <span class="op">=</span> <span class="va">max</span>,</span>
+<span>    fun <span class="op">=</span> <span class="va">median</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-34-1.png" width="70%" style="display: block; margin: auto;"></div>
 </li>
 </ol>
-<p>ggplot2 provides over 20 stats for you to use. Each stat is a function, so you can get help in the usual way, e.g. <code>?stat_bin</code>. To see a complete list of stats, try the ggplot2 cheatsheet.</p>
+<p>ggplot2 provides over 20 stats for you to use. Each stat is a function, so you can get help in the usual way, e.g. <code><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">?stat_bin</a></code>. To see a complete list of stats, try the ggplot2 cheatsheet.</p>
 <div id="exercises-4" class="section level3" number="3.7.1">
 <h3>
 <span class="header-section-number">3.7.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-4"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
-<li><p>What is the default geom associated with <code>stat_summary()</code>? How could
+<li><p>What is the default geom associated with <code><a href="https://ggplot2.tidyverse.org/reference/stat_summary.html">stat_summary()</a></code>? How could
 you rewrite the previous plot to use that geom function instead of the
 stat function?</p></li>
-<li><p>What does <code>geom_col()</code> do? How is it different to <code>geom_bar()</code>?</p></li>
+<li><p>What does <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_col()</a></code> do? How is it different to <code><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar()</a></code>?</p></li>
 <li><p>Most geoms and stats come in pairs that are almost always used in
 concert. Read through the documentation and make a list of all the
 pairs. What do they have in common?</p></li>
-<li><p>What variables does <code>stat_smooth()</code> compute? What parameters control
+<li><p>What variables does <code><a href="https://ggplot2.tidyverse.org/reference/geom_smooth.html">stat_smooth()</a></code> compute? What parameters control
 its behaviour?</p></li>
 <li>
 <p>In our proportion bar chart, we need to set <code>group = 1</code>. Why? In other
 words what is the problem with these two graphs?</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="fu">after_stat</span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">color</span>, y <span class="op">=</span> <span class="fu">after_stat</span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">color</span>, y <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes_eval.html">after_stat</a></span><span class="op">(</span><span class="va">prop</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </li>
 </ol>
 </div>
@@ -575,15 +578,15 @@ words what is the problem with these two graphs?</p>
 </h2>
 <p>There’s one more piece of magic associated with bar charts. You can colour a bar chart using either the <code>colour</code> aesthetic, or, more usefully, <code>fill</code>:</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, colour <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, colour <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">cut</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualize_files/figure-html/unnamed-chunk-36-1.png" width="50%"><img src="visualize_files/figure-html/unnamed-chunk-36-2.png" width="50%"></p>
 <p>Note what happens if you map the fill aesthetic to another variable, like <code>clarity</code>: the bars are automatically stacked. Each colored rectangle represents a combination of <code>cut</code> and <code>clarity</code>.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-37-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>The stacking is performed automatically by the <strong>position adjustment</strong> specified by the <code>position</code> argument. If you don’t want a stacked bar chart, you can use one of three other options: <code>"identity"</code>, <code>"dodge"</code> or <code>"fill"</code>.</p>
 <ul>
@@ -594,10 +597,10 @@ overlaps them. To see that overlapping we either need to make the bars
 slightly transparent by setting <code>alpha</code> to a small value, or completely
 transparent by setting <code>fill = NA</code>.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span>, position <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, colour <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, position <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">5</span>, position <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, colour <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="cn">NA</span>, position <span class="op">=</span> <span class="st">"identity"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualize_files/figure-html/unnamed-chunk-38-1.png" width="50%"><img src="visualize_files/figure-html/unnamed-chunk-38-2.png" width="50%"></p>
 <p>The identity position adjustment is more useful for 2d geoms, like points,
 where it is the default.</p>
@@ -607,16 +610,16 @@ where it is the default.</p>
 the same height. This makes it easier to compare proportions across
 groups.</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span>, position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span>, position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;"></div>
 </li>
 <li>
 <p><code>position = "dodge"</code> places overlapping objects directly <em>beside</em> one
 another. This makes it easier to compare individual values.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span>, position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">clarity</span><span class="op">)</span>, position <span class="op">=</span> <span class="st">"dodge"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-40-1.png" width="70%" style="display: block; margin: auto;"></div>
 </li>
 </ul>
@@ -625,11 +628,11 @@ another. This makes it easier to compare individual values.</p>
 <p>The values of <code>hwy</code> and <code>displ</code> are rounded so the points appear on a grid and many points overlap each other. This problem is known as <strong>overplotting</strong>. This arrangement makes it hard to see where the mass of the data is. Are the data points spread equally throughout the graph, or is there one special combination of <code>hwy</code> and <code>displ</code> that contains 109 values?</p>
 <p>You can avoid this gridding by setting the position adjustment to “jitter”. <code>position = "jitter"</code> adds a small amount of random noise to each point. This spreads the points out because no two points are likely to receive the same amount of random noise.</p>
 <div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span>, position <span class="op">=</span> <span class="st">"jitter"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span>, position <span class="op">=</span> <span class="st">"jitter"</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-42-1.png" width="70%" style="display: block; margin: auto;"></div>
-<p>Adding randomness seems like a strange way to improve your plot, but while it makes your graph less accurate at small scales, it makes your graph <em>more</em> revealing at large scales. Because this is such a useful operation, ggplot2 comes with a shorthand for <code>geom_point(position = "jitter")</code>: <code>geom_jitter()</code>.</p>
-<p>To learn more about a position adjustment, look up the help page associated with each adjustment: <code>?position_dodge</code>, <code>?position_fill</code>, <code>?position_identity</code>, <code>?position_jitter</code>, and <code>?position_stack</code>.</p>
+<p>Adding randomness seems like a strange way to improve your plot, but while it makes your graph less accurate at small scales, it makes your graph <em>more</em> revealing at large scales. Because this is such a useful operation, ggplot2 comes with a shorthand for <code>geom_point(position = "jitter")</code>: <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code>.</p>
+<p>To learn more about a position adjustment, look up the help page associated with each adjustment: <code><a href="https://ggplot2.tidyverse.org/reference/position_dodge.html">?position_dodge</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/position_stack.html">?position_fill</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/position_identity.html">?position_identity</a></code>, <code><a href="https://ggplot2.tidyverse.org/reference/position_jitter.html">?position_jitter</a></code>, and <code><a href="https://ggplot2.tidyverse.org/reference/position_stack.html">?position_stack</a></code>.</p>
 <div id="exercises-5" class="section level3" number="3.8.1">
 <h3>
 <span class="header-section-number">3.8.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-5"><i class="fas fa-link"></i></a>
@@ -638,13 +641,13 @@ another. This makes it easier to compare individual values.</p>
 <li>
 <p>What is the problem with this plot? How could you improve it?</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cty</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cty</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-43-1.png" width="70%" style="display: block; margin: auto;"></div>
 </li>
-<li><p>What parameters to <code>geom_jitter()</code> control the amount of jittering?</p></li>
-<li><p>Compare and contrast <code>geom_jitter()</code> with <code>geom_count()</code>.</p></li>
-<li><p>What’s the default position adjustment for <code>geom_boxplot()</code>? Create
+<li><p>What parameters to <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> control the amount of jittering?</p></li>
+<li><p>Compare and contrast <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> with <code><a href="https://ggplot2.tidyverse.org/reference/geom_count.html">geom_count()</a></code>.</p></li>
+<li><p>What’s the default position adjustment for <code><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot()</a></code>? Create
 a visualisation of the <code>mpg</code> dataset that demonstrates it.</p></li>
 </ol>
 </div>
@@ -657,47 +660,47 @@ a visualisation of the <code>mpg</code> dataset that demonstrates it.</p></li>
 <p>Coordinate systems are probably the most complicated part of ggplot2. The default coordinate system is the Cartesian coordinate system where the x and y positions act independently to determine the location of each point. There are a number of other coordinate systems that are occasionally helpful.</p>
 <ul>
 <li>
-<p><code>coord_flip()</code> switches the x and y axes. This is useful (for example),
+<p><code><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip()</a></code> switches the x and y axes. This is useful (for example),
 if you want horizontal boxplots. It’s also useful for long labels: it’s
 hard to get them to fit without overlapping on the x-axis.</p>
 <div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">class</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span>
-<span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">class</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_boxplot</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">class</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">class</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_boxplot.html">geom_boxplot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualize_files/figure-html/unnamed-chunk-44-1.png" width="50%"><img src="visualize_files/figure-html/unnamed-chunk-44-2.png" width="50%"></p>
 </li>
 <li>
-<p><code>coord_quickmap()</code> sets the aspect ratio correctly for maps. This is very
+<p><code><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap()</a></code> sets the aspect ratio correctly for maps. This is very
 important if you’re plotting spatial data with ggplot2 (which unfortunately
 we don’t have the space to cover in this book).</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">nz</span> <span class="op">&lt;-</span> <span class="fu">map_data</span><span class="op">(</span><span class="st">"nz"</span><span class="op">)</span>
-
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">nz</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_polygon</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span>
-
-<span class="fu">ggplot</span><span class="op">(</span><span class="va">nz</span>, <span class="fu">aes</span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_polygon</span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_quickmap</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">nz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/map_data.html">map_data</a></span><span class="op">(</span><span class="st">"nz"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nz</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">nz</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">long</span>, <span class="va">lat</span>, group <span class="op">=</span> <span class="va">group</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_polygon.html">geom_polygon</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="st">"white"</span>, colour <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualize_files/figure-html/unnamed-chunk-45-1.png" width="50%"><img src="visualize_files/figure-html/unnamed-chunk-45-2.png" width="50%"></p>
 </li>
 <li>
-<p><code>coord_polar()</code> uses polar coordinates. Polar coordinates reveal an
+<p><code><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar()</a></code> uses polar coordinates. Polar coordinates reveal an
 interesting connection between a bar chart and a Coxcomb chart.</p>
 <div class="sourceCode" id="cb47"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bar</span> <span class="op">&lt;-</span> <span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_bar</span><span class="op">(</span>
-    mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">cut</span><span class="op">)</span>, 
-    show.legend <span class="op">=</span> <span class="cn">FALSE</span>,
-    width <span class="op">=</span> <span class="fl">1</span>
-  <span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">theme</span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span>
-
-<span class="va">bar</span> <span class="op">+</span> <span class="fu">coord_flip</span><span class="op">(</span><span class="op">)</span>
-<span class="va">bar</span> <span class="op">+</span> <span class="fu">coord_polar</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">diamonds</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_bar.html">geom_bar</a></span><span class="op">(</span></span>
+<span>    mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cut</span>, fill <span class="op">=</span> <span class="va">cut</span><span class="op">)</span>, </span>
+<span>    show.legend <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    width <span class="op">=</span> <span class="fl">1</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html">theme</a></span><span class="op">(</span>aspect.ratio <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="cn">NULL</span>, y <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">bar</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html">coord_flip</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="va">bar</span> <span class="op">+</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="visualize_files/figure-html/unnamed-chunk-46-1.png" width="50%"><img src="visualize_files/figure-html/unnamed-chunk-46-2.png" width="50%"></p>
 </li>
 </ul>
@@ -706,18 +709,18 @@ interesting connection between a bar chart and a Coxcomb chart.</p>
 <span class="header-section-number">3.9.1</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-6"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
-<li><p>Turn a stacked bar chart into a pie chart using <code>coord_polar()</code>.</p></li>
-<li><p>What does <code>labs()</code> do? Read the documentation.</p></li>
-<li><p>What’s the difference between <code>coord_quickmap()</code> and <code>coord_map()</code>?</p></li>
+<li><p>Turn a stacked bar chart into a pie chart using <code><a href="https://ggplot2.tidyverse.org/reference/coord_polar.html">coord_polar()</a></code>.</p></li>
+<li><p>What does <code><a href="https://ggplot2.tidyverse.org/reference/labs.html">labs()</a></code> do? Read the documentation.</p></li>
+<li><p>What’s the difference between <code><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_quickmap()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/coord_map.html">coord_map()</a></code>?</p></li>
 <li>
 <p>What does the plot below tell you about the relationship between city
-and highway mpg? Why is <code>coord_fixed()</code> important? What does
-<code>geom_abline()</code> do?</p>
+and highway mpg? Why is <code><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed()</a></code> important? What does
+<code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline()</a></code> do?</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">cty</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_abline</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span>
-  <span class="fu">coord_fixed</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span>, mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">cty</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_fixed.html">coord_fixed</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="visualize_files/figure-html/unnamed-chunk-47-1.png" width="50%" style="display: block; margin: auto;"></div>
 </li>
 </ol>
@@ -790,8 +793,8 @@ and highway mpg? Why is <code>coord_fixed()</code> important? What does
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/Data-Sci-2021/r4ds/blob/master/visualize.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/Data-Sci-2021/r4ds/edit/master/visualize.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/djvill/r4ds/blob/master/visualize.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/djvill/r4ds/edit/master/visualize.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -816,7 +819,7 @@ and highway mpg? Why is <code>coord_fixed()</code> important? What does
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

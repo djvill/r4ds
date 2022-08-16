@@ -1,20 +1,18 @@
 window.onload = function() {
   //Change master branch to main
   var ghSrc = document.querySelectorAll(".book-extra ul a");
-  // ghSrc.forEach(a => a.href = a.href.replace("master", "main")).forEach(a => a.target = "_blank");
   ghSrc.forEach(a => {
     a.href = a.href.replace("master", "main");
     a.target = "_blank";
   });
-  //ghSrc.forEach(a => a.href = a.href.replace("master", "main"));
-
+  
   //Change left-side navigation
   $("header h1").parent().css("flex-direction","column"); //Flex
   var r4dsTitle = document.querySelector("header h1");
   var newTitle = document.createElement("div");
   r4dsTitle.parentNode.insertBefore(newTitle, r4dsTitle);
   r4dsTitle.parentNode.insertBefore(r4dsTitle, newTitle);
-  newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz" target="_blank">Original</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/Data-Sci-2021/r4ds/" target="_blank">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
+  newTitle.innerHTML = '<ul class="list-unstyled"><li><a href="https://r4ds.had.co.nz" target="_blank">First edition</a> by Hadley Wickham &amp; Garrett Grolemund</li><li><a href="https://github.com/djvill/r4ds/" target="_blank">Forked &amp; lightly edited</a> by Dan Villarreal</li></ul>'
   $(newTitle).css("padding-left", "10px");
   r4dsTitle.querySelector("a").removeAttribute("href");
 

@@ -7,31 +7,34 @@
 <title>18 Pipes | R for Data Science</title>
 <meta name="author" content="Hadley Wickham and Garrett Grolemund">
 <meta name="description" content="18.1 Introduction Pipes are a powerful tool for clearly expressing a sequence of multiple operations. So far, you’ve been using them without knowing how they work, or what the alternatives are....">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="generator" content="bookdown 0.28 with bs4_book()">
 <meta property="og:title" content="18 Pipes | R for Data Science">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://r4ds.had.co.nz/pipes.html">
-<meta property="og:image" content="https://r4ds.had.co.nz//cover.png">
+<meta property="og:url" content="https://djvill.github.io/r4ds/pipes.html">
+<meta property="og:image" content="https://djvill.github.io/r4ds//cover.png">
 <meta property="og:description" content="18.1 Introduction Pipes are a powerful tool for clearly expressing a sequence of multiple operations. So far, you’ve been using them without knowing how they work, or what the alternatives are....">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="18 Pipes | R for Data Science">
 <meta name="twitter:description" content="18.1 Introduction Pipes are a powerful tool for clearly expressing a sequence of multiple operations. So far, you’ve been using them without knowing how they work, or what the alternatives are....">
-<meta name="twitter:image" content="https://r4ds.had.co.nz//cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="twitter:image" content="https://djvill.github.io/r4ds//cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
 <script src="libs/str_view-binding-1.4.0/str_view.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
       gtag('config', 'UA-115082821-1');
     </script><!-- Dan's additional code --><script src="more-js.js"></script><link href="more-css.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -92,7 +95,7 @@
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/Data-Sci-2021/r4ds">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="https://github.com/djvill/r4ds">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -109,9 +112,9 @@
 <h3>
 <span class="header-section-number">18.1.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-11"><i class="fas fa-link"></i></a>
 </h3>
-<p>The pipe, <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>, comes from the <strong>magrittr</strong> package by Stefan Milton Bache. Packages in the tidyverse load <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> for you automatically, so you don’t usually load magrittr explicitly. Here, however, we’re focussing on piping, and we aren’t loading any other packages, so we will load it explicitly.</p>
-<div class="sourceCode" id="cb429"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></code></pre></div>
+<p>The pipe, <code>%&gt;%</code>, comes from the <strong>magrittr</strong> package by Stefan Milton Bache. Packages in the tidyverse load <code>%&gt;%</code> for you automatically, so you don’t usually load magrittr explicitly. Here, however, we’re focussing on piping, and we aren’t loading any other packages, so we will load it explicitly.</p>
+<div class="sourceCode" id="cb433"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div id="piping-alternatives" class="section level2" number="18.2">
@@ -127,8 +130,8 @@ And bopping them on the head</p>
 </blockquote>
 <p>This is a popular Children’s poem that is accompanied by hand actions.</p>
 <p>We’ll start by defining an object to represent little bunny Foo Foo:</p>
-<div class="sourceCode" id="cb430"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">foo_foo</span> <span class="op">&lt;-</span> <span class="fu">little_bunny</span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb434"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">foo_foo</span> <span class="op">&lt;-</span> <span class="fu">little_bunny</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p>And we’ll use a function for each key verb: <code>hop()</code>, <code>scoop()</code>, and <code>bop()</code>. Using this object and these verbs, there are (at least) four ways we could retell the story in code:</p>
 <ol style="list-style-type: decimal">
 <li>Save each intermediate step as a new object.</li>
@@ -142,10 +145,10 @@ And bopping them on the head</p>
 <span class="header-section-number">18.2.1</span> Intermediate steps<a class="anchor" aria-label="anchor" href="#intermediate-steps"><i class="fas fa-link"></i></a>
 </h3>
 <p>The simplest approach is to save each step as a new object:</p>
-<div class="sourceCode" id="cb431"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">foo_foo_1</span> <span class="op">&lt;-</span> <span class="fu">hop</span><span class="op">(</span><span class="va">foo_foo</span>, through <span class="op">=</span> <span class="va">forest</span><span class="op">)</span>
-<span class="va">foo_foo_2</span> <span class="op">&lt;-</span> <span class="fu">scoop</span><span class="op">(</span><span class="va">foo_foo_1</span>, up <span class="op">=</span> <span class="va">field_mice</span><span class="op">)</span>
-<span class="va">foo_foo_3</span> <span class="op">&lt;-</span> <span class="fu">bop</span><span class="op">(</span><span class="va">foo_foo_2</span>, on <span class="op">=</span> <span class="va">head</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb435"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">foo_foo_1</span> <span class="op">&lt;-</span> <span class="fu">hop</span><span class="op">(</span><span class="va">foo_foo</span>, through <span class="op">=</span> <span class="va">forest</span><span class="op">)</span></span>
+<span><span class="va">foo_foo_2</span> <span class="op">&lt;-</span> <span class="fu">scoop</span><span class="op">(</span><span class="va">foo_foo_1</span>, up <span class="op">=</span> <span class="va">field_mice</span><span class="op">)</span></span>
+<span><span class="va">foo_foo_3</span> <span class="op">&lt;-</span> <span class="fu">bop</span><span class="op">(</span><span class="va">foo_foo_2</span>, on <span class="op">=</span> <span class="va">head</span><span class="op">)</span></span></code></pre></div>
 <p>The main downside of this form is that it forces you to name each intermediate element. If there are natural names, this is a good idea, and you should do it. But many times, like this in this example, there aren’t natural names, and you add numeric suffixes to make the names unique. That leads to two problems:</p>
 <ol style="list-style-type: decimal">
 <li><p>The code is cluttered with unimportant names</p></li>
@@ -153,17 +156,17 @@ And bopping them on the head</p>
 </ol>
 <p>Whenever I write code like this, I invariably use the wrong number on one line and then spend 10 minutes scratching my head and trying to figure out what went wrong with my code.</p>
 <p>You may also worry that this form creates many copies of your data and takes up a lot of memory. Surprisingly, that’s not the case. First, note that proactively worrying about memory is not a useful way to spend your time: worry about it when it becomes a problem (i.e. you run out of memory), not before. Second, R isn’t stupid, and it will share columns across data frames, where possible. Let’s take a look at an actual data manipulation pipeline where we add a new column to <code><a href="https://ggplot2.tidyverse.org/reference/diamonds.html">ggplot2::diamonds</a></code>:</p>
-<div class="sourceCode" id="cb432"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">diamonds</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/diamonds.html">diamonds</a></span>
-<span class="va">diamonds2</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op">%&gt;%</span> 
-  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>price_per_carat <span class="op">=</span> <span class="va">price</span> <span class="op">/</span> <span class="va">carat</span><span class="op">)</span>
-
-<span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span>
-<span class="co">#&gt; 3,456,344 B</span>
-<span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds2</span><span class="op">)</span>
-<span class="co">#&gt; 3,887,976 B</span>
-<span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="va">diamonds2</span><span class="op">)</span>
-<span class="co">#&gt; 3,888,552 B</span></code></pre></div>
+<div class="sourceCode" id="cb436"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">diamonds</span> <span class="op">&lt;-</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="va"><a href="https://ggplot2.tidyverse.org/reference/diamonds.html">diamonds</a></span></span>
+<span><span class="va">diamonds2</span> <span class="op">&lt;-</span> <span class="va">diamonds</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>price_per_carat <span class="op">=</span> <span class="va">price</span> <span class="op">/</span> <span class="va">carat</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 3.46 MB</span></span>
+<span><span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 3.89 MB</span></span>
+<span><span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="va">diamonds2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 3.89 MB</span></span></code></pre></div>
 <p><code><a href="https://rdrr.io/pkg/pryr/man/object_size.html">pryr::object_size()</a></code> gives the memory occupied by all of its arguments. The results seem counterintuitive at first:</p>
 <ul>
 <li>
@@ -174,14 +177,14 @@ And bopping them on the head</p>
 <code>diamonds</code> and <code>diamonds2</code> together take up 3.89 MB!</li>
 </ul>
 <p>How can that work? Well, <code>diamonds2</code> has 10 columns in common with <code>diamonds</code>: there’s no need to duplicate all that data, so the two data frames have variables in common. These variables will only get copied if you modify one of them. In the following example, we modify a single value in <code>diamonds$carat</code>. That means the <code>carat</code> variable can no longer be shared between the two data frames, and a copy must be made. The size of each data frame is unchanged, but the collective size increases:</p>
-<div class="sourceCode" id="cb433"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">diamonds</span><span class="op">$</span><span class="va">carat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span>
-<span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span>
-<span class="co">#&gt; 3,456,344 B</span>
-<span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds2</span><span class="op">)</span>
-<span class="co">#&gt; 3,887,976 B</span>
-<span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="va">diamonds2</span><span class="op">)</span>
-<span class="co">#&gt; 4,320,120 B</span></code></pre></div>
+<div class="sourceCode" id="cb437"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">diamonds</span><span class="op">$</span><span class="va">carat</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="cn">NA</span></span>
+<span><span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 3.46 MB</span></span>
+<span><span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 3.89 MB</span></span>
+<span><span class="fu">pryr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/pryr/man/object_size.html">object_size</a></span><span class="op">(</span><span class="va">diamonds</span>, <span class="va">diamonds2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 4.32 MB</span></span></code></pre></div>
 <p>(Note that we use <code><a href="https://rdrr.io/pkg/pryr/man/object_size.html">pryr::object_size()</a></code> here, not the built-in <code><a href="https://rdrr.io/r/utils/object.size.html">object.size()</a></code>. <code><a href="https://rdrr.io/r/utils/object.size.html">object.size()</a></code> only takes a single object so it can’t compute how data is shared across multiple objects.)</p>
 </div>
 <div id="overwrite-the-original" class="section level3" number="18.2.2">
@@ -189,10 +192,10 @@ And bopping them on the head</p>
 <span class="header-section-number">18.2.2</span> Overwrite the original<a class="anchor" aria-label="anchor" href="#overwrite-the-original"><i class="fas fa-link"></i></a>
 </h3>
 <p>Instead of creating intermediate objects at each step, we could overwrite the original object:</p>
-<div class="sourceCode" id="cb434"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">foo_foo</span> <span class="op">&lt;-</span> <span class="fu">hop</span><span class="op">(</span><span class="va">foo_foo</span>, through <span class="op">=</span> <span class="va">forest</span><span class="op">)</span>
-<span class="va">foo_foo</span> <span class="op">&lt;-</span> <span class="fu">scoop</span><span class="op">(</span><span class="va">foo_foo</span>, up <span class="op">=</span> <span class="va">field_mice</span><span class="op">)</span>
-<span class="va">foo_foo</span> <span class="op">&lt;-</span> <span class="fu">bop</span><span class="op">(</span><span class="va">foo_foo</span>, on <span class="op">=</span> <span class="va">head</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb438"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">foo_foo</span> <span class="op">&lt;-</span> <span class="fu">hop</span><span class="op">(</span><span class="va">foo_foo</span>, through <span class="op">=</span> <span class="va">forest</span><span class="op">)</span></span>
+<span><span class="va">foo_foo</span> <span class="op">&lt;-</span> <span class="fu">scoop</span><span class="op">(</span><span class="va">foo_foo</span>, up <span class="op">=</span> <span class="va">field_mice</span><span class="op">)</span></span>
+<span><span class="va">foo_foo</span> <span class="op">&lt;-</span> <span class="fu">bop</span><span class="op">(</span><span class="va">foo_foo</span>, on <span class="op">=</span> <span class="va">head</span><span class="op">)</span></span></code></pre></div>
 <p>This is less typing (and less thinking), so you’re less likely to make mistakes. However, there are two problems:</p>
 <ol style="list-style-type: decimal">
 <li><p>Debugging is painful: if you make a mistake you’ll need to re-run the
@@ -206,14 +209,14 @@ times!) obscures what’s changing on each line.</p></li>
 <span class="header-section-number">18.2.3</span> Function composition<a class="anchor" aria-label="anchor" href="#function-composition"><i class="fas fa-link"></i></a>
 </h3>
 <p>Another approach is to abandon assignment and just string the function calls together:</p>
-<div class="sourceCode" id="cb435"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">bop</span><span class="op">(</span>
-  <span class="fu">scoop</span><span class="op">(</span>
-    <span class="fu">hop</span><span class="op">(</span><span class="va">foo_foo</span>, through <span class="op">=</span> <span class="va">forest</span><span class="op">)</span>,
-    up <span class="op">=</span> <span class="va">field_mice</span>
-  <span class="op">)</span>, 
-  on <span class="op">=</span> <span class="va">head</span>
-<span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb439"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">bop</span><span class="op">(</span></span>
+<span>  <span class="fu">scoop</span><span class="op">(</span></span>
+<span>    <span class="fu">hop</span><span class="op">(</span><span class="va">foo_foo</span>, through <span class="op">=</span> <span class="va">forest</span><span class="op">)</span>,</span>
+<span>    up <span class="op">=</span> <span class="va">field_mice</span></span>
+<span>  <span class="op">)</span>, </span>
+<span>  on <span class="op">=</span> <span class="va">head</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Here the disadvantage is that you have to read from inside-out, from right-to-left, and that the arguments end up spread far apart (evocatively called the
 <a href="https://en.wikipedia.org/wiki/Dagwood_sandwich">dagwood sandwhich</a> problem). In short, this code is hard for a human to consume.</p>
 </div>
@@ -222,41 +225,41 @@ times!) obscures what’s changing on each line.</p></li>
 <span class="header-section-number">18.2.4</span> Use the pipe<a class="anchor" aria-label="anchor" href="#use-the-pipe"><i class="fas fa-link"></i></a>
 </h3>
 <p>Finally, we can use the pipe:</p>
-<div class="sourceCode" id="cb436"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">foo_foo</span> <span class="op">%&gt;%</span>
-  <span class="fu">hop</span><span class="op">(</span>through <span class="op">=</span> <span class="va">forest</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">scoop</span><span class="op">(</span>up <span class="op">=</span> <span class="va">field_mice</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">bop</span><span class="op">(</span>on <span class="op">=</span> <span class="va">head</span><span class="op">)</span></code></pre></div>
-<p>This is my favourite form, because it focusses on verbs, not nouns. You can read this series of function compositions like it’s a set of imperative actions. Foo Foo hops, then scoops, then bops. The downside, of course, is that you need to be familiar with the pipe. If you’ve never seen <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> before, you’ll have no idea what this code does. Fortunately, most people pick up the idea very quickly, so when you share your code with others who aren’t familiar with the pipe, you can easily teach them.</p>
+<div class="sourceCode" id="cb440"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">foo_foo</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">hop</span><span class="op">(</span>through <span class="op">=</span> <span class="va">forest</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">scoop</span><span class="op">(</span>up <span class="op">=</span> <span class="va">field_mice</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu">bop</span><span class="op">(</span>on <span class="op">=</span> <span class="va">head</span><span class="op">)</span></span></code></pre></div>
+<p>This is my favourite form, because it focusses on verbs, not nouns. You can read this series of function compositions like it’s a set of imperative actions. Foo Foo hops, then scoops, then bops. The downside, of course, is that you need to be familiar with the pipe. If you’ve never seen <code>%&gt;%</code> before, you’ll have no idea what this code does. Fortunately, most people pick up the idea very quickly, so when you share your code with others who aren’t familiar with the pipe, you can easily teach them.</p>
 <p>The pipe works by performing a “lexical transformation”: behind the scenes, magrittr reassembles the code in the pipe to a form that works by overwriting an intermediate object. When you run a pipe like the one above, magrittr does something like this:</p>
-<div class="sourceCode" id="cb437"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">my_pipe</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">{</span>
-  <span class="va">.</span> <span class="op">&lt;-</span> <span class="fu">hop</span><span class="op">(</span><span class="va">.</span>, through <span class="op">=</span> <span class="va">forest</span><span class="op">)</span>
-  <span class="va">.</span> <span class="op">&lt;-</span> <span class="fu">scoop</span><span class="op">(</span><span class="va">.</span>, up <span class="op">=</span> <span class="va">field_mice</span><span class="op">)</span>
-  <span class="fu">bop</span><span class="op">(</span><span class="va">.</span>, on <span class="op">=</span> <span class="va">head</span><span class="op">)</span>
-<span class="op">}</span>
-<span class="fu">my_pipe</span><span class="op">(</span><span class="va">foo_foo</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb441"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">my_pipe</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">.</span> <span class="op">&lt;-</span> <span class="fu">hop</span><span class="op">(</span><span class="va">.</span>, through <span class="op">=</span> <span class="va">forest</span><span class="op">)</span></span>
+<span>  <span class="va">.</span> <span class="op">&lt;-</span> <span class="fu">scoop</span><span class="op">(</span><span class="va">.</span>, up <span class="op">=</span> <span class="va">field_mice</span><span class="op">)</span></span>
+<span>  <span class="fu">bop</span><span class="op">(</span><span class="va">.</span>, on <span class="op">=</span> <span class="va">head</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span><span class="fu">my_pipe</span><span class="op">(</span><span class="va">foo_foo</span><span class="op">)</span></span></code></pre></div>
 <p>This means that the pipe won’t work for two classes of functions:</p>
 <ol style="list-style-type: decimal">
 <li>
 <p>Functions that use the current environment. For example, <code><a href="https://rdrr.io/r/base/assign.html">assign()</a></code>
 will create a new variable with the given name in the current environment:</p>
-<div class="sourceCode" id="cb438"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="fl">10</span><span class="op">)</span>
-<span class="va">x</span>
-<span class="co">#&gt; [1] 10</span>
-
-<span class="st">"x"</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>
-<span class="va">x</span>
-<span class="co">#&gt; [1] 10</span></code></pre></div>
+<div class="sourceCode" id="cb442"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="va">x</span></span>
+<span><span class="co">#&gt; [1] 10</span></span>
+<span></span>
+<span><span class="st">"x"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">x</span></span>
+<span><span class="co">#&gt; [1] 10</span></span></code></pre></div>
 <p>The use of assign with the pipe does not work because it assigns it to
-a temporary environment used by <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code>. If you do want to use assign with the
+a temporary environment used by <code>%&gt;%</code>. If you do want to use assign with the
 pipe, you must be explicit about the environment:</p>
-<div class="sourceCode" id="cb439"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">env</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">environment</a></span><span class="op">(</span><span class="op">)</span>
-<span class="st">"x"</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="fl">100</span>, envir <span class="op">=</span> <span class="va">env</span><span class="op">)</span>
-<span class="va">x</span>
-<span class="co">#&gt; [1] 100</span></code></pre></div>
+<div class="sourceCode" id="cb443"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">env</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/environment.html">environment</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="st">"x"</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/assign.html">assign</a></span><span class="op">(</span><span class="fl">100</span>, envir <span class="op">=</span> <span class="va">env</span><span class="op">)</span></span>
+<span><span class="va">x</span></span>
+<span><span class="co">#&gt; [1] 100</span></span></code></pre></div>
 <p>Other functions with this problem include <code><a href="https://rdrr.io/r/base/get.html">get()</a></code> and <code><a href="https://rdrr.io/r/base/load.html">load()</a></code>.</p>
 </li>
 <li>
@@ -266,13 +269,13 @@ function. The pipe computes each element in turn, so you can’t
 rely on this behaviour.</p>
 <p>One place that this is a problem is <code><a href="https://rdrr.io/r/base/conditions.html">tryCatch()</a></code>, which lets you capture
 and handle errors:</p>
-<div class="sourceCode" id="cb440"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"!"</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="st">"An error"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "An error"</span>
-
-<span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"!"</span><span class="op">)</span> <span class="op">%&gt;%</span> 
-  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span>error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="st">"An error"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "An error"</span></code></pre></div>
+<div class="sourceCode" id="cb444"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"!"</span><span class="op">)</span>, error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="st">"An error"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "An error"</span></span>
+<span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/stop.html">stop</a></span><span class="op">(</span><span class="st">"!"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="kw"><a href="https://rdrr.io/r/base/conditions.html">tryCatch</a></span><span class="op">(</span>error <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">e</span><span class="op">)</span> <span class="st">"An error"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "An error"</span></span></code></pre></div>
 <p>There are a relatively wide class of functions with this behaviour,
 including <code><a href="https://rdrr.io/r/base/try.html">try()</a></code>, <code><a href="https://rdrr.io/r/base/message.html">suppressMessages()</a></code>, and <code><a href="https://rdrr.io/r/base/warning.html">suppressWarnings()</a></code>
 in base R.</p>
@@ -303,51 +306,51 @@ complex relationships with them will typically yield confusing code.</p></li>
 <h2>
 <span class="header-section-number">18.4</span> Other tools from magrittr<a class="anchor" aria-label="anchor" href="#other-tools-from-magrittr"><i class="fas fa-link"></i></a>
 </h2>
-<p>All packages in the tidyverse automatically make <code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> available for you, so you don’t normally load magrittr explicitly. However, there are some other useful tools inside magrittr that you might want to try out:</p>
+<p>All packages in the tidyverse automatically make <code>%&gt;%</code> available for you, so you don’t normally load magrittr explicitly. However, there are some other useful tools inside magrittr that you might want to try out:</p>
 <ul>
 <li>
 <p>When working with more complex pipes, it’s sometimes useful to call a
 function for its side-effects. Maybe you want to print out the current
 object, or plot it, or save it to disk. Many times, such functions don’t
 return anything, effectively terminating the pipe.</p>
-<p>To work around this problem, you can use the “tee” pipe. <code><a href="https://magrittr.tidyverse.org/reference/tee.html">%T&gt;%</a></code> works like
-<code><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></code> except that it returns the left-hand side instead of the right-hand
+<p>To work around this problem, you can use the “tee” pipe. <code>%T&gt;%</code> works like
+<code>%&gt;%</code> except that it returns the left-hand side instead of the right-hand
 side. It’s called “tee” because it’s like a literal T-shaped pipe.</p>
-<div class="sourceCode" id="cb441"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;  NULL</span>
-
-<span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">%T&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span>
-<span class="co">#&gt;  num [1:50, 1:2] -0.387 -0.785 -1.057 -0.796 -1.756 ...</span></code></pre></div>
+<div class="sourceCode" id="cb445"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  NULL</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span><span class="op">(</span>ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/tee.html">%T&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  num [1:50, 1:2] -0.387 -0.785 -1.057 -0.796 -1.756 ...</span></span></code></pre></div>
 <p><img src="pipes_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;"><img src="pipes_files/figure-html/unnamed-chunk-12-2.png" width="70%" style="display: block; margin: auto;"></p>
 </li>
 <li>
 <p>If you’re working with functions that don’t have a data frame based API<br>
 (i.e. you pass them individual vectors, not a data frame and expressions
-to be evaluated in the context of that data frame), you might find <code><a href="https://magrittr.tidyverse.org/reference/exposition.html">%$%</a></code>
+to be evaluated in the context of that data frame), you might find <code>%$%</code>
 useful. It “explodes” out the variables in a data frame so that you can
 refer to them explicitly. This is useful when working with many functions
 in base R:</p>
-<div class="sourceCode" id="cb442"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op">%$%</span>
-  <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; [1] -0.8475514</span></code></pre></div>
+<div class="sourceCode" id="cb446"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/exposition.html">%$%</a></span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/stats/cor.html">cor</a></span><span class="op">(</span><span class="va">disp</span>, <span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] -0.8475514</span></span></code></pre></div>
 </li>
 <li>
-<p>For assignment magrittr provides the <code><a href="https://magrittr.tidyverse.org/reference/compound.html">%&lt;&gt;%</a></code> operator which allows you to
+<p>For assignment magrittr provides the <code>%&lt;&gt;%</code> operator which allows you to
 replace code like:</p>
-<div class="sourceCode" id="cb443"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="va">cyl</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb447"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="va">cyl</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>with</p>
-<div class="sourceCode" id="cb444"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op">%&lt;&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="va">cyl</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb448"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/compound.html">%&lt;&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/transform.html">transform</a></span><span class="op">(</span>cyl <span class="op">=</span> <span class="va">cyl</span> <span class="op">*</span> <span class="fl">2</span><span class="op">)</span></span></code></pre></div>
 <p>I’m not a fan of this operator because I think assignment is such a
 special operation that it should always be clear when it’s occurring.
 In my opinion, a little bit of duplication (i.e. repeating the
@@ -381,8 +384,8 @@ more explicit.</p>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/Data-Sci-2021/r4ds/blob/master/pipes.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/Data-Sci-2021/r4ds/edit/master/pipes.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/djvill/r4ds/blob/master/pipes.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/djvill/r4ds/edit/master/pipes.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -407,7 +410,7 @@ more explicit.</p>
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

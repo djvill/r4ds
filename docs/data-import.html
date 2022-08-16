@@ -7,31 +7,34 @@
 <title>11 Data import | R for Data Science</title>
 <meta name="author" content="Hadley Wickham and Garrett Grolemund">
 <meta name="description" content="11.1 Introduction Working with data provided by R packages is a great way to learn the tools of data science, but at some point you want to stop learning and start working with your own data. In...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="generator" content="bookdown 0.28 with bs4_book()">
 <meta property="og:title" content="11 Data import | R for Data Science">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://r4ds.had.co.nz/data-import.html">
-<meta property="og:image" content="https://r4ds.had.co.nz//cover.png">
+<meta property="og:url" content="https://djvill.github.io/r4ds/data-import.html">
+<meta property="og:image" content="https://djvill.github.io/r4ds//cover.png">
 <meta property="og:description" content="11.1 Introduction Working with data provided by R packages is a great way to learn the tools of data science, but at some point you want to stop learning and start working with your own data. In...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="11 Data import | R for Data Science">
 <meta name="twitter:description" content="11.1 Introduction Working with data provided by R packages is a great way to learn the tools of data science, but at some point you want to stop learning and start working with your own data. In...">
-<meta name="twitter:image" content="https://r4ds.had.co.nz//cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="twitter:image" content="https://djvill.github.io/r4ds//cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
 <script src="libs/str_view-binding-1.4.0/str_view.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
       gtag('config', 'UA-115082821-1');
     </script><!-- Dan's additional code --><script src="more-js.js"></script><link href="more-css.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -92,7 +95,7 @@
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/Data-Sci-2021/r4ds">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="https://github.com/djvill/r4ds">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -110,8 +113,8 @@
 <span class="header-section-number">11.1.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-5"><i class="fas fa-link"></i></a>
 </h3>
 <p>In this chapter, you’ll learn how to load flat files in R with the <strong>readr</strong> package, which is part of the core tidyverse.</p>
-<div class="sourceCode" id="cb182"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div id="getting-started" class="section level2" number="11.2">
@@ -120,140 +123,140 @@
 </h2>
 <p>Most of readr’s functions are concerned with turning flat files into data frames:</p>
 <ul>
-<li><p><code>read_csv()</code> reads comma delimited files, <code>read_csv2()</code> reads semicolon
+<li><p><code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> reads comma delimited files, <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2()</a></code> reads semicolon
 separated files (common in countries where <code>,</code> is used as the decimal place),
-<code>read_tsv()</code> reads tab delimited files, and <code>read_delim()</code> reads in files
+<code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv()</a></code> reads tab delimited files, and <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_delim()</a></code> reads in files
 with any delimiter.</p></li>
-<li><p><code>read_fwf()</code> reads fixed width files. You can specify fields either by their
-widths with <code>fwf_widths()</code> or their position with <code>fwf_positions()</code>.
-<code>read_table()</code> reads a common variation of fixed width files where columns
+<li><p><code><a href="https://readr.tidyverse.org/reference/read_fwf.html">read_fwf()</a></code> reads fixed width files. You can specify fields either by their
+widths with <code><a href="https://readr.tidyverse.org/reference/read_fwf.html">fwf_widths()</a></code> or their position with <code><a href="https://readr.tidyverse.org/reference/read_fwf.html">fwf_positions()</a></code>.
+<code><a href="https://readr.tidyverse.org/reference/read_table.html">read_table()</a></code> reads a common variation of fixed width files where columns
 are separated by white space.</p></li>
-<li><p><code>read_log()</code> reads Apache style log files. (But also check out
+<li><p><code><a href="https://readr.tidyverse.org/reference/read_log.html">read_log()</a></code> reads Apache style log files. (But also check out
 <a href="https://github.com/Ironholds/webreadr">webreadr</a> which is built on top
-of <code>read_log()</code> and provides many more helpful tools.)</p></li>
+of <code><a href="https://readr.tidyverse.org/reference/read_log.html">read_log()</a></code> and provides many more helpful tools.)</p></li>
 </ul>
-<p>These functions all have similar syntax: once you’ve mastered one, you can use the others with ease. For the rest of this chapter we’ll focus on <code>read_csv()</code>. Not only are csv files one of the most common forms of data storage, but once you understand <code>read_csv()</code>, you can easily apply your knowledge to all the other functions in readr.</p>
-<p>The first argument to <code>read_csv()</code> is the most important: it’s the path to the file to read.</p>
-<div class="sourceCode" id="cb183"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">heights</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="st">"data/heights.csv"</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 1192 Columns: 6</span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; Delimiter: ","</span>
-<span class="co">#&gt; chr (2): sex, race</span>
-<span class="co">#&gt; dbl (4): earn, height, ed, age</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></code></pre></div>
-<p>When you run <code>read_csv()</code> it prints out a column specification that gives the name and type of each column. That’s an important part of readr, which we’ll come back to in <a href="data-import.html#parsing-a-file">parsing a file</a>.</p>
+<p>These functions all have similar syntax: once you’ve mastered one, you can use the others with ease. For the rest of this chapter we’ll focus on <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code>. Not only are csv files one of the most common forms of data storage, but once you understand <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code>, you can easily apply your knowledge to all the other functions in readr.</p>
+<p>The first argument to <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> is the most important: it’s the path to the file to read.</p>
+<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">heights</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"data/heights.csv"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 1192 Columns: 6</span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Delimiter: ","</span></span>
+<span><span class="co">#&gt; chr (2): sex, race</span></span>
+<span><span class="co">#&gt; dbl (4): earn, height, ed, age</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre></div>
+<p>When you run <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> it prints out a column specification that gives the name and type of each column. That’s an important part of readr, which we’ll come back to in <a href="data-import.html#parsing-a-file">parsing a file</a>.</p>
 <p>You can also supply an inline csv file. This is useful for experimenting with readr and for creating reproducible examples to share with others:</p>
-<div class="sourceCode" id="cb184"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">read_csv</span><span class="op">(</span><span class="st">"a,b,c
-1,2,3
-4,5,6"</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 2 Columns: 3</span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; Delimiter: ","</span>
-<span class="co">#&gt; dbl (3): a, b, c</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
-<span class="co">#&gt; # A tibble: 2 x 3</span>
-<span class="co">#&gt;       a     b     c</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1     2     3</span>
-<span class="co">#&gt; 2     4     5     6</span></code></pre></div>
-<p>In both cases <code>read_csv()</code> uses the first line of the data for the column names, which is a very common convention. There are two cases where you might want to tweak this behaviour:</p>
+<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"a,b,c</span></span>
+<span><span class="st">1,2,3</span></span>
+<span><span class="st">4,5,6"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 2 Columns: 3</span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Delimiter: ","</span></span>
+<span><span class="co">#&gt; dbl (3): a, b, c</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 3</span></span>
+<span><span class="co">#&gt;       a     b     c</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1     1     2     3</span></span>
+<span><span class="co">#&gt; 2     4     5     6</span></span></code></pre></div>
+<p>In both cases <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> uses the first line of the data for the column names, which is a very common convention. There are two cases where you might want to tweak this behaviour:</p>
 <ol style="list-style-type: decimal">
 <li>
 <p>Sometimes there are a few lines of metadata at the top of the file. You can
 use <code>skip = n</code> to skip the first <code>n</code> lines; or use <code>comment = "#"</code> to drop
 all lines that start with (e.g.) <code>#</code>.</p>
-<div class="sourceCode" id="cb185"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">read_csv</span><span class="op">(</span><span class="st">"The first line of metadata
-  The second line of metadata
-  x,y,z
-  1,2,3"</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 1 Columns: 3</span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; Delimiter: ","</span>
-<span class="co">#&gt; dbl (3): x, y, z</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
-<span class="co">#&gt;       x     y     z</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1     2     3</span>
-
-<span class="fu">read_csv</span><span class="op">(</span><span class="st">"# A comment I want to skip
-  x,y,z
-  1,2,3"</span>, comment <span class="op">=</span> <span class="st">"#"</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 1 Columns: 3</span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; Delimiter: ","</span>
-<span class="co">#&gt; dbl (3): x, y, z</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
-<span class="co">#&gt;       x     y     z</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1     2     3</span></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"The first line of metadata</span></span>
+<span><span class="st">  The second line of metadata</span></span>
+<span><span class="st">  x,y,z</span></span>
+<span><span class="st">  1,2,3"</span>, skip <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 1 Columns: 3</span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Delimiter: ","</span></span>
+<span><span class="co">#&gt; dbl (3): x, y, z</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="co">#&gt; # A tibble: 1 x 3</span></span>
+<span><span class="co">#&gt;       x     y     z</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1     1     2     3</span></span>
+<span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"# A comment I want to skip</span></span>
+<span><span class="st">  x,y,z</span></span>
+<span><span class="st">  1,2,3"</span>, comment <span class="op">=</span> <span class="st">"#"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 1 Columns: 3</span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Delimiter: ","</span></span>
+<span><span class="co">#&gt; dbl (3): x, y, z</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="co">#&gt; # A tibble: 1 x 3</span></span>
+<span><span class="co">#&gt;       x     y     z</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1     1     2     3</span></span></code></pre></div>
 </li>
 <li>
 <p>The data might not have column names. You can use <code>col_names = FALSE</code> to
-tell <code>read_csv()</code> not to treat the first row as headings, and instead
+tell <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> not to treat the first row as headings, and instead
 label them sequentially from <code>X1</code> to <code>Xn</code>:</p>
-<div class="sourceCode" id="cb186"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">read_csv</span><span class="op">(</span><span class="st">"1,2,3\n4,5,6"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 2 Columns: 3</span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; Delimiter: ","</span>
-<span class="co">#&gt; dbl (3): X1, X2, X3</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
-<span class="co">#&gt; # A tibble: 2 x 3</span>
-<span class="co">#&gt;      X1    X2    X3</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1     2     3</span>
-<span class="co">#&gt; 2     4     5     6</span></code></pre></div>
+<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"1,2,3\n4,5,6"</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 2 Columns: 3</span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Delimiter: ","</span></span>
+<span><span class="co">#&gt; dbl (3): X1, X2, X3</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 3</span></span>
+<span><span class="co">#&gt;      X1    X2    X3</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1     1     2     3</span></span>
+<span><span class="co">#&gt; 2     4     5     6</span></span></code></pre></div>
 <p>(<code>"\n"</code> is a convenient shortcut for adding a new line. You’ll learn more
 about it and other types of string escape in <a href="strings.html#string-basics">string basics</a>.)</p>
 <p>Alternatively you can pass <code>col_names</code> a character vector which will be
 used as the column names:</p>
-<div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">read_csv</span><span class="op">(</span><span class="st">"1,2,3\n4,5,6"</span>, col_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 2 Columns: 3</span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; Delimiter: ","</span>
-<span class="co">#&gt; dbl (3): x, y, z</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
-<span class="co">#&gt; # A tibble: 2 x 3</span>
-<span class="co">#&gt;       x     y     z</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1     2     3</span>
-<span class="co">#&gt; 2     4     5     6</span></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"1,2,3\n4,5,6"</span>, col_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 2 Columns: 3</span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Delimiter: ","</span></span>
+<span><span class="co">#&gt; dbl (3): x, y, z</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 3</span></span>
+<span><span class="co">#&gt;       x     y     z</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1     1     2     3</span></span>
+<span><span class="co">#&gt; 2     4     5     6</span></span></code></pre></div>
 </li>
 </ol>
 <p>Another option that commonly needs tweaking is <code>na</code>: this specifies the value (or values) that are used to represent missing values in your file:</p>
-<div class="sourceCode" id="cb188"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">read_csv</span><span class="op">(</span><span class="st">"a,b,c\n1,2,."</span>, na <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 1 Columns: 3</span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; Delimiter: ","</span>
-<span class="co">#&gt; dbl (2): a, b</span>
-<span class="co">#&gt; lgl (1): c</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
-<span class="co">#&gt;       a     b c    </span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;</span>
-<span class="co">#&gt; 1     1     2 NA</span></code></pre></div>
-<p>This is all you need to know to read ~75% of CSV files that you’ll encounter in practice. You can also easily adapt what you’ve learned to read tab separated files with <code>read_tsv()</code> and fixed width files with <code>read_fwf()</code>. To read in more challenging files, you’ll need to learn more about how readr parses each column, turning them into R vectors.</p>
+<div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"a,b,c\n1,2,."</span>, na <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 1 Columns: 3</span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Delimiter: ","</span></span>
+<span><span class="co">#&gt; dbl (2): a, b</span></span>
+<span><span class="co">#&gt; lgl (1): c</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="co">#&gt; # A tibble: 1 x 3</span></span>
+<span><span class="co">#&gt;       a     b c    </span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;lgl&gt;</span></span>
+<span><span class="co">#&gt; 1     1     2 NA</span></span></code></pre></div>
+<p>This is all you need to know to read ~75% of CSV files that you’ll encounter in practice. You can also easily adapt what you’ve learned to read tab separated files with <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv()</a></code> and fixed width files with <code><a href="https://readr.tidyverse.org/reference/read_fwf.html">read_fwf()</a></code>. To read in more challenging files, you’ll need to learn more about how readr parses each column, turning them into R vectors.</p>
 <div id="compared-to-base-r" class="section level3" number="11.2.1">
 <h3>
 <span class="header-section-number">11.2.1</span> Compared to base R<a class="anchor" aria-label="anchor" href="#compared-to-base-r"><i class="fas fa-link"></i></a>
@@ -280,26 +283,26 @@ on your computer might not work on someone else’s.</p></li>
 <li><p>What function would you use to read a file where fields were separated with<br>
 “|”?</p></li>
 <li><p>Apart from <code>file</code>, <code>skip</code>, and <code>comment</code>, what other arguments do
-<code>read_csv()</code> and <code>read_tsv()</code> have in common?</p></li>
-<li><p>What are the most important arguments to <code>read_fwf()</code>?</p></li>
+<code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> and <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_tsv()</a></code> have in common?</p></li>
+<li><p>What are the most important arguments to <code><a href="https://readr.tidyverse.org/reference/read_fwf.html">read_fwf()</a></code>?</p></li>
 <li>
 <p>Sometimes strings in a CSV file contain commas. To prevent them from
 causing problems they need to be surrounded by a quoting character, like
-<code>"</code> or <code>'</code>. By default, <code>read_csv()</code> assumes that the quoting
-character will be <code>"</code>. What argument to <code>read_csv()</code> do you need to specify
+<code>"</code> or <code>'</code>. By default, <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> assumes that the quoting
+character will be <code>"</code>. What argument to <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> do you need to specify
 to read the following text into a data frame?</p>
-<div class="sourceCode" id="cb189"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="st">"x,y\n1,'a,b'"</span></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="st">"x,y\n1,'a,b'"</span></span></code></pre></div>
 </li>
 <li>
 <p>Identify what is wrong with each of the following inline CSV files.
 What happens when you run the code?</p>
-<div class="sourceCode" id="cb190"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">read_csv</span><span class="op">(</span><span class="st">"a,b\n1,2,3\n4,5,6"</span><span class="op">)</span>
-<span class="fu">read_csv</span><span class="op">(</span><span class="st">"a,b,c\n1,2\n1,2,3,4"</span><span class="op">)</span>
-<span class="fu">read_csv</span><span class="op">(</span><span class="st">"a,b\n\"1"</span><span class="op">)</span>
-<span class="fu">read_csv</span><span class="op">(</span><span class="st">"a,b\n1,2\na,b"</span><span class="op">)</span>
-<span class="fu">read_csv</span><span class="op">(</span><span class="st">"a;b\n1;3"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"a,b\n1,2,3\n4,5,6"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"a,b,c\n1,2\n1,2,3,4"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"a,b\n\"1"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"a,b\n1,2\na,b"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"a;b\n1;3"</span><span class="op">)</span></span></code></pre></div>
 </li>
 </ol>
 </div>
@@ -309,57 +312,57 @@ What happens when you run the code?</p>
 <span class="header-section-number">11.3</span> Parsing a vector<a class="anchor" aria-label="anchor" href="#parsing-a-vector"><i class="fas fa-link"></i></a>
 </h2>
 <p>Before we get into the details of how readr reads files from disk, we need to take a little detour to talk about the <code>parse_*()</code> functions. These functions take a character vector and return a more specialised vector like a logical, integer, or date:</p>
-<div class="sourceCode" id="cb191"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu">parse_logical</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="st">"FALSE"</span>, <span class="st">"NA"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;  logi [1:3] TRUE FALSE NA</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu">parse_integer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;  int [1:3] 1 2 3</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu">parse_date</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2010-01-01"</span>, <span class="st">"1979-10-14"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;  Date[1:2], format: "2010-01-01" "1979-10-14"</span></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_logical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="st">"FALSE"</span>, <span class="st">"NA"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  logi [1:3] TRUE FALSE NA</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"2"</span>, <span class="st">"3"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  int [1:3] 1 2 3</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_date</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"2010-01-01"</span>, <span class="st">"1979-10-14"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  Date[1:2], format: "2010-01-01" "1979-10-14"</span></span></code></pre></div>
 <p>These functions are useful in their own right, but are also an important building block for readr. Once you’ve learned how the individual parsers work in this section, we’ll circle back and see how they fit together to parse a complete file in the next section.</p>
 <p>Like all functions in the tidyverse, the <code>parse_*()</code> functions are uniform: the first argument is a character vector to parse, and the <code>na</code> argument specifies which strings should be treated as missing:</p>
-<div class="sourceCode" id="cb192"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">parse_integer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"231"</span>, <span class="st">"."</span>, <span class="st">"456"</span><span class="op">)</span>, na <span class="op">=</span> <span class="st">"."</span><span class="op">)</span>
-<span class="co">#&gt; [1]   1 231  NA 456</span></code></pre></div>
+<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"231"</span>, <span class="st">"."</span>, <span class="st">"456"</span><span class="op">)</span>, na <span class="op">=</span> <span class="st">"."</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1]   1 231  NA 456</span></span></code></pre></div>
 <p>If parsing fails, you’ll get a warning:</p>
-<div class="sourceCode" id="cb193"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">parse_integer</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"123"</span>, <span class="st">"345"</span>, <span class="st">"abc"</span>, <span class="st">"123.45"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning: 2 parsing failures.</span>
-<span class="co">#&gt; row col               expected actual</span>
-<span class="co">#&gt;   3  -- no trailing characters abc   </span>
-<span class="co">#&gt;   4  -- no trailing characters 123.45</span></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_integer</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"123"</span>, <span class="st">"345"</span>, <span class="st">"abc"</span>, <span class="st">"123.45"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: 2 parsing failures.</span></span>
+<span><span class="co">#&gt; row col               expected actual</span></span>
+<span><span class="co">#&gt;   3  -- no trailing characters abc   </span></span>
+<span><span class="co">#&gt;   4  -- no trailing characters 123.45</span></span></code></pre></div>
 <p>And the failures will be missing in the output:</p>
-<div class="sourceCode" id="cb194"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span>
-<span class="co">#&gt; [1] 123 345  NA  NA</span>
-<span class="co">#&gt; attr(,"problems")</span>
-<span class="co">#&gt; # A tibble: 2 x 4</span>
-<span class="co">#&gt;     row   col expected               actual</span>
-<span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt; </span>
-<span class="co">#&gt; 1     3    NA no trailing characters abc   </span>
-<span class="co">#&gt; 2     4    NA no trailing characters 123.45</span></code></pre></div>
-<p>If there are many parsing failures, you’ll need to use <code>problems()</code> to get the complete set. This returns a tibble, which you can then manipulate with dplyr.</p>
-<div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">problems</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 4</span>
-<span class="co">#&gt;     row   col expected               actual</span>
-<span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt; </span>
-<span class="co">#&gt; 1     3    NA no trailing characters abc   </span>
-<span class="co">#&gt; 2     4    NA no trailing characters 123.45</span></code></pre></div>
+<div class="sourceCode" id="cb198"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span></span>
+<span><span class="co">#&gt; [1] 123 345  NA  NA</span></span>
+<span><span class="co">#&gt; attr(,"problems")</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 4</span></span>
+<span><span class="co">#&gt;     row   col expected               actual</span></span>
+<span><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt; </span></span>
+<span><span class="co">#&gt; 1     3    NA no trailing characters abc   </span></span>
+<span><span class="co">#&gt; 2     4    NA no trailing characters 123.45</span></span></code></pre></div>
+<p>If there are many parsing failures, you’ll need to use <code><a href="https://readr.tidyverse.org/reference/problems.html">problems()</a></code> to get the complete set. This returns a tibble, which you can then manipulate with dplyr.</p>
+<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/problems.html">problems</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 4</span></span>
+<span><span class="co">#&gt;     row   col expected               actual</span></span>
+<span><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt; </span></span>
+<span><span class="co">#&gt; 1     3    NA no trailing characters abc   </span></span>
+<span><span class="co">#&gt; 2     4    NA no trailing characters 123.45</span></span></code></pre></div>
 <p>Using parsers is mostly a matter of understanding what’s available and how they deal with different types of input. There are eight particularly important parsers:</p>
 <ol style="list-style-type: decimal">
-<li><p><code>parse_logical()</code> and <code>parse_integer()</code> parse logicals and integers
+<li><p><code><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_logical()</a></code> and <code><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_integer()</a></code> parse logicals and integers
 respectively. There’s basically nothing that can go wrong with these
 parsers so I won’t describe them here further.</p></li>
-<li><p><code>parse_double()</code> is a strict numeric parser, and <code>parse_number()</code>
+<li><p><code><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_double()</a></code> is a strict numeric parser, and <code><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number()</a></code>
 is a flexible numeric parser. These are more complicated than you might
 expect because different parts of the world write numbers in different
 ways.</p></li>
-<li><p><code>parse_character()</code> seems so simple that it shouldn’t be necessary. But
+<li><p><code><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_character()</a></code> seems so simple that it shouldn’t be necessary. But
 one complication makes it quite important: character encodings.</p></li>
-<li><p><code>parse_factor()</code> create factors, the data structure that R uses to represent
+<li><p><code><a href="https://readr.tidyverse.org/reference/parse_factor.html">parse_factor()</a></code> create factors, the data structure that R uses to represent
 categorical variables with fixed and known values.</p></li>
-<li><p><code>parse_datetime()</code>, <code>parse_date()</code>, and <code>parse_time()</code> allow you to
+<li><p><code><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_datetime()</a></code>, <code><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_date()</a></code>, and <code><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_time()</a></code> allow you to
 parse various date &amp; time specifications. These are the most complicated
 because there are so many different ways of writing dates.</p></li>
 </ol>
@@ -379,93 +382,93 @@ context, like “$1000” or “10%”.</p></li>
 like “1,000,000”, and these grouping characters vary around the world.</p></li>
 </ol>
 <p>To address the first problem, readr has the notion of a “locale”, an object that specifies parsing options that differ from place to place. When parsing numbers, the most important option is the character you use for the decimal mark. You can override the default value of <code>.</code> by creating a new locale and setting the <code>decimal_mark</code> argument:</p>
-<div class="sourceCode" id="cb196"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">parse_double</span><span class="op">(</span><span class="st">"1.23"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1.23</span>
-<span class="fu">parse_double</span><span class="op">(</span><span class="st">"1,23"</span>, locale <span class="op">=</span> <span class="fu">locale</span><span class="op">(</span>decimal_mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1.23</span></code></pre></div>
+<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_double</a></span><span class="op">(</span><span class="st">"1.23"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1.23</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_double</a></span><span class="op">(</span><span class="st">"1,23"</span>, locale <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/locale.html">locale</a></span><span class="op">(</span>decimal_mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1.23</span></span></code></pre></div>
 <p>readr’s default locale is US-centric, because generally R is US-centric (i.e. the documentation of base R is written in American English). An alternative approach would be to try and guess the defaults from your operating system. This is hard to do well, and, more importantly, makes your code fragile: even if it works on your computer, it might fail when you email it to a colleague in another country.</p>
-<p><code>parse_number()</code> addresses the second problem: it ignores non-numeric characters before and after the number. This is particularly useful for currencies and percentages, but also works to extract numbers embedded in text.</p>
-<div class="sourceCode" id="cb197"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">parse_number</span><span class="op">(</span><span class="st">"$100"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 100</span>
-<span class="fu">parse_number</span><span class="op">(</span><span class="st">"20%"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 20</span>
-<span class="fu">parse_number</span><span class="op">(</span><span class="st">"It cost $123.45"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 123.45</span></code></pre></div>
-<p>The final problem is addressed by the combination of <code>parse_number()</code> and the locale as <code>parse_number()</code> will ignore the “grouping mark”:</p>
-<div class="sourceCode" id="cb198"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Used in America</span>
-<span class="fu">parse_number</span><span class="op">(</span><span class="st">"$123,456,789"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 123456789</span>
-
-<span class="co"># Used in many parts of Europe</span>
-<span class="fu">parse_number</span><span class="op">(</span><span class="st">"123.456.789"</span>, locale <span class="op">=</span> <span class="fu">locale</span><span class="op">(</span>grouping_mark <span class="op">=</span> <span class="st">"."</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 123456789</span>
-
-<span class="co"># Used in Switzerland</span>
-<span class="fu">parse_number</span><span class="op">(</span><span class="st">"123'456'789"</span>, locale <span class="op">=</span> <span class="fu">locale</span><span class="op">(</span>grouping_mark <span class="op">=</span> <span class="st">"'"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] 123456789</span></code></pre></div>
+<p><code><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number()</a></code> addresses the second problem: it ignores non-numeric characters before and after the number. This is particularly useful for currencies and percentages, but also works to extract numbers embedded in text.</p>
+<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="st">"$100"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 100</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="st">"20%"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 20</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="st">"It cost $123.45"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 123.45</span></span></code></pre></div>
+<p>The final problem is addressed by the combination of <code><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number()</a></code> and the locale as <code><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number()</a></code> will ignore the “grouping mark”:</p>
+<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Used in America</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="st">"$123,456,789"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 123456789</span></span>
+<span></span>
+<span><span class="co"># Used in many parts of Europe</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="st">"123.456.789"</span>, locale <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/locale.html">locale</a></span><span class="op">(</span>grouping_mark <span class="op">=</span> <span class="st">"."</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 123456789</span></span>
+<span></span>
+<span><span class="co"># Used in Switzerland</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_number.html">parse_number</a></span><span class="op">(</span><span class="st">"123'456'789"</span>, locale <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/locale.html">locale</a></span><span class="op">(</span>grouping_mark <span class="op">=</span> <span class="st">"'"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 123456789</span></span></code></pre></div>
 </div>
 <div id="readr-strings" class="section level3" number="11.3.2">
 <h3>
 <span class="header-section-number">11.3.2</span> Strings<a class="anchor" aria-label="anchor" href="#readr-strings"><i class="fas fa-link"></i></a>
 </h3>
-<p>It seems like <code>parse_character()</code> should be really simple — it could just return its input. Unfortunately life isn’t so simple, as there are multiple ways to represent the same string. To understand what’s going on, we need to dive into the details of how computers represent strings. In R, we can get at the underlying representation of a string using <code><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw()</a></code>:</p>
-<div class="sourceCode" id="cb199"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw</a></span><span class="op">(</span><span class="st">"Hadley"</span><span class="op">)</span>
-<span class="co">#&gt; [1] 48 61 64 6c 65 79</span></code></pre></div>
+<p>It seems like <code><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_character()</a></code> should be really simple — it could just return its input. Unfortunately life isn’t so simple, as there are multiple ways to represent the same string. To understand what’s going on, we need to dive into the details of how computers represent strings. In R, we can get at the underlying representation of a string using <code><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw()</a></code>:</p>
+<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw</a></span><span class="op">(</span><span class="st">"Hadley"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 48 61 64 6c 65 79</span></span></code></pre></div>
 <p>Each hexadecimal number represents a byte of information: <code>48</code> is H, <code>61</code> is a, and so on. The mapping from hexadecimal number to character is called the encoding, and in this case the encoding is called ASCII. ASCII does a great job of representing English characters, because it’s the <strong>American</strong> Standard Code for Information Interchange.</p>
 <p>Things get more complicated for languages other than English. In the early days of computing there were many competing standards for encoding non-English characters, and to correctly interpret a string you needed to know both the values and the encoding. For example, two common encodings are Latin1 (aka ISO-8859-1, used for Western European languages) and Latin2 (aka ISO-8859-2, used for Eastern European languages). In Latin1, the byte <code>b1</code> is “±”, but in Latin2, it’s “ą”! Fortunately, today there is one standard that is supported almost everywhere: UTF-8. UTF-8 can encode just about every character used by humans today, as well as many extra symbols (like emoji!).</p>
 <p>readr uses UTF-8 everywhere: it assumes your data is UTF-8 encoded when you read it, and always uses it when writing. This is a good default, but will fail for data produced by older systems that don’t understand UTF-8. If this happens to you, your strings will look weird when you print them. Sometimes just one or two characters might be messed up; other times you’ll get complete gibberish. For example:</p>
-<div class="sourceCode" id="cb200"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x1</span> <span class="op">&lt;-</span> <span class="st">"El Ni\xf1o was particularly bad this year"</span>
-<span class="va">x2</span> <span class="op">&lt;-</span> <span class="st">"\x82\xb1\x82\xf1\x82\xc9\x82\xbf\x82\xcd"</span>
-
-<span class="va">x1</span>
-<span class="co">#&gt; [1] "El Niño was particularly bad this year"</span>
-<span class="va">x2</span>
-<span class="co">#&gt; [1] "‚±‚ñ‚É‚¿‚Í"</span></code></pre></div>
-<p>To fix the problem you need to specify the encoding in <code>parse_character()</code>:</p>
-<div class="sourceCode" id="cb201"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">parse_character</span><span class="op">(</span><span class="va">x1</span>, locale <span class="op">=</span> <span class="fu">locale</span><span class="op">(</span>encoding <span class="op">=</span> <span class="st">"Latin1"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "El Niño was particularly bad this year"</span>
-<span class="fu">parse_character</span><span class="op">(</span><span class="va">x2</span>, locale <span class="op">=</span> <span class="fu">locale</span><span class="op">(</span>encoding <span class="op">=</span> <span class="st">"Shift-JIS"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "&lt;U+3053&gt;&lt;U+3093&gt;&lt;U+306B&gt;&lt;U+3061&gt;&lt;U+306F&gt;"</span></code></pre></div>
-<p>How do you find the correct encoding? If you’re lucky, it’ll be included somewhere in the data documentation. Unfortunately, that’s rarely the case, so readr provides <code>guess_encoding()</code> to help you figure it out. It’s not foolproof, and it works better when you have lots of text (unlike here), but it’s a reasonable place to start. Expect to try a few different encodings before you find the right one.</p>
-<div class="sourceCode" id="cb202"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">guess_encoding</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2 x 2</span>
-<span class="co">#&gt;   encoding   confidence</span>
-<span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 ISO-8859-1       0.46</span>
-<span class="co">#&gt; 2 ISO-8859-9       0.23</span>
-<span class="fu">guess_encoding</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw</a></span><span class="op">(</span><span class="va">x2</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 2</span>
-<span class="co">#&gt;   encoding confidence</span>
-<span class="co">#&gt;   &lt;chr&gt;         &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 KOI8-R         0.42</span></code></pre></div>
-<p>The first argument to <code>guess_encoding()</code> can either be a path to a file, or, as in this case, a raw vector (useful if the strings are already in R).</p>
+<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="st">"El Ni\xf1o was particularly bad this year"</span></span>
+<span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="st">"\x82\xb1\x82\xf1\x82\xc9\x82\xbf\x82\xcd"</span></span>
+<span></span>
+<span><span class="va">x1</span></span>
+<span><span class="co">#&gt; [1] "El Niño was particularly bad this year"</span></span>
+<span><span class="va">x2</span></span>
+<span><span class="co">#&gt; [1] "‚±‚ñ‚É‚¿‚Í"</span></span></code></pre></div>
+<p>To fix the problem you need to specify the encoding in <code><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_character()</a></code>:</p>
+<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_character</a></span><span class="op">(</span><span class="va">x1</span>, locale <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/locale.html">locale</a></span><span class="op">(</span>encoding <span class="op">=</span> <span class="st">"Latin1"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "El Niño was particularly bad this year"</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_character</a></span><span class="op">(</span><span class="va">x2</span>, locale <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/locale.html">locale</a></span><span class="op">(</span>encoding <span class="op">=</span> <span class="st">"Shift-JIS"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "&lt;U+3053&gt;&lt;U+3093&gt;&lt;U+306B&gt;&lt;U+3061&gt;&lt;U+306F&gt;"</span></span></code></pre></div>
+<p>How do you find the correct encoding? If you’re lucky, it’ll be included somewhere in the data documentation. Unfortunately, that’s rarely the case, so readr provides <code><a href="https://readr.tidyverse.org/reference/encoding.html">guess_encoding()</a></code> to help you figure it out. It’s not foolproof, and it works better when you have lots of text (unlike here), but it’s a reasonable place to start. Expect to try a few different encodings before you find the right one.</p>
+<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/encoding.html">guess_encoding</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw</a></span><span class="op">(</span><span class="va">x1</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2 x 2</span></span>
+<span><span class="co">#&gt;   encoding   confidence</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;           &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 ISO-8859-1       0.46</span></span>
+<span><span class="co">#&gt; 2 ISO-8859-9       0.23</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/encoding.html">guess_encoding</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rawConversion.html">charToRaw</a></span><span class="op">(</span><span class="va">x2</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 1 x 2</span></span>
+<span><span class="co">#&gt;   encoding confidence</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;         &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 KOI8-R         0.42</span></span></code></pre></div>
+<p>The first argument to <code><a href="https://readr.tidyverse.org/reference/encoding.html">guess_encoding()</a></code> can either be a path to a file, or, as in this case, a raw vector (useful if the strings are already in R).</p>
 <p>Encodings are a rich and complex topic, and I’ve only scratched the surface here. If you’d like to learn more I’d recommend reading the detailed explanation at <a href="http://kunststube.net/encoding/" class="uri">http://kunststube.net/encoding/</a>.</p>
 </div>
 <div id="readr-factors" class="section level3" number="11.3.3">
 <h3>
 <span class="header-section-number">11.3.3</span> Factors<a class="anchor" aria-label="anchor" href="#readr-factors"><i class="fas fa-link"></i></a>
 </h3>
-<p>R uses factors to represent categorical variables that have a known set of possible values. Give <code>parse_factor()</code> a vector of known <code>levels</code> to generate a warning whenever an unexpected value is present:</p>
-<div class="sourceCode" id="cb203"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">fruit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"apple"</span>, <span class="st">"banana"</span><span class="op">)</span>
-<span class="fu">parse_factor</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"bananana"</span><span class="op">)</span>, levels <span class="op">=</span> <span class="va">fruit</span><span class="op">)</span>
-<span class="co">#&gt; Warning: 1 parsing failure.</span>
-<span class="co">#&gt; row col           expected   actual</span>
-<span class="co">#&gt;   3  -- value in level set bananana</span>
-<span class="co">#&gt; [1] apple  banana &lt;NA&gt;  </span>
-<span class="co">#&gt; attr(,"problems")</span>
-<span class="co">#&gt; # A tibble: 1 x 4</span>
-<span class="co">#&gt;     row   col expected           actual  </span>
-<span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;              &lt;chr&gt;   </span>
-<span class="co">#&gt; 1     3    NA value in level set bananana</span>
-<span class="co">#&gt; Levels: apple banana</span></code></pre></div>
+<p>R uses factors to represent categorical variables that have a known set of possible values. Give <code><a href="https://readr.tidyverse.org/reference/parse_factor.html">parse_factor()</a></code> a vector of known <code>levels</code> to generate a warning whenever an unexpected value is present:</p>
+<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fruit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"apple"</span>, <span class="st">"banana"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_factor.html">parse_factor</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"bananana"</span><span class="op">)</span>, levels <span class="op">=</span> <span class="va">fruit</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: 1 parsing failure.</span></span>
+<span><span class="co">#&gt; row col           expected   actual</span></span>
+<span><span class="co">#&gt;   3  -- value in level set bananana</span></span>
+<span><span class="co">#&gt; [1] apple  banana &lt;NA&gt;  </span></span>
+<span><span class="co">#&gt; attr(,"problems")</span></span>
+<span><span class="co">#&gt; # A tibble: 1 x 4</span></span>
+<span><span class="co">#&gt;     row   col expected           actual  </span></span>
+<span><span class="co">#&gt;   &lt;int&gt; &lt;int&gt; &lt;chr&gt;              &lt;chr&gt;   </span></span>
+<span><span class="co">#&gt; 1     3    NA value in level set bananana</span></span>
+<span><span class="co">#&gt; Levels: apple banana</span></span></code></pre></div>
 <p>But if you have many problematic entries, it’s often easier to leave as character vectors and then use the tools you’ll learn about in <a href="strings.html#strings">strings</a> and <a href="vectors.html#factors-1">factors</a> to clean them up.</p>
 </div>
 <div id="readr-datetimes" class="section level3" number="11.3.4">
@@ -475,36 +478,36 @@ like “1,000,000”, and these grouping characters vary around the world.</p></
 <p>You pick between three parsers depending on whether you want a date (the number of days since 1970-01-01), a date-time (the number of seconds since midnight 1970-01-01), or a time (the number of seconds since midnight). When called without any additional arguments:</p>
 <ul>
 <li>
-<p><code>parse_datetime()</code> expects an ISO8601 date-time. ISO8601 is an
+<p><code><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_datetime()</a></code> expects an ISO8601 date-time. ISO8601 is an
 international standard in which the components of a date are
 organised from biggest to smallest: year, month, day, hour, minute,
 second.</p>
-<div class="sourceCode" id="cb204"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">parse_datetime</span><span class="op">(</span><span class="st">"2010-10-01T2010"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2010-10-01 20:10:00 UTC"</span>
-<span class="co"># If time is omitted, it will be set to midnight</span>
-<span class="fu">parse_datetime</span><span class="op">(</span><span class="st">"20101010"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2010-10-10 UTC"</span></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_datetime</a></span><span class="op">(</span><span class="st">"2010-10-01T2010"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2010-10-01 20:10:00 UTC"</span></span>
+<span><span class="co"># If time is omitted, it will be set to midnight</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_datetime</a></span><span class="op">(</span><span class="st">"20101010"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2010-10-10 UTC"</span></span></code></pre></div>
 <p>This is the most important date/time standard, and if you work with
 dates and times frequently, I recommend reading
 <a href="https://en.wikipedia.org/wiki/ISO_8601" class="uri">https://en.wikipedia.org/wiki/ISO_8601</a></p>
 </li>
 <li>
-<p><code>parse_date()</code> expects a four digit year, a <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> or <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code>, the month, a <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>
-or <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code>, then the day:</p>
-<div class="sourceCode" id="cb205"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">parse_date</span><span class="op">(</span><span class="st">"2010-10-01"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2010-10-01"</span></code></pre></div>
+<p><code><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_date()</a></code> expects a four digit year, a <code>-</code> or <code>/</code>, the month, a <code>-</code>
+or <code>/</code>, then the day:</p>
+<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_date</a></span><span class="op">(</span><span class="st">"2010-10-01"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2010-10-01"</span></span></code></pre></div>
 </li>
 <li>
-<p><code>parse_time()</code> expects the hour, <code><a href="https://rdrr.io/r/base/Colon.html">:</a></code>, minutes, optionally <code><a href="https://rdrr.io/r/base/Colon.html">:</a></code> and seconds,
+<p><code><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_time()</a></code> expects the hour, <code>:</code>, minutes, optionally <code>:</code> and seconds,
 and an optional am/pm specifier:</p>
-<div class="sourceCode" id="cb206"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hms.tidyverse.org/">hms</a></span><span class="op">)</span>
-<span class="fu">parse_time</span><span class="op">(</span><span class="st">"01:10 am"</span><span class="op">)</span>
-<span class="co">#&gt; 01:10:00</span>
-<span class="fu">parse_time</span><span class="op">(</span><span class="st">"20:10:01"</span><span class="op">)</span>
-<span class="co">#&gt; 20:10:01</span></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://hms.tidyverse.org/">hms</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_time</a></span><span class="op">(</span><span class="st">"01:10 am"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 01:10:00</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_time</a></span><span class="op">(</span><span class="st">"20:10:01"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 20:10:01</span></span></code></pre></div>
 <p>Base R doesn’t have a great built in class for time data, so we use
 the one provided in the hms package.</p>
 </li>
@@ -572,48 +575,48 @@ come back to this <a href="dates-and-times.html#time-zones">time zones</a>.
 </dd>
 </dl>
 <p>The best way to figure out the correct format is to create a few examples in a character vector, and test with one of the parsing functions. For example:</p>
-<div class="sourceCode" id="cb207"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">parse_date</span><span class="op">(</span><span class="st">"01/02/15"</span>, <span class="st">"%m/%d/%y"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2015-01-02"</span>
-<span class="fu">parse_date</span><span class="op">(</span><span class="st">"01/02/15"</span>, <span class="st">"%d/%m/%y"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2015-02-01"</span>
-<span class="fu">parse_date</span><span class="op">(</span><span class="st">"01/02/15"</span>, <span class="st">"%y/%m/%d"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2001-02-15"</span></code></pre></div>
-<p>If you’re using <code>%b</code> or <code>%B</code> with non-English month names, you’ll need to set the <code>lang</code> argument to <code>locale()</code>. See the list of built-in languages in <code>date_names_langs()</code>, or if your language is not already included, create your own with <code>date_names()</code>.</p>
-<div class="sourceCode" id="cb208"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">parse_date</span><span class="op">(</span><span class="st">"1 janvier 2015"</span>, <span class="st">"%d %B %Y"</span>, locale <span class="op">=</span> <span class="fu">locale</span><span class="op">(</span><span class="st">"fr"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "2015-01-01"</span></code></pre></div>
+<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_date</a></span><span class="op">(</span><span class="st">"01/02/15"</span>, <span class="st">"%m/%d/%y"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2015-01-02"</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_date</a></span><span class="op">(</span><span class="st">"01/02/15"</span>, <span class="st">"%d/%m/%y"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2015-02-01"</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_date</a></span><span class="op">(</span><span class="st">"01/02/15"</span>, <span class="st">"%y/%m/%d"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2001-02-15"</span></span></code></pre></div>
+<p>If you’re using <code>%b</code> or <code>%B</code> with non-English month names, you’ll need to set the <code>lang</code> argument to <code><a href="https://readr.tidyverse.org/reference/locale.html">locale()</a></code>. See the list of built-in languages in <code><a href="https://readr.tidyverse.org/reference/date_names.html">date_names_langs()</a></code>, or if your language is not already included, create your own with <code><a href="https://readr.tidyverse.org/reference/date_names.html">date_names()</a></code>.</p>
+<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">parse_date</a></span><span class="op">(</span><span class="st">"1 janvier 2015"</span>, <span class="st">"%d %B %Y"</span>, locale <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/locale.html">locale</a></span><span class="op">(</span><span class="st">"fr"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "2015-01-01"</span></span></code></pre></div>
 </div>
 <div id="exercises-21" class="section level3" number="11.3.5">
 <h3>
 <span class="header-section-number">11.3.5</span> Exercises<a class="anchor" aria-label="anchor" href="#exercises-21"><i class="fas fa-link"></i></a>
 </h3>
 <ol style="list-style-type: decimal">
-<li><p>What are the most important arguments to <code>locale()</code>?</p></li>
+<li><p>What are the most important arguments to <code><a href="https://readr.tidyverse.org/reference/locale.html">locale()</a></code>?</p></li>
 <li><p>What happens if you try and set <code>decimal_mark</code> and <code>grouping_mark</code>
 to the same character? What happens to the default value of
 <code>grouping_mark</code> when you set <code>decimal_mark</code> to “,”? What happens
 to the default value of <code>decimal_mark</code> when you set the <code>grouping_mark</code>
 to “.”?</p></li>
 <li><p>I didn’t discuss the <code>date_format</code> and <code>time_format</code> options to
-<code>locale()</code>. What do they do? Construct an example that shows when
+<code><a href="https://readr.tidyverse.org/reference/locale.html">locale()</a></code>. What do they do? Construct an example that shows when
 they might be useful.</p></li>
 <li><p>If you live outside the US, create a new locale object that encapsulates
 the settings for the types of file you read most commonly.</p></li>
-<li><p>What’s the difference between <code>read_csv()</code> and <code>read_csv2()</code>?</p></li>
+<li><p>What’s the difference between <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> and <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv2()</a></code>?</p></li>
 <li><p>What are the most common encodings used in Europe? What are the
 most common encodings used in Asia? Do some googling to find out.</p></li>
 <li>
 <p>Generate the correct format string to parse each of the following
 dates and times:</p>
-<div class="sourceCode" id="cb209"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">d1</span> <span class="op">&lt;-</span> <span class="st">"January 1, 2010"</span>
-<span class="va">d2</span> <span class="op">&lt;-</span> <span class="st">"2015-Mar-07"</span>
-<span class="va">d3</span> <span class="op">&lt;-</span> <span class="st">"06-Jun-2017"</span>
-<span class="va">d4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"August 19 (2015)"</span>, <span class="st">"July 1 (2015)"</span><span class="op">)</span>
-<span class="va">d5</span> <span class="op">&lt;-</span> <span class="st">"12/30/14"</span> <span class="co"># Dec 30, 2014</span>
-<span class="va">t1</span> <span class="op">&lt;-</span> <span class="st">"1705"</span>
-<span class="va">t2</span> <span class="op">&lt;-</span> <span class="st">"11:15:10.12 PM"</span></code></pre></div>
+<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">d1</span> <span class="op">&lt;-</span> <span class="st">"January 1, 2010"</span></span>
+<span><span class="va">d2</span> <span class="op">&lt;-</span> <span class="st">"2015-Mar-07"</span></span>
+<span><span class="va">d3</span> <span class="op">&lt;-</span> <span class="st">"06-Jun-2017"</span></span>
+<span><span class="va">d4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"August 19 (2015)"</span>, <span class="st">"July 1 (2015)"</span><span class="op">)</span></span>
+<span><span class="va">d5</span> <span class="op">&lt;-</span> <span class="st">"12/30/14"</span> <span class="co"># Dec 30, 2014</span></span>
+<span><span class="va">t1</span> <span class="op">&lt;-</span> <span class="st">"1705"</span></span>
+<span><span class="va">t2</span> <span class="op">&lt;-</span> <span class="st">"11:15:10.12 PM"</span></span></code></pre></div>
 </li>
 </ol>
 </div>
@@ -631,25 +634,25 @@ dates and times:</p>
 <h3>
 <span class="header-section-number">11.4.1</span> Strategy<a class="anchor" aria-label="anchor" href="#strategy"><i class="fas fa-link"></i></a>
 </h3>
-<p>readr uses a heuristic to figure out the type of each column: it reads the first 1000 rows and uses some (moderately conservative) heuristics to figure out the type of each column. You can emulate this process with a character vector using <code>guess_parser()</code>, which returns readr’s best guess, and <code>parse_guess()</code> which uses that guess to parse the column:</p>
-<div class="sourceCode" id="cb210"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">guess_parser</span><span class="op">(</span><span class="st">"2010-10-01"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "date"</span>
-<span class="fu">guess_parser</span><span class="op">(</span><span class="st">"15:01"</span><span class="op">)</span>
-<span class="co">#&gt; [1] "time"</span>
-<span class="fu">guess_parser</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="st">"FALSE"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "logical"</span>
-<span class="fu">guess_parser</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"5"</span>, <span class="st">"9"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "double"</span>
-<span class="fu">guess_parser</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"12,352,561"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1] "number"</span>
-
-<span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu">parse_guess</span><span class="op">(</span><span class="st">"2010-10-10"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;  Date[1:1], format: "2010-10-10"</span></code></pre></div>
+<p>readr uses a heuristic to figure out the type of each column: it reads the first 1000 rows and uses some (moderately conservative) heuristics to figure out the type of each column. You can emulate this process with a character vector using <code><a href="https://readr.tidyverse.org/reference/parse_guess.html">guess_parser()</a></code>, which returns readr’s best guess, and <code><a href="https://readr.tidyverse.org/reference/parse_guess.html">parse_guess()</a></code> which uses that guess to parse the column:</p>
+<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_guess.html">guess_parser</a></span><span class="op">(</span><span class="st">"2010-10-01"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "date"</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_guess.html">guess_parser</a></span><span class="op">(</span><span class="st">"15:01"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "time"</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_guess.html">guess_parser</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="st">"FALSE"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "logical"</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_guess.html">guess_parser</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1"</span>, <span class="st">"5"</span>, <span class="st">"9"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "double"</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_guess.html">guess_parser</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"12,352,561"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "number"</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_guess.html">parse_guess</a></span><span class="op">(</span><span class="st">"2010-10-10"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  Date[1:1], format: "2010-10-10"</span></span></code></pre></div>
 <p>The heuristic tries each of the following types, stopping when it finds a match:</p>
 <ul>
 <li>logical: contains only “F”, “T”, “FALSE”, or “TRUE”.</li>
-<li>integer: contains only numeric characters (and <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>).</li>
+<li>integer: contains only numeric characters (and <code>-</code>).</li>
 <li>double: contains only valid doubles (including numbers like <code>4.5e-5</code>).</li>
 <li>number: contains valid doubles with the grouping mark inside.</li>
 <li>time: matches the default <code>time_format</code>.</li>
@@ -673,65 +676,66 @@ vector, whereas you probably want to parse it as something more
 specific.</p></li>
 </ol>
 <p>readr contains a challenging CSV that illustrates both of these problems:</p>
-<div class="sourceCode" id="cb211"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">challenge</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="fu">readr_example</span><span class="op">(</span><span class="st">"challenge.csv"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 2000 Columns: 2</span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; Delimiter: ","</span>
-<span class="co">#&gt; dbl  (1): x</span>
-<span class="co">#&gt; date (1): y</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></code></pre></div>
-<p>(Note the use of <code>readr_example()</code> which finds the path to one of the files included with the package)</p>
-<p>There are two printed outputs: the column specification generated by looking at the first 1000 rows, and the first five parsing failures. It’s always a good idea to explicitly pull out the <code>problems()</code>, so you can explore them in more depth:</p>
-<div class="sourceCode" id="cb212"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">problems</span><span class="op">(</span><span class="va">challenge</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 0 x 5</span>
-<span class="co">#&gt; # ... with 5 variables: row &lt;int&gt;, col &lt;int&gt;, expected &lt;chr&gt;, actual &lt;chr&gt;,</span>
-<span class="co">#&gt; #   file &lt;chr&gt;</span></code></pre></div>
-<p>A good strategy is to work column by column until there are no problems remaining. Here we can see that there are a lot of parsing problems with the <code>y</code> column. If we look at the last few rows, you’ll see that they’re dates stored in a character vector:</p>
-<div class="sourceCode" id="cb213"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">challenge</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 x 2</span>
-<span class="co">#&gt;       x y         </span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;    </span>
-<span class="co">#&gt; 1 0.805 2019-11-21</span>
-<span class="co">#&gt; 2 0.164 2018-03-29</span>
-<span class="co">#&gt; 3 0.472 2014-08-04</span>
-<span class="co">#&gt; 4 0.718 2015-08-16</span>
-<span class="co">#&gt; 5 0.270 2020-02-04</span>
-<span class="co">#&gt; 6 0.608 2019-01-06</span></code></pre></div>
-<p>That suggests we need to use a date parser instead. To fix the call, start by copying and pasting the column specification into your original call:</p>
-<div class="sourceCode" id="cb214"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">challenge</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span>
-  <span class="fu">readr_example</span><span class="op">(</span><span class="st">"challenge.csv"</span><span class="op">)</span>, 
-  col_types <span class="op">=</span> <span class="fu">cols</span><span class="op">(</span>
-    x <span class="op">=</span> <span class="fu">col_double</span><span class="op">(</span><span class="op">)</span>,
-    y <span class="op">=</span> <span class="fu">col_logical</span><span class="op">(</span><span class="op">)</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
-<p>Then you can fix the type of the <code>y</code> column by specifying that <code>y</code> is a date column:</p>
 <div class="sourceCode" id="cb215"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">challenge</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span>
-  <span class="fu">readr_example</span><span class="op">(</span><span class="st">"challenge.csv"</span><span class="op">)</span>, 
-  col_types <span class="op">=</span> <span class="fu">cols</span><span class="op">(</span>
-    x <span class="op">=</span> <span class="fu">col_double</span><span class="op">(</span><span class="op">)</span>,
-    y <span class="op">=</span> <span class="fu">col_date</span><span class="op">(</span><span class="op">)</span>
-  <span class="op">)</span>
-<span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">challenge</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 6 x 2</span>
-<span class="co">#&gt;       x y         </span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;    </span>
-<span class="co">#&gt; 1 0.805 2019-11-21</span>
-<span class="co">#&gt; 2 0.164 2018-03-29</span>
-<span class="co">#&gt; 3 0.472 2014-08-04</span>
-<span class="co">#&gt; 4 0.718 2015-08-16</span>
-<span class="co">#&gt; 5 0.270 2020-02-04</span>
-<span class="co">#&gt; 6 0.608 2019-01-06</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">challenge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://readr.tidyverse.org/reference/readr_example.html">readr_example</a></span><span class="op">(</span><span class="st">"challenge.csv"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 2000 Columns: 2</span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Delimiter: ","</span></span>
+<span><span class="co">#&gt; dbl  (1): x</span></span>
+<span><span class="co">#&gt; date (1): y</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span></code></pre></div>
+<p>(Note the use of <code><a href="https://readr.tidyverse.org/reference/readr_example.html">readr_example()</a></code> which finds the path to one of the files included with the package)</p>
+<p>There are two printed outputs: the column specification generated by looking at the first 1000 rows, and the first five parsing failures. It’s always a good idea to explicitly pull out the <code><a href="https://readr.tidyverse.org/reference/problems.html">problems()</a></code>, so you can explore them in more depth:</p>
+<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/problems.html">problems</a></span><span class="op">(</span><span class="va">challenge</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 0 x 5</span></span>
+<span><span class="co">#&gt; # ... with 5 variables: row &lt;int&gt;, col &lt;int&gt;, expected &lt;chr&gt;, actual &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   file &lt;chr&gt;</span></span>
+<span><span class="co">#&gt; # i Use `colnames()` to see all variable names</span></span></code></pre></div>
+<p>A good strategy is to work column by column until there are no problems remaining. Here we can see that there are a lot of parsing problems with the <code>y</code> column. If we look at the last few rows, you’ll see that they’re dates stored in a character vector:</p>
+<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">challenge</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 x 2</span></span>
+<span><span class="co">#&gt;       x y         </span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;    </span></span>
+<span><span class="co">#&gt; 1 0.805 2019-11-21</span></span>
+<span><span class="co">#&gt; 2 0.164 2018-03-29</span></span>
+<span><span class="co">#&gt; 3 0.472 2014-08-04</span></span>
+<span><span class="co">#&gt; 4 0.718 2015-08-16</span></span>
+<span><span class="co">#&gt; 5 0.270 2020-02-04</span></span>
+<span><span class="co">#&gt; 6 0.608 2019-01-06</span></span></code></pre></div>
+<p>That suggests we need to use a date parser instead. To fix the call, start by copying and pasting the column specification into your original call:</p>
+<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">challenge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/readr_example.html">readr_example</a></span><span class="op">(</span><span class="st">"challenge.csv"</span><span class="op">)</span>, </span>
+<span>  col_types <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">col_double</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">col_logical</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>Then you can fix the type of the <code>y</code> column by specifying that <code>y</code> is a date column:</p>
+<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">challenge</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://readr.tidyverse.org/reference/readr_example.html">readr_example</a></span><span class="op">(</span><span class="st">"challenge.csv"</span><span class="op">)</span>, </span>
+<span>  col_types <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">col_double</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_datetime.html">col_date</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html">tail</a></span><span class="op">(</span><span class="va">challenge</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 6 x 2</span></span>
+<span><span class="co">#&gt;       x y         </span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;    </span></span>
+<span><span class="co">#&gt; 1 0.805 2019-11-21</span></span>
+<span><span class="co">#&gt; 2 0.164 2018-03-29</span></span>
+<span><span class="co">#&gt; 3 0.472 2014-08-04</span></span>
+<span><span class="co">#&gt; 4 0.718 2015-08-16</span></span>
+<span><span class="co">#&gt; 5 0.270 2020-02-04</span></span>
+<span><span class="co">#&gt; 6 0.608 2019-01-06</span></span></code></pre></div>
 <p>Every <code>parse_xyz()</code> function has a corresponding <code>col_xyz()</code> function. You use <code>parse_xyz()</code> when the data is in a character vector in R already; you use <code>col_xyz()</code> when you want to tell readr how to load the data.</p>
-<p>I highly recommend always supplying <code>col_types</code>, building up from the print-out provided by readr. This ensures that you have a consistent and reproducible data import script. If you rely on the default guesses and your data changes, readr will continue to read it in. If you want to be really strict, use <code>stop_for_problems()</code>: that will throw an error and stop your script if there are any parsing problems.</p>
+<p>I highly recommend always supplying <code>col_types</code>, building up from the print-out provided by readr. This ensures that you have a consistent and reproducible data import script. If you rely on the default guesses and your data changes, readr will continue to read it in. If you want to be really strict, use <code><a href="https://readr.tidyverse.org/reference/problems.html">stop_for_problems()</a></code>: that will throw an error and stop your script if there are any parsing problems.</p>
 </div>
 <div id="other-strategies" class="section level3" number="11.4.3">
 <h3>
@@ -742,74 +746,75 @@ specific.</p></li>
 <li>
 <p>In the previous example, we just got unlucky: if we look at just
 one more row than the default, we can correctly parse in one shot:</p>
-<div class="sourceCode" id="cb216"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">challenge2</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="fu">readr_example</span><span class="op">(</span><span class="st">"challenge.csv"</span><span class="op">)</span>, guess_max <span class="op">=</span> <span class="fl">1001</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 2000 Columns: 2</span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; Delimiter: ","</span>
-<span class="co">#&gt; dbl  (1): x</span>
-<span class="co">#&gt; date (1): y</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
-<span class="va">challenge2</span>
-<span class="co">#&gt; # A tibble: 2,000 x 2</span>
-<span class="co">#&gt;       x y     </span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;</span>
-<span class="co">#&gt; 1   404 NA    </span>
-<span class="co">#&gt; 2  4172 NA    </span>
-<span class="co">#&gt; 3  3004 NA    </span>
-<span class="co">#&gt; 4   787 NA    </span>
-<span class="co">#&gt; 5    37 NA    </span>
-<span class="co">#&gt; 6  2332 NA    </span>
-<span class="co">#&gt; # ... with 1,994 more rows</span></code></pre></div>
+<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">challenge2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://readr.tidyverse.org/reference/readr_example.html">readr_example</a></span><span class="op">(</span><span class="st">"challenge.csv"</span><span class="op">)</span>, guess_max <span class="op">=</span> <span class="fl">1001</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 2000 Columns: 2</span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Delimiter: ","</span></span>
+<span><span class="co">#&gt; dbl  (1): x</span></span>
+<span><span class="co">#&gt; date (1): y</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="va">challenge2</span></span>
+<span><span class="co">#&gt; # A tibble: 2,000 x 2</span></span>
+<span><span class="co">#&gt;       x y     </span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;</span></span>
+<span><span class="co">#&gt; 1   404 NA    </span></span>
+<span><span class="co">#&gt; 2  4172 NA    </span></span>
+<span><span class="co">#&gt; 3  3004 NA    </span></span>
+<span><span class="co">#&gt; 4   787 NA    </span></span>
+<span><span class="co">#&gt; 5    37 NA    </span></span>
+<span><span class="co">#&gt; 6  2332 NA    </span></span>
+<span><span class="co">#&gt; # ... with 1,994 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 </li>
 <li>
 <p>Sometimes it’s easier to diagnose problems if you just read in all
 the columns as character vectors:</p>
-<div class="sourceCode" id="cb217"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">challenge2</span> <span class="op">&lt;-</span> <span class="fu">read_csv</span><span class="op">(</span><span class="fu">readr_example</span><span class="op">(</span><span class="st">"challenge.csv"</span><span class="op">)</span>, 
-  col_types <span class="op">=</span> <span class="fu">cols</span><span class="op">(</span>.default <span class="op">=</span> <span class="fu">col_character</span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
-<p>This is particularly useful in conjunction with <code>type_convert()</code>,
+<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">challenge2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="fu"><a href="https://readr.tidyverse.org/reference/readr_example.html">readr_example</a></span><span class="op">(</span><span class="st">"challenge.csv"</span><span class="op">)</span>, </span>
+<span>  col_types <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/cols.html">cols</a></span><span class="op">(</span>.default <span class="op">=</span> <span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">col_character</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
+<p>This is particularly useful in conjunction with <code><a href="https://readr.tidyverse.org/reference/type_convert.html">type_convert()</a></code>,
 which applies the parsing heuristics to the character columns in a data
 frame.</p>
-<div class="sourceCode" id="cb218"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span>
-  <span class="op">~</span><span class="va">x</span>,  <span class="op">~</span><span class="va">y</span>,
-  <span class="st">"1"</span>, <span class="st">"1.21"</span>,
-  <span class="st">"2"</span>, <span class="st">"2.32"</span>,
-  <span class="st">"3"</span>, <span class="st">"4.56"</span>
-<span class="op">)</span>
-<span class="va">df</span>
-<span class="co">#&gt; # A tibble: 3 x 2</span>
-<span class="co">#&gt;   x     y    </span>
-<span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;</span>
-<span class="co">#&gt; 1 1     1.21 </span>
-<span class="co">#&gt; 2 2     2.32 </span>
-<span class="co">#&gt; 3 3     4.56</span>
-
-<span class="co"># Note the column types</span>
-<span class="fu">type_convert</span><span class="op">(</span><span class="va">df</span><span class="op">)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; cols(</span>
-<span class="co">#&gt;   x = col_double(),</span>
-<span class="co">#&gt;   y = col_double()</span>
-<span class="co">#&gt; )</span>
-<span class="co">#&gt; # A tibble: 3 x 2</span>
-<span class="co">#&gt;       x     y</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1     1  1.21</span>
-<span class="co">#&gt; 2     2  2.32</span>
-<span class="co">#&gt; 3     3  4.56</span></code></pre></div>
+<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
+<span>  <span class="op">~</span><span class="va">x</span>,  <span class="op">~</span><span class="va">y</span>,</span>
+<span>  <span class="st">"1"</span>, <span class="st">"1.21"</span>,</span>
+<span>  <span class="st">"2"</span>, <span class="st">"2.32"</span>,</span>
+<span>  <span class="st">"3"</span>, <span class="st">"4.56"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="va">df</span></span>
+<span><span class="co">#&gt; # A tibble: 3 x 2</span></span>
+<span><span class="co">#&gt;   x     y    </span></span>
+<span><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;</span></span>
+<span><span class="co">#&gt; 1 1     1.21 </span></span>
+<span><span class="co">#&gt; 2 2     2.32 </span></span>
+<span><span class="co">#&gt; 3 3     4.56</span></span>
+<span></span>
+<span><span class="co"># Note the column types</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/type_convert.html">type_convert</a></span><span class="op">(</span><span class="va">df</span><span class="op">)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; cols(</span></span>
+<span><span class="co">#&gt;   x = col_double(),</span></span>
+<span><span class="co">#&gt;   y = col_double()</span></span>
+<span><span class="co">#&gt; )</span></span>
+<span><span class="co">#&gt; # A tibble: 3 x 2</span></span>
+<span><span class="co">#&gt;       x     y</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1     1  1.21</span></span>
+<span><span class="co">#&gt; 2     2  2.32</span></span>
+<span><span class="co">#&gt; 3     3  4.56</span></span></code></pre></div>
 </li>
 <li><p>If you’re reading a very large file, you might want to set <code>n_max</code> to
 a smallish number like 10,000 or 100,000. That will accelerate your
 iterations while you eliminate common problems.</p></li>
 <li><p>If you’re having major parsing problems, sometimes it’s easier
-to just read into a character vector of lines with <code>read_lines()</code>,
-or even a character vector of length 1 with <code>read_file()</code>. Then you
+to just read into a character vector of lines with <code><a href="https://readr.tidyverse.org/reference/read_lines.html">read_lines()</a></code>,
+or even a character vector of length 1 with <code><a href="https://readr.tidyverse.org/reference/read_file.html">read_file()</a></code>. Then you
 can use the string parsing skills you’ll learn later to parse
 more exotic formats.</p></li>
 </ul>
@@ -819,86 +824,89 @@ more exotic formats.</p></li>
 <h2>
 <span class="header-section-number">11.5</span> Writing to a file<a class="anchor" aria-label="anchor" href="#writing-to-a-file"><i class="fas fa-link"></i></a>
 </h2>
-<p>readr also comes with two useful functions for writing data back to disk: <code>write_csv()</code> and <code>write_tsv()</code>. Both functions increase the chances of the output file being read back in correctly by:</p>
+<p>readr also comes with two useful functions for writing data back to disk: <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv()</a></code> and <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_tsv()</a></code>. Both functions increase the chances of the output file being read back in correctly by:</p>
 <ul>
 <li><p>Always encoding strings in UTF-8.</p></li>
 <li><p>Saving dates and date-times in ISO8601 format so they are easily
 parsed elsewhere.</p></li>
 </ul>
-<p>If you want to export a csv file to Excel, use <code>write_excel_csv()</code> — this writes a special character (a “byte order mark”) at the start of the file which tells Excel that you’re using the UTF-8 encoding.</p>
+<p>If you want to export a csv file to Excel, use <code><a href="https://readr.tidyverse.org/reference/write_delim.html">write_excel_csv()</a></code> — this writes a special character (a “byte order mark”) at the start of the file which tells Excel that you’re using the UTF-8 encoding.</p>
 <p>The most important arguments are <code>x</code> (the data frame to save), and <code>path</code> (the location to save it). You can also specify how missing values are written with <code>na</code>, and if you want to <code>append</code> to an existing file.</p>
-<div class="sourceCode" id="cb219"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">write_csv</span><span class="op">(</span><span class="va">challenge</span>, <span class="st">"challenge.csv"</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb223"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">challenge</span>, <span class="st">"challenge.csv"</span><span class="op">)</span></span></code></pre></div>
 <p>Note that the type information is lost when you save to csv:</p>
-<div class="sourceCode" id="cb220"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">challenge</span>
-<span class="co">#&gt; # A tibble: 2,000 x 2</span>
-<span class="co">#&gt;       x y     </span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;</span>
-<span class="co">#&gt; 1   404 NA    </span>
-<span class="co">#&gt; 2  4172 NA    </span>
-<span class="co">#&gt; 3  3004 NA    </span>
-<span class="co">#&gt; 4   787 NA    </span>
-<span class="co">#&gt; 5    37 NA    </span>
-<span class="co">#&gt; 6  2332 NA    </span>
-<span class="co">#&gt; # ... with 1,994 more rows</span>
-<span class="fu">write_csv</span><span class="op">(</span><span class="va">challenge</span>, <span class="st">"challenge-2.csv"</span><span class="op">)</span>
-<span class="fu">read_csv</span><span class="op">(</span><span class="st">"challenge-2.csv"</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 2000 Columns: 2</span>
-<span class="co">#&gt; -- Column specification --------------------------------------------------------</span>
-<span class="co">#&gt; Delimiter: ","</span>
-<span class="co">#&gt; dbl  (1): x</span>
-<span class="co">#&gt; date (1): y</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span>
-<span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span>
-<span class="co">#&gt; # A tibble: 2,000 x 2</span>
-<span class="co">#&gt;       x y     </span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;</span>
-<span class="co">#&gt; 1   404 NA    </span>
-<span class="co">#&gt; 2  4172 NA    </span>
-<span class="co">#&gt; 3  3004 NA    </span>
-<span class="co">#&gt; 4   787 NA    </span>
-<span class="co">#&gt; 5    37 NA    </span>
-<span class="co">#&gt; 6  2332 NA    </span>
-<span class="co">#&gt; # ... with 1,994 more rows</span></code></pre></div>
+<div class="sourceCode" id="cb224"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">challenge</span></span>
+<span><span class="co">#&gt; # A tibble: 2,000 x 2</span></span>
+<span><span class="co">#&gt;       x y     </span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;</span></span>
+<span><span class="co">#&gt; 1   404 NA    </span></span>
+<span><span class="co">#&gt; 2  4172 NA    </span></span>
+<span><span class="co">#&gt; 3  3004 NA    </span></span>
+<span><span class="co">#&gt; 4   787 NA    </span></span>
+<span><span class="co">#&gt; 5    37 NA    </span></span>
+<span><span class="co">#&gt; 6  2332 NA    </span></span>
+<span><span class="co">#&gt; # ... with 1,994 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/write_delim.html">write_csv</a></span><span class="op">(</span><span class="va">challenge</span>, <span class="st">"challenge-2.csv"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv</a></span><span class="op">(</span><span class="st">"challenge-2.csv"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 2000 Columns: 2</span></span>
+<span><span class="co">#&gt; -- Column specification --------------------------------------------------------</span></span>
+<span><span class="co">#&gt; Delimiter: ","</span></span>
+<span><span class="co">#&gt; dbl  (1): x</span></span>
+<span><span class="co">#&gt; date (1): y</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; i Use `spec()` to retrieve the full column specification for this data.</span></span>
+<span><span class="co">#&gt; i Specify the column types or set `show_col_types = FALSE` to quiet this message.</span></span>
+<span><span class="co">#&gt; # A tibble: 2,000 x 2</span></span>
+<span><span class="co">#&gt;       x y     </span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;</span></span>
+<span><span class="co">#&gt; 1   404 NA    </span></span>
+<span><span class="co">#&gt; 2  4172 NA    </span></span>
+<span><span class="co">#&gt; 3  3004 NA    </span></span>
+<span><span class="co">#&gt; 4   787 NA    </span></span>
+<span><span class="co">#&gt; 5    37 NA    </span></span>
+<span><span class="co">#&gt; 6  2332 NA    </span></span>
+<span><span class="co">#&gt; # ... with 1,994 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>This makes CSVs a little unreliable for caching interim results—you need to recreate the column specification every time you load in. There are two alternatives:</p>
 <ol style="list-style-type: decimal">
 <li>
-<p><code>write_rds()</code> and <code>read_rds()</code> are uniform wrappers around the base
+<p><code><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds()</a></code> and <code><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds()</a></code> are uniform wrappers around the base
 functions <code><a href="https://rdrr.io/r/base/readRDS.html">readRDS()</a></code> and <code><a href="https://rdrr.io/r/base/readRDS.html">saveRDS()</a></code>. These store data in R’s custom
 binary format called RDS:</p>
-<div class="sourceCode" id="cb221"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">write_rds</span><span class="op">(</span><span class="va">challenge</span>, <span class="st">"challenge.rds"</span><span class="op">)</span>
-<span class="fu">read_rds</span><span class="op">(</span><span class="st">"challenge.rds"</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2,000 x 2</span>
-<span class="co">#&gt;       x y     </span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;</span>
-<span class="co">#&gt; 1   404 NA    </span>
-<span class="co">#&gt; 2  4172 NA    </span>
-<span class="co">#&gt; 3  3004 NA    </span>
-<span class="co">#&gt; 4   787 NA    </span>
-<span class="co">#&gt; 5    37 NA    </span>
-<span class="co">#&gt; 6  2332 NA    </span>
-<span class="co">#&gt; # ... with 1,994 more rows</span></code></pre></div>
+<div class="sourceCode" id="cb225"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">write_rds</a></span><span class="op">(</span><span class="va">challenge</span>, <span class="st">"challenge.rds"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://readr.tidyverse.org/reference/read_rds.html">read_rds</a></span><span class="op">(</span><span class="st">"challenge.rds"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2,000 x 2</span></span>
+<span><span class="co">#&gt;       x y     </span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;</span></span>
+<span><span class="co">#&gt; 1   404 NA    </span></span>
+<span><span class="co">#&gt; 2  4172 NA    </span></span>
+<span><span class="co">#&gt; 3  3004 NA    </span></span>
+<span><span class="co">#&gt; 4   787 NA    </span></span>
+<span><span class="co">#&gt; 5    37 NA    </span></span>
+<span><span class="co">#&gt; 6  2332 NA    </span></span>
+<span><span class="co">#&gt; # ... with 1,994 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 </li>
 <li>
 <p>The feather package implements a fast binary file format that can
 be shared across programming languages:</p>
-<div class="sourceCode" id="cb222"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">feather</span><span class="op">)</span>
-<span class="fu">write_feather</span><span class="op">(</span><span class="va">challenge</span>, <span class="st">"challenge.feather"</span><span class="op">)</span>
-<span class="fu">read_feather</span><span class="op">(</span><span class="st">"challenge.feather"</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 2,000 x 2</span>
-<span class="co">#&gt;       x      y</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;</span>
-<span class="co">#&gt; 1   404   &lt;NA&gt;</span>
-<span class="co">#&gt; 2  4172   &lt;NA&gt;</span>
-<span class="co">#&gt; 3  3004   &lt;NA&gt;</span>
-<span class="co">#&gt; 4   787   &lt;NA&gt;</span>
-<span class="co">#&gt; 5    37   &lt;NA&gt;</span>
-<span class="co">#&gt; 6  2332   &lt;NA&gt;</span>
-<span class="co">#&gt; # ... with 1,994 more rows</span></code></pre></div>
+<div class="sourceCode" id="cb226"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/wesm/feather">feather</a></span><span class="op">)</span></span>
+<span><span class="fu">write_feather</span><span class="op">(</span><span class="va">challenge</span>, <span class="st">"challenge.feather"</span><span class="op">)</span></span>
+<span><span class="fu">read_feather</span><span class="op">(</span><span class="st">"challenge.feather"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 2,000 x 2</span></span>
+<span><span class="co">#&gt;       x      y</span></span>
+<span><span class="co">#&gt;   &lt;dbl&gt; &lt;date&gt;</span></span>
+<span><span class="co">#&gt; 1   404   &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 2  4172   &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 3  3004   &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 4   787   &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 5    37   &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; 6  2332   &lt;NA&gt;</span></span>
+<span><span class="co">#&gt; # ... with 1,994 more rows</span></span></code></pre></div>
 </li>
 </ol>
 <p>Feather tends to be faster than RDS and is usable outside of R. RDS supports list-columns (which you’ll learn about in <a href="many-models.html#many-models">many models</a>); feather currently does not.</p>
@@ -958,8 +966,8 @@ database and return a data frame.</p></li>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/Data-Sci-2021/r4ds/blob/master/import.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/Data-Sci-2021/r4ds/edit/master/import.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/djvill/r4ds/blob/master/import.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/djvill/r4ds/edit/master/import.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -984,7 +992,7 @@ database and return a data frame.</p></li>
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');

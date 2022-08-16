@@ -2,7 +2,7 @@ bookdown::bs4_book:
   theme:
     primary: "#637238"
   # repo: https://github.com/hadley/r4ds
-  repo: https://github.com/Data-Sci-2021/r4ds
+  repo: https://github.com/djvill/r4ds
   includes:
     in_header: [ga_script.html]
 

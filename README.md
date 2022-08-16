@@ -1,9 +1,9 @@
 # R for Data Science
 
 This repository contains the source of the _R for Data Science_
-book---originally written by Hadley Wickham and Garrett Grolemund ([book site](http://r4ds.had.co.nz), [GitHub](https://github.com/hadley/r4ds/releases/tag/first-ed))---as
-[lightly modified](https://data-sci-2021.github.io/r4ds/) by Dan Villarreal for 
-the purposes of Data Science for Linguists at the University of Pittsburgh. 
+book&mdash;originally written by Hadley Wickham and Garrett Grolemund ([book site](http://r4ds.had.co.nz), [GitHub](https://github.com/hadley/r4ds/releases/tag/first-ed))&mdash;as
+[lightly modified](https://djvill.github.io/r4ds/) by Dan Villarreal for 
+the purposes of Data Science for Linguists at the University of Pittsburgh, based on the first edition. 
 _R4DS_ was released under a Creative Commons [BY-NC-ND 3.0](https://creativecommons.org/licenses/by-nc-nd/3.0/us/) License,
 and this version is being made available under that same license. 
 

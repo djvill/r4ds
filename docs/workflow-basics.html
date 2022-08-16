@@ -7,31 +7,34 @@
 <title>4 Workflow: basics | R for Data Science</title>
 <meta name="author" content="Hadley Wickham and Garrett Grolemund">
 <meta name="description" content="You now have some experience running R code. We didn’t give you many details, but you’ve obviously figured out the basics, or you would’ve thrown this book away in frustration! Frustration is...">
-<meta name="generator" content="bookdown 0.23 with bs4_book()">
+<meta name="generator" content="bookdown 0.28 with bs4_book()">
 <meta property="og:title" content="4 Workflow: basics | R for Data Science">
 <meta property="og:type" content="book">
-<meta property="og:url" content="https://r4ds.had.co.nz/workflow-basics.html">
-<meta property="og:image" content="https://r4ds.had.co.nz//cover.png">
+<meta property="og:url" content="https://djvill.github.io/r4ds/workflow-basics.html">
+<meta property="og:image" content="https://djvill.github.io/r4ds//cover.png">
 <meta property="og:description" content="You now have some experience running R code. We didn’t give you many details, but you’ve obviously figured out the basics, or you would’ve thrown this book away in frustration! Frustration is...">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="4 Workflow: basics | R for Data Science">
 <meta name="twitter:description" content="You now have some experience running R code. We didn’t give you many details, but you’ve obviously figured out the basics, or you would’ve thrown this book away in frustration! Frustration is...">
-<meta name="twitter:image" content="https://r4ds.had.co.nz//cover.png">
-<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/header-attrs-2.10/header-attrs.js"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="twitter:image" content="https://djvill.github.io/r4ds//cover.png">
+<!-- JS --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://kit.fontawesome.com/6ecbd6c532.js" crossorigin="anonymous"></script><script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="libs/bootstrap-4.6.0/bootstrap.min.css" rel="stylesheet">
-<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.2.5.1/tabs.js"></script><script src="libs/bs3compat-0.2.5.1/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
-<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.3/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
+<script src="libs/bootstrap-4.6.0/bootstrap.bundle.min.js"></script><script src="libs/bs3compat-0.4.0/transition.js"></script><script src="libs/bs3compat-0.4.0/tabs.js"></script><script src="libs/bs3compat-0.4.0/bs3compat.js"></script><link href="libs/bs4_book-1.0.0/bs4_book.css" rel="stylesheet">
+<script src="libs/bs4_book-1.0.0/bs4_book.js"></script><script src="libs/htmlwidgets-1.5.4/htmlwidgets.js"></script><link href="libs/str_view-0.1.0/str_view.css" rel="stylesheet">
 <script src="libs/str_view-binding-1.4.0/str_view.js"></script><link href="libs/leaflet-1.3.1/leaflet.css" rel="stylesheet">
 <script src="libs/leaflet-1.3.1/leaflet.js"></script><link href="libs/leafletfix-1.0.0/leafletfix.css" rel="stylesheet">
 <script src="libs/proj4-2.6.2/proj4.min.js"></script><script src="libs/Proj4Leaflet-1.0.1/proj4leaflet.js"></script><link href="libs/rstudio_leaflet-1.3.1/rstudio_leaflet.css" rel="stylesheet">
-<script src="libs/leaflet-binding-2.0.4.1/leaflet.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
+<script src="libs/leaflet-binding-2.1.1/leaflet.js"></script><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
       gtag('config', 'UA-115082821-1');
     </script><!-- Dan's additional code --><script src="more-js.js"></script><link href="more-css.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- CSS --><style type="text/css">
+    
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  </style>
 </head>
 <body data-spy="scroll" data-target="#toc">
 
@@ -92,7 +95,7 @@
 </ul>
 
         <div class="book-extra">
-          <p><a id="book-repo" href="https://github.com/Data-Sci-2021/r4ds">View book source <i class="fab fa-github"></i></a></p>
+          <p><a id="book-repo" href="https://github.com/djvill/r4ds">View book source <i class="fab fa-github"></i></a></p>
         </div>
       </nav>
 </div>
@@ -108,20 +111,20 @@
 </h2>
 <p>Let’s review some basics we’ve so far omitted in the interests of getting you plotting as quickly as possible. You can use R as a calculator:</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fl">1</span> <span class="op">/</span> <span class="fl">200</span> <span class="op">*</span> <span class="fl">30</span>
-<span class="co">#&gt; [1] 0.15</span>
-<span class="op">(</span><span class="fl">59</span> <span class="op">+</span> <span class="fl">73</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fl">3</span>
-<span class="co">#&gt; [1] 44.66667</span>
-<span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">pi</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; [1] 1</span></code></pre></div>
-<p>You can create new objects with <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code>:</p>
+<code class="sourceCode R"><span><span class="fl">1</span> <span class="op">/</span> <span class="fl">200</span> <span class="op">*</span> <span class="fl">30</span></span>
+<span><span class="co">#&gt; [1] 0.15</span></span>
+<span><span class="op">(</span><span class="fl">59</span> <span class="op">+</span> <span class="fl">73</span> <span class="op">+</span> <span class="fl">2</span><span class="op">)</span> <span class="op">/</span> <span class="fl">3</span></span>
+<span><span class="co">#&gt; [1] 44.66667</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">pi</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+<p>You can create new objects with <code>&lt;-</code>:</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">*</span> <span class="fl">4</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">3</span> <span class="op">*</span> <span class="fl">4</span></span></code></pre></div>
 <p>All R statements where you create objects, <strong>assignment</strong> statements, have the same form:</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">object_name</span> <span class="op">&lt;-</span> <span class="va">value</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">object_name</span> <span class="op">&lt;-</span> <span class="va">value</span></span></code></pre></div>
 <p>When reading that code say “object name gets value” in your head.</p>
-<p>You will make lots of assignments and <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> is a pain to type. Don’t be lazy and use <code><a href="https://rdrr.io/r/base/assignOps.html">=</a></code>: it will work, but it will cause confusion later. Instead, use RStudio’s keyboard shortcut: Alt + - (the minus sign). Notice that RStudio automagically surrounds <code><a href="https://rdrr.io/r/base/assignOps.html">&lt;-</a></code> with spaces, which is a good code formatting practice. Code is miserable to read on a good day, so giveyoureyesabreak and use spaces.</p>
+<p>You will make lots of assignments and <code>&lt;-</code> is a pain to type. Don’t be lazy and use <code>=</code>: it will work, but it will cause confusion later. Instead, use RStudio’s keyboard shortcut: Alt + - (the minus sign). Notice that RStudio automagically surrounds <code>&lt;-</code> with spaces, which is a good code formatting practice. Code is miserable to read on a good day, so giveyoureyesabreak and use spaces.</p>
 </div>
 <div id="whats-in-a-name" class="section level2" number="4.2">
 <h2>
@@ -129,29 +132,29 @@
 </h2>
 <p>Object names must start with a letter, and can only contain letters, numbers, <code>_</code> and <code>.</code>. You want your object names to be descriptive, so you’ll need a convention for multiple words. We recommend <strong>snake_case</strong> where you separate lowercase words with <code>_</code>.</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">i_use_snake_case</span>
-<span class="va">otherPeopleUseCamelCase</span>
-<span class="va">some.people.use.periods</span>
-<span class="va">And_aFew.People_RENOUNCEconvention</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">i_use_snake_case</span></span>
+<span><span class="va">otherPeopleUseCamelCase</span></span>
+<span><span class="va">some.people.use.periods</span></span>
+<span><span class="va">And_aFew.People_RENOUNCEconvention</span></span></code></pre></div>
 <p>We’ll come back to code style later, in <a href="functions.html#functions">functions</a>.</p>
 <p>You can inspect an object by typing its name:</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span>
-<span class="co">#&gt; [1] 12</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span></span>
+<span><span class="co">#&gt; [1] 12</span></span></code></pre></div>
 <p>Make another assignment:</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">this_is_a_really_long_name</span> <span class="op">&lt;-</span> <span class="fl">2.5</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">this_is_a_really_long_name</span> <span class="op">&lt;-</span> <span class="fl">2.5</span></span></code></pre></div>
 <p>To inspect this object, try out RStudio’s completion facility: type “this”, press TAB, add characters until you have a unique prefix, then press return.</p>
 <p>Ooops, you made a mistake! <code>this_is_a_really_long_name</code> should have value 3.5 not 2.5. Use another keyboard shortcut to help you fix it. Type “this” then press Cmd/Ctrl + ↑. That will list all the commands you’ve typed that start those letters. Use the arrow keys to navigate, then press enter to retype the command. Change 2.5 to 3.5 and rerun.</p>
 <p>Make yet another assignment:</p>
 <div class="sourceCode" id="cb56"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">r_rocks</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">^</span> <span class="fl">3</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">r_rocks</span> <span class="op">&lt;-</span> <span class="fl">2</span> <span class="op">^</span> <span class="fl">3</span></span></code></pre></div>
 <p>Let’s try to inspect it:</p>
 <div class="sourceCode" id="cb57"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">r_rock</span>
-<span class="co">#&gt; Error: object 'r_rock' not found</span>
-<span class="va">R_rocks</span>
-<span class="co">#&gt; Error: object 'R_rocks' not found</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">r_rock</span></span>
+<span><span class="co">#&gt; Error: object 'r_rock' not found</span></span>
+<span><span class="va">R_rocks</span></span>
+<span><span class="co">#&gt; Error: object 'R_rocks' not found</span></span></code></pre></div>
 <p>There’s an implied contract between you and R: it will do the tedious computation for you, but in return, you must be completely precise in your instructions. Typos matter. Case matters.</p>
 </div>
 <div id="calling-functions" class="section level2" number="4.3">
@@ -160,28 +163,28 @@
 </h2>
 <p>R has a large collection of built-in functions that are called like this:</p>
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">function_name</span><span class="op">(</span>arg1 <span class="op">=</span> <span class="va">val1</span>, arg2 <span class="op">=</span> <span class="va">val2</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">function_name</span><span class="op">(</span>arg1 <span class="op">=</span> <span class="va">val1</span>, arg2 <span class="op">=</span> <span class="va">val2</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s try using <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code> which makes regular <strong>seq</strong>uences of numbers and, while we’re at it, learn more helpful features of RStudio. Type <code>se</code> and hit TAB. A popup shows you possible completions. Specify <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code> by typing more (a “q”) to disambiguate, or by using ↑/↓ arrows to select. Notice the floating tooltip that pops up, reminding you of the function’s arguments and purpose. If you want more help, press F1 to get all the details in the help tab in the lower right pane.</p>
 <p>Press TAB once more when you’ve selected the function you want. RStudio will add matching opening (<code>(</code>) and closing (<code>)</code>) parentheses for you. Type the arguments <code>1, 10</code> and hit return.</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span>
-<span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1]  1  2  3  4  5  6  7  8  9 10</span></span></code></pre></div>
 <p>Type this code and notice you get similar assistance with the paired quotation marks:</p>
 <div class="sourceCode" id="cb60"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"hello world"</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="st">"hello world"</span></span></code></pre></div>
 <p>Quotation marks and parentheses must always come in a pair. RStudio does its best to help you, but it’s still possible to mess up and end up with a mismatch. If this happens, R will show you the continuation character “+”:</p>
 <pre><code>&gt; x &lt;- "hello
 +</code></pre>
-<p>The <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code> tells you that R is waiting for more input; it doesn’t think you’re done yet. Usually that means you’ve forgotten either a <code>"</code> or a <code>)</code>. Either add the missing pair, or press ESCAPE to abort the expression and try again.</p>
+<p>The <code>+</code> tells you that R is waiting for more input; it doesn’t think you’re done yet. Usually that means you’ve forgotten either a <code>"</code> or a <code>)</code>. Either add the missing pair, or press ESCAPE to abort the expression and try again.</p>
 <p>If you make an assignment, you don’t get to see the value. You’re then tempted to immediately double-check the result:</p>
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>
-<span class="va">y</span>
-<span class="co">#&gt; [1]  1.00  3.25  5.50  7.75 10.00</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
+<span><span class="va">y</span></span>
+<span><span class="co">#&gt; [1]  1.00  3.25  5.50  7.75 10.00</span></span></code></pre></div>
 <p>This common action can be shortened by surrounding the assignment with parentheses, which causes assignment and “print to screen” to happen.</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; [1]  1.00  3.25  5.50  7.75 10.00</span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">10</span>, length.out <span class="op">=</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1]  1.00  3.25  5.50  7.75 10.00</span></span></code></pre></div>
 <p>Now look at your environment in the upper right pane:</p>
 <div class="inline-figure"><img src="screenshots/rstudio-env.png" width="597" style="display: block; margin: auto;"></div>
 <p>Here you can see all of the objects that you’ve created.</p>
@@ -203,13 +206,13 @@ when programming.)</p>
 <li>
 <p>Tweak each of the following R commands so that they run correctly:</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
-
-<span class="fu">ggplot</span><span class="op">(</span>dota <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> 
-  <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span>
-
-<span class="fu">fliter</span><span class="op">(</span><span class="va">mpg</span>, cyl <span class="op">=</span> <span class="fl">8</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span><span class="op">(</span><span class="va">diamond</span>, <span class="va">carat</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span>dota <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> <span class="op">+</span> </span>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">fliter</span><span class="op">(</span><span class="va">mpg</span>, cyl <span class="op">=</span> <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">diamond</span>, <span class="va">carat</span> <span class="op">&gt;</span> <span class="fl">3</span><span class="op">)</span></span></code></pre></div>
 </li>
 <li><p>Press Alt + Shift + K. What happens? How can you get to the same place
 using the menus?</p></li>
@@ -231,8 +234,8 @@ using the menus?</p></li>
 
       <div class="book-extra">
         <ul class="list-unstyled">
-<li><a id="book-source" href="https://github.com/Data-Sci-2021/r4ds/blob/master/workflow-basics.Rmd">View source <i class="fab fa-github"></i></a></li>
-          <li><a id="book-edit" href="https://github.com/Data-Sci-2021/r4ds/edit/master/workflow-basics.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
+<li><a id="book-source" href="https://github.com/djvill/r4ds/blob/master/workflow-basics.Rmd">View source <i class="fab fa-github"></i></a></li>
+          <li><a id="book-edit" href="https://github.com/djvill/r4ds/edit/master/workflow-basics.Rmd">Edit this page <i class="fab fa-github"></i></a></li>
         </ul>
 </div>
     </nav>
@@ -257,7 +260,7 @@ using the menus?</p></li>
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
