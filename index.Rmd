@@ -12,6 +12,14 @@ site: bookdown::bookdown_site
 documentclass: book
 ---
 
+```{r versCheck, include=FALSE}
+rVers <- with(R.version, paste0(major, ".", minor))
+needed <- "4.2.1"
+if (rVers != needed) {
+  stop("Knit this book with R version ", needed)
+}
+```
+
 # Welcome {-} 
 
 <span class="warning">
