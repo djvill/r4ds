@@ -18,6 +18,7 @@ In this chapter we'll focus on tidyr, a package that provides a bunch of tools t
 
 ```{r setup, message = FALSE}
 library(tidyverse)
+options(pillar.min_title_chars = Inf)
 ```
 
 ## Tidy data
@@ -373,6 +374,11 @@ There are two missing values in this dataset:
   
 One way to think about the difference is with this Zen-like koan: An explicit missing value is the presence of an absence; an implicit missing value is the absence of a presence.
 
+<span class="warning">
+Not all missing values are "bad". In language data, we have "structural missings", where a given variable might not apply to a given observation. For example, if you have a table of phonemes, with columns `voicing`, `place`, `manner`, `height`, `frontness`, etc., the `manner` column won't apply to vowel phonemes.
+</span>
+
+
 The way that a dataset is represented can make implicit values explicit. For example, we can make the implicit missing value explicit by putting years in the columns:
 
 ```{r}
@@ -560,7 +566,7 @@ who %>%
     missing values? What's the difference between an `NA` and zero? 
 
 1.  What happens if you neglect the `mutate()` step?
-    (`mutate(names_from = stringr::str_replace(key, "newrel", "new_rel"))`)
+    (`mutate(key = stringr::str_replace(key, "newrel", "new_rel"))`)
 
 1.  I claimed that `iso2` and `iso3` were redundant with `country`. 
     Confirm this claim.
@@ -577,7 +583,11 @@ Before we continue on to other topics, it's worth talking briefly about non-tidy
   
 * Specialised fields have evolved their own conventions for storing data
   that may be quite different to the conventions of  tidy data.
+  
+<span class="warning>
+I'll add a third: if you're formatting your data as a table for publication, a non-tidy format may be more information-dense. For example, `table3` might be more suitable than showing cases & population in different columns
+</span>
 
 Either of these reasons means you'll need something other than a tibble (or data frame). If your data does fit naturally into a rectangular structure composed of observations and variables, I think tidy data should be your default choice. But there are good reasons to use other structures; tidy data is not the only way.
 
-If you'd like to learn more about non-tidy data, I'd highly recommend this thoughtful blog post by Jeff Leek: <http://simplystatistics.org/2016/02/17/non-tidy-data/>
+If you'd like to learn more about non-tidy data, I'd highly recommend this thoughtful blog post by Jeff Leek: <https://web.archive.org/web/20171015004647/https://simplystatistics.org/2016/02/17/non-tidy-data/>

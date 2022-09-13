@@ -101,6 +101,10 @@ You can also control the default print behaviour by setting options:
 
 * Use `options(tibble.width = Inf)` to always print all columns, regardless
   of the width of the screen.
+  
+* Use `options(pillar.min_title_chars = Inf)` to never abbreviate column
+  names, regardless of their length (`pillar` is imported automatically when 
+  you load `tibble`)
 
 You can see a complete list of options by looking at the package help with `package?tibble`.
 
