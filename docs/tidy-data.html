@@ -124,7 +124,8 @@ own way.” –– Hadley Wickham</p>
 </h3>
 <p>In this chapter we’ll focus on tidyr, a package that provides a bunch of tools to help tidy up your messy datasets. tidyr is a member of the core tidyverse.</p>
 <div class="sourceCode" id="cb227"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/options.html">options</a></span><span class="op">(</span>pillar.min_title_chars <span class="op">=</span> <span class="cn">Inf</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div id="tidy-data-1" class="section level2" number="12.2">
@@ -619,6 +620,9 @@ the cell where its value should be instead contains <code>NA</code>.</p></li>
 simply does not appear in the dataset.</p></li>
 </ul>
 <p>One way to think about the difference is with this Zen-like koan: An explicit missing value is the presence of an absence; an implicit missing value is the absence of a presence.</p>
+<p><span class="warning">
+Not all missing values are “bad”. In language data, we have “structural missings”, where a given variable might not apply to a given observation. For example, if you have a table of phonemes, with columns <code>voicing</code>, <code>place</code>, <code>manner</code>, <code>height</code>, <code>frontness</code>, etc., the <code>manner</code> column won’t apply to vowel phonemes.
+</span></p>
 <p>The way that a dataset is represented can make implicit values explicit. For example, we can make the implicit missing value explicit by putting years in the columns:</p>
 <div class="sourceCode" id="cb249"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">stocks</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -893,7 +897,7 @@ check that we had the correct values. Is this reasonable? Think about
 how missing values are represented in this dataset. Are there implicit
 missing values? What’s the difference between an <code>NA</code> and zero?</p></li>
 <li><p>What happens if you neglect the <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> step?
-(<code>mutate(names_from = stringr::str_replace(key, "newrel", "new_rel"))</code>)</p></li>
+(<code>mutate(key = stringr::str_replace(key, "newrel", "new_rel"))</code>)</p></li>
 <li><p>I claimed that <code>iso2</code> and <code>iso3</code> were redundant with <code>country</code>.
 Confirm this claim.</p></li>
 <li><p>For each country, year, and sex compute the total number of cases of
@@ -912,8 +916,11 @@ advantages.</p></li>
 <li><p>Specialised fields have evolved their own conventions for storing data
 that may be quite different to the conventions of tidy data.</p></li>
 </ul>
+<p>&lt;span class=“warning&gt;
+I’ll add a third: if you’re formatting your data as a table for publication, a non-tidy format may be more information-dense. For example, <code>table3</code> might be more suitable than showing cases &amp; population in different columns
+</p>
 <p>Either of these reasons means you’ll need something other than a tibble (or data frame). If your data does fit naturally into a rectangular structure composed of observations and variables, I think tidy data should be your default choice. But there are good reasons to use other structures; tidy data is not the only way.</p>
-<p>If you’d like to learn more about non-tidy data, I’d highly recommend this thoughtful blog post by Jeff Leek: <a href="http://simplystatistics.org/2016/02/17/non-tidy-data/" class="uri">http://simplystatistics.org/2016/02/17/non-tidy-data/</a></p>
+<p>If you’d like to learn more about non-tidy data, I’d highly recommend this thoughtful blog post by Jeff Leek: <a href="https://web.archive.org/web/20171015004647/https://simplystatistics.org/2016/02/17/non-tidy-data/" class="uri">https://web.archive.org/web/20171015004647/https://simplystatistics.org/2016/02/17/non-tidy-data/</a></p>
 
 </div>
 </div>

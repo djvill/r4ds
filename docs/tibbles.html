@@ -226,6 +226,9 @@ rows, print only <code>m</code> rows. Use <code>options(tibble.print_min = Inf)<
 show all rows.</p></li>
 <li><p>Use <code>options(tibble.width = Inf)</code> to always print all columns, regardless
 of the width of the screen.</p></li>
+<li><p>Use <code>options(pillar.min_title_chars = Inf)</code> to never abbreviate column
+names, regardless of their length (<code>pillar</code> is imported automatically when
+you load <code>tibble</code>)</p></li>
 </ul>
 <p>You can see a complete list of options by looking at the package help with <code><a href="https://tibble.tidyverse.org/reference/tibble-package.html">package?tibble</a></code>.</p>
 <p>A final option is to use RStudio’s built-in data viewer to get a scrollable view of the complete dataset. This is also often useful at the end of a long chain of manipulations.</p>
