@@ -139,7 +139,7 @@ data structure.</p></li>
 <span class="header-section-number">25.1.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-17"><i class="fas fa-link"></i></a>
 </h3>
 <p>Working with many models requires many of the packages of the tidyverse (for data exploration, wrangling, and programming) and modelr to facilitate modelling.</p>
-<div class="sourceCode" id="cb685"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb686"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelr.tidyverse.org">modelr</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -150,7 +150,7 @@ data structure.</p></li>
 </h2>
 <p>To motivate the power of many simple models, we’re going to look into the “gapminder” data. This data was popularised by Hans Rosling, a Swedish doctor and statistician. If you’ve never heard of him, stop reading this chapter right now and go watch one of his videos! He is a fantastic data presenter and illustrates how you can use data to present a compelling story. A good place to start is this short video filmed in conjunction with the BBC: <a href="https://www.youtube.com/watch?v=jbkSRLYSojo" class="uri">https://www.youtube.com/watch?v=jbkSRLYSojo</a>.</p>
 <p>The gapminder data summarises the progression of countries over time, looking at statistics like life expectancy and GDP. The data is easy to access in R, thanks to Jenny Bryan who created the gapminder package:</p>
-<div class="sourceCode" id="cb686"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb687"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/jennybc/gapminder">gapminder</a></span><span class="op">)</span></span>
 <span><span class="va">gapminder</span></span>
 <span><span class="co">#&gt; # A tibble: 1,704 x 6</span></span>
@@ -165,7 +165,7 @@ data structure.</p></li>
 <span><span class="co">#&gt; # ... with 1,698 more rows</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>In this case study, we’re going to focus on just three variables to answer the question “How does life expectancy (<code>lifeExp</code>) change over time (<code>year</code>) for each country (<code>country</code>)?”. A good place to start is with a plot:</p>
-<div class="sourceCode" id="cb687"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb688"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gapminder</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">lifeExp</span>, group <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span><span class="op">/</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
@@ -173,7 +173,7 @@ data structure.</p></li>
 <p>This is a small dataset: it only has ~1,700 observations and 3 variables. But it’s still hard to see what’s going on! Overall, it looks like life expectancy has been steadily improving. However, if you look closely, you might notice some countries that don’t follow this pattern. How can we make those countries easier to see?</p>
 <p>One way is to use the same approach as in the last chapter: there’s a strong signal (overall linear growth) that makes it hard to see subtler trends. We’ll tease these factors apart by fitting a model with a linear trend. The model captures steady growth over time, and the residuals will show what’s left.</p>
 <p>You already know how to do that if we had a single country:</p>
-<div class="sourceCode" id="cb688"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb689"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">nz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">gapminder</span>, <span class="va">country</span> <span class="op">==</span> <span class="st">"New Zealand"</span><span class="op">)</span></span>
 <span><span class="va">nz</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">lifeExp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -200,7 +200,7 @@ data structure.</p></li>
 <span class="header-section-number">25.2.1</span> Nested data<a class="anchor" aria-label="anchor" href="#nested-data"><i class="fas fa-link"></i></a>
 </h3>
 <p>You could imagine copy and pasting that code multiple times; but you’ve already learned a better way! Extract out the common code with a function and repeat using a map function from purrr. This problem is structured a little differently to what you’ve seen before. Instead of repeating an action for each variable, we want to repeat an action for each country, a subset of rows. To do that, we need a new data structure: the <strong>nested data frame</strong>. To create a nested data frame we start with a grouped data frame, and “nest” it:</p>
-<div class="sourceCode" id="cb689"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb690"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by_country</span> <span class="op">&lt;-</span> <span class="va">gapminder</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">continent</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -221,7 +221,7 @@ data structure.</p></li>
 <p>(I’m cheating a little by grouping on both <code>continent</code> and <code>country</code>. Given <code>country</code>, <code>continent</code> is fixed, so this doesn’t add any more groups, but it’s an easy way to carry an extra variable along for the ride.)</p>
 <p>This creates a data frame that has one row per group (per country), and a rather unusual column: <code>data</code>. <code>data</code> is a list of data frames (or tibbles, to be precise). This seems like a crazy idea: we have a data frame with a column that is a list of other data frames! I’ll explain shortly why I think this is a good idea.</p>
 <p>The <code>data</code> column is a little tricky to look at because it’s a moderately complicated list, and we’re still working on good tools to explore these objects. Unfortunately using <code><a href="https://rdrr.io/r/utils/str.html">str()</a></code> is not recommended as it will often produce very long output. But if you pluck out a single element from the <code>data</code> column you’ll see that it contains all the data for that country (in this case, Afghanistan).</p>
-<div class="sourceCode" id="cb690"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb691"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by_country</span><span class="op">$</span><span class="va">data</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span></span>
 <span><span class="co">#&gt; # A tibble: 12 x 4</span></span>
 <span><span class="co">#&gt;    year lifeExp      pop gdpPercap</span></span>
@@ -241,16 +241,16 @@ data structure.</p></li>
 <span class="header-section-number">25.2.2</span> List-columns<a class="anchor" aria-label="anchor" href="#list-columns"><i class="fas fa-link"></i></a>
 </h3>
 <p>Now that we have our nested data frame, we’re in a good position to fit some models. We have a model-fitting function:</p>
-<div class="sourceCode" id="cb691"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb692"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">country_model</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">df</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">lifeExp</span> <span class="op">~</span> <span class="va">year</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
 <span><span class="op">}</span></span></code></pre></div>
 <p>And we want to apply it to every data frame. The data frames are in a list, so we can use <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code> to apply <code>country_model</code> to each element:</p>
-<div class="sourceCode" id="cb692"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb693"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">by_country</span><span class="op">$</span><span class="va">data</span>, <span class="va">country_model</span><span class="op">)</span></span></code></pre></div>
 <p>However, rather than leaving the list of models as a free-floating object, I think it’s better to store it as a column in the <code>by_country</code> data frame. Storing related objects in columns is a key part of the value of data frames, and why I think list-columns are such a good idea. In the course of working with these countries, we are going to have lots of lists where we have one element per country. So why not store them all together in one data frame?</p>
 <p>In other words, instead of creating a new object in the global environment, we’re going to create a new variable in the <code>by_country</code> data frame. That’s a job for <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">dplyr::mutate()</a></code>:</p>
-<div class="sourceCode" id="cb693"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb694"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by_country</span> <span class="op">&lt;-</span> <span class="va">by_country</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>model <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">country_model</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">by_country</span></span>
@@ -267,7 +267,7 @@ data structure.</p></li>
 <span><span class="co">#&gt; # ... with 136 more rows</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>This has a big advantage: because all the related objects are stored together, you don’t need to manually keep them in sync when you filter or arrange. The semantics of the data frame takes care of that for you:</p>
-<div class="sourceCode" id="cb694"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb695"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by_country</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">continent</span> <span class="op">==</span> <span class="st">"Europe"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 30 x 4</span></span>
@@ -303,7 +303,7 @@ data structure.</p></li>
 <span class="header-section-number">25.2.3</span> Unnesting<a class="anchor" aria-label="anchor" href="#unnesting"><i class="fas fa-link"></i></a>
 </h3>
 <p>Previously we computed the residuals of a single model with a single dataset. Now we have 142 data frames and 142 models. To compute the residuals, we need to call <code><a href="https://modelr.tidyverse.org/reference/add_residuals.html">add_residuals()</a></code> with each model-data pair:</p>
-<div class="sourceCode" id="cb695"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb696"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by_country</span> <span class="op">&lt;-</span> <span class="va">by_country</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    resids <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2</a></span><span class="op">(</span><span class="va">data</span>, <span class="va">model</span>, <span class="va">add_residuals</span><span class="op">)</span></span>
@@ -322,7 +322,7 @@ data structure.</p></li>
 <span><span class="co">#&gt; # ... with 136 more rows</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>But how can you plot a list of data frames? Instead of struggling to answer that question, let’s turn the list of data frames back into a regular data frame. Previously we used <code><a href="https://tidyr.tidyverse.org/reference/nest.html">nest()</a></code> to turn a regular data frame into an nested data frame, and now we do the opposite with <code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code>:</p>
-<div class="sourceCode" id="cb696"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb697"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">resids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">by_country</span>, <span class="va">resids</span><span class="op">)</span></span>
 <span><span class="va">resids</span></span>
 <span><span class="co">#&gt; # A tibble: 1,704 x 9</span></span>
@@ -339,7 +339,7 @@ data structure.</p></li>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>Note that each regular column is repeated once for each row of the nested tibble.</p>
 <p>Now we have regular data frame, we can plot the residuals:</p>
-<div class="sourceCode" id="cb697"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb698"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">resids</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>group <span class="op">=</span> <span class="va">country</span><span class="op">)</span>, alpha <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -347,7 +347,7 @@ data structure.</p></li>
 <span><span class="co">#&gt; `geom_smooth()` using method = 'gam' and formula 'y ~ s(x, bs = "cs")'</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-many_files/figure-html/unnamed-chunk-12-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Facetting by continent is particularly revealing:</p>
-<div class="sourceCode" id="cb698"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb699"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">resids</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">year</span>, <span class="va">resid</span>, group <span class="op">=</span> <span class="va">country</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">1</span> <span class="op">/</span> <span class="fl">3</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -360,7 +360,7 @@ data structure.</p></li>
 <span class="header-section-number">25.2.4</span> Model quality<a class="anchor" aria-label="anchor" href="#model-quality"><i class="fas fa-link"></i></a>
 </h3>
 <p>Instead of looking at the residuals from the model, we could look at some general measurements of model quality. You learned how to compute some specific measures in the previous chapter. Here we’ll show a different approach using the broom package. The broom package provides a general set of functions to turn models into tidy data. Here we’ll use <code><a href="https://generics.r-lib.org/reference/glance.html">broom::glance()</a></code> to extract some model quality metrics. If we apply it to a model, we get a data frame with a single row:</p>
-<div class="sourceCode" id="cb699"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb700"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">broom</span><span class="fu">::</span><span class="fu"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">(</span><span class="va">nz_mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 x 12</span></span>
 <span><span class="co">#&gt;   r.squ~1 adj.r~2 sigma stati~3 p.value    df logLik   AIC   BIC devia~4 df.re~5</span></span>
@@ -370,7 +370,7 @@ data structure.</p></li>
 <span><span class="co">#&gt; #   1: r.squared, 2: adj.r.squared, 3: statistic, 4: deviance, 5: df.residual</span></span>
 <span><span class="co">#&gt; # i Use `colnames()` to see all variable names</span></span></code></pre></div>
 <p>We can use <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code> and <code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code> to create a data frame with a row for each country:</p>
-<div class="sourceCode" id="cb700"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb701"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">by_country</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>glance <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">model</span>, <span class="fu">broom</span><span class="fu">::</span><span class="va"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">glance</span><span class="op">)</span></span>
@@ -389,7 +389,7 @@ data structure.</p></li>
 <span><span class="co">#&gt; #   variable names 1: continent, 2: r.squared, 3: adj.r.squared, 4: statistic</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></code></pre></div>
 <p>This isn’t quite the output we want, because it still includes all the list columns. This is default behaviour when <code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code> works on single row data frames. To suppress these columns we use <code>.drop = TRUE</code>:</p>
-<div class="sourceCode" id="cb701"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb702"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">glance</span> <span class="op">&lt;-</span> <span class="va">by_country</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>glance <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html">map</a></span><span class="op">(</span><span class="va">model</span>, <span class="fu">broom</span><span class="fu">::</span><span class="va"><a href="https://generics.r-lib.org/reference/glance.html">glance</a></span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">glance</span>, .drop <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -414,7 +414,7 @@ data structure.</p></li>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></code></pre></div>
 <p>(Pay attention to the variables that aren’t printed: there’s a lot of useful stuff there.)</p>
 <p>With this data frame in hand, we can start to look for models that don’t fit well:</p>
-<div class="sourceCode" id="cb702"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb703"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">glance</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="va">r.squared</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 142 x 17</span></span>
@@ -432,13 +432,13 @@ data structure.</p></li>
 <span><span class="co">#&gt; #   variable names 1: continent, 2: r.squared, 3: adj.r.squared, 4: statistic</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span></code></pre></div>
 <p>The worst models all appear to be in Africa. Let’s double check that with a plot. Here we have a relatively small number of observations and a discrete variable, so <code><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter()</a></code> is effective:</p>
-<div class="sourceCode" id="cb703"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb704"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">glance</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">continent</span>, <span class="va">r.squared</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>    <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_jitter.html">geom_jitter</a></span><span class="op">(</span>width <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-many_files/figure-html/unnamed-chunk-18-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>We could pull out the countries with particularly bad <span class="math inline">\(R^2\)</span> and plot the data:</p>
-<div class="sourceCode" id="cb704"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb705"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bad_fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">glance</span>, <span class="va">r.squared</span> <span class="op">&lt;</span> <span class="fl">0.25</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">gapminder</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -474,14 +474,14 @@ It’s possible to avoid this join if we use <code><a href="https://tidyr.tidyve
 <span class="header-section-number">25.3</span> List-columns<a class="anchor" aria-label="anchor" href="#list-columns-1"><i class="fas fa-link"></i></a>
 </h2>
 <p>Now that you’ve seen a basic workflow for managing many models, let’s dive back into some of the details. In this section, we’ll explore the list-column data structure in a little more detail. It’s only recently that I’ve really appreciated the idea of the list-column. List-columns are implicit in the definition of the data frame: a data frame is a named list of equal length vectors. A list is a vector, so it’s always been legitimate to use a list as a column of a data frame. However, base R doesn’t make it easy to create list-columns, and <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> treats a list as a list of columns:.</p>
-<div class="sourceCode" id="cb705"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb706"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   x.1.3 x.3.5</span></span>
 <span><span class="co">#&gt; 1     1     3</span></span>
 <span><span class="co">#&gt; 2     2     4</span></span>
 <span><span class="co">#&gt; 3     3     5</span></span></code></pre></div>
 <p>You can prevent <code><a href="https://rdrr.io/r/base/data.frame.html">data.frame()</a></code> from doing this with <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code>, but the result doesn’t print particularly well:</p>
-<div class="sourceCode" id="cb706"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb707"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/AsIs.html">I</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>, </span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1, 2"</span>, <span class="st">"3, 4, 5"</span><span class="op">)</span></span>
@@ -490,7 +490,7 @@ It’s possible to avoid this join if we use <code><a href="https://tidyr.tidyve
 <span><span class="co">#&gt; 1 1, 2, 3    1, 2</span></span>
 <span><span class="co">#&gt; 2 3, 4, 5 3, 4, 5</span></span></code></pre></div>
 <p>Tibble alleviates this problem by being lazier (<code><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble()</a></code> doesn’t modify its inputs) and by providing a better print method:</p>
-<div class="sourceCode" id="cb707"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb708"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="fl">3</span><span class="op">:</span><span class="fl">5</span><span class="op">)</span>, </span>
 <span>  y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"1, 2"</span>, <span class="st">"3, 4, 5"</span><span class="op">)</span></span>
@@ -501,7 +501,7 @@ It’s possible to avoid this join if we use <code><a href="https://tidyr.tidyve
 <span><span class="co">#&gt; 1 &lt;int [3]&gt; 1, 2   </span></span>
 <span><span class="co">#&gt; 2 &lt;int [3]&gt; 3, 4, 5</span></span></code></pre></div>
 <p>It’s even easier with <code><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble()</a></code> as it can automatically work out that you need a list:</p>
-<div class="sourceCode" id="cb708"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb709"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>   <span class="op">~</span><span class="va">x</span>, <span class="op">~</span><span class="va">y</span>,</span>
 <span>  <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="st">"1, 2"</span>,</span>
@@ -544,7 +544,7 @@ frame where you have list-column of data frames.</p></li>
 </h3>
 <p><code><a href="https://tidyr.tidyverse.org/reference/nest.html">nest()</a></code> creates a nested data frame, which is a data frame with a list-column of data frames. In a nested data frame each row is a meta-observation: the other columns give variables that define the observation (like country and continent above), and the list-column of data frames gives the individual observations that make up the meta-observation.</p>
 <p>There are two ways to use <code><a href="https://tidyr.tidyverse.org/reference/nest.html">nest()</a></code>. So far you’ve seen how to use it with a grouped data frame. When applied to a grouped data frame, <code><a href="https://tidyr.tidyverse.org/reference/nest.html">nest()</a></code> keeps the grouping columns as is, and bundles everything else into the list-column:</p>
-<div class="sourceCode" id="cb709"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb710"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gapminder</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">country</span>, <span class="va">continent</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -561,7 +561,7 @@ frame where you have list-column of data frames.</p></li>
 <span><span class="co">#&gt; # ... with 136 more rows</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>You can also use it on an ungrouped data frame, specifying which columns you want to nest:</p>
-<div class="sourceCode" id="cb710"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb711"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gapminder</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">nest</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">year</span><span class="op">:</span><span class="va">gdpPercap</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 142 x 3</span></span>
@@ -581,7 +581,7 @@ frame where you have list-column of data frames.</p></li>
 <span class="header-section-number">25.4.2</span> From vectorised functions<a class="anchor" aria-label="anchor" href="#from-vectorised-functions"><i class="fas fa-link"></i></a>
 </h3>
 <p>Some useful functions take an atomic vector and return a list. For example, in <a href="strings.html#strings">strings</a> you learned about <code><a href="https://stringr.tidyverse.org/reference/str_split.html">stringr::str_split()</a></code> which takes a character vector and returns a list of character vectors. If you use that inside mutate, you’ll get a list-column:</p>
-<div class="sourceCode" id="cb711"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb712"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">x1</span>,</span>
 <span>  <span class="st">"a,b,c"</span>, </span>
@@ -596,7 +596,7 @@ frame where you have list-column of data frames.</p></li>
 <span><span class="co">#&gt; 1 a,b,c   &lt;chr [3]&gt;</span></span>
 <span><span class="co">#&gt; 2 d,e,f,g &lt;chr [4]&gt;</span></span></code></pre></div>
 <p><code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code> knows how to handle these lists of vectors:</p>
-<div class="sourceCode" id="cb712"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb713"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span>x2 <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_split.html">str_split</a></span><span class="op">(</span><span class="va">x1</span>, <span class="st">","</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">x2</span><span class="op">)</span></span>
@@ -613,7 +613,7 @@ frame where you have list-column of data frames.</p></li>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>(If you find yourself using this pattern a lot, make sure to check out <code><a href="https://tidyr.tidyverse.org/reference/separate_rows.html">tidyr::separate_rows()</a></code> which is a wrapper around this common pattern).</p>
 <p>Another example of this pattern is using the <code><a href="https://purrr.tidyverse.org/reference/map.html">map()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code>, <code><a href="https://purrr.tidyverse.org/reference/map2.html">pmap()</a></code> from purrr. For example, we could take the final example from <a href="iteration.html#invoking-different-functions">Invoking different functions</a> and rewrite it to use <code><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate()</a></code>:</p>
-<div class="sourceCode" id="cb713"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb714"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">f</span>,      <span class="op">~</span><span class="va">params</span>,</span>
 <span>  <span class="st">"runif"</span>, <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>min <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, max <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
@@ -636,7 +636,7 @@ frame where you have list-column of data frames.</p></li>
 <span class="header-section-number">25.4.3</span> From multivalued summaries<a class="anchor" aria-label="anchor" href="#from-multivalued-summaries"><i class="fas fa-link"></i></a>
 </h3>
 <p>One restriction of <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code> is that it only works with summary functions that return a single value. That means that you can’t use it with functions like <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> that return a vector of arbitrary length:</p>
-<div class="sourceCode" id="cb714"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb715"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span>
@@ -655,7 +655,7 @@ frame where you have list-column of data frames.</p></li>
 <span><span class="co">#&gt; # ... with 9 more rows</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>You can however, wrap the result in a list! This obeys the contract of <code><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise()</a></code>, because each summary is now a list (a vector) of length 1.</p>
-<div class="sourceCode" id="cb715"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb716"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -666,7 +666,7 @@ frame where you have list-column of data frames.</p></li>
 <span><span class="co">#&gt; 2     6 &lt;dbl [5]&gt;</span></span>
 <span><span class="co">#&gt; 3     8 &lt;dbl [5]&gt;</span></span></code></pre></div>
 <p>To make useful results with unnest, you’ll also need to capture the probabilities:</p>
-<div class="sourceCode" id="cb716"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb717"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">probs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.01</span>, <span class="fl">0.25</span>, <span class="fl">0.5</span>, <span class="fl">0.75</span>, <span class="fl">0.99</span><span class="op">)</span></span>
 <span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -689,7 +689,7 @@ frame where you have list-column of data frames.</p></li>
 <span class="header-section-number">25.4.4</span> From a named list<a class="anchor" aria-label="anchor" href="#from-a-named-list"><i class="fas fa-link"></i></a>
 </h3>
 <p>Data frames with list-columns provide a solution to a common problem: what do you do if you want to iterate over both the contents of a list and its elements? Instead of trying to jam everything into one object, it’s often easier to make a data frame: one column can contain the elements, and one column can contain the list. An easy way to create such a data frame from a list is <code><a href="https://tibble.tidyverse.org/reference/enframe.html">tibble::enframe()</a></code>.</p>
-<div class="sourceCode" id="cb717"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb718"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span></span>
 <span>  a <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">5</span>,</span>
 <span>  b <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span>, </span>
@@ -706,7 +706,7 @@ frame where you have list-column of data frames.</p></li>
 <span><span class="co">#&gt; 3 c     &lt;int [2]&gt;</span></span></code></pre></div>
 <p>The advantage of this structure is that it generalises in a straightforward way - names are useful if you have character vector of metadata, but don’t help if you have other types of data, or multiple vectors.</p>
 <p>Now if you want to iterate over names and values in parallel, you can use <code><a href="https://purrr.tidyverse.org/reference/map2.html">map2()</a></code>:</p>
-<div class="sourceCode" id="cb718"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb719"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html">mutate</a></span><span class="op">(</span></span>
 <span>    smry <span class="op">=</span> <span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">map2_chr</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">value</span>, <span class="op">~</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="va">.x</span>, <span class="st">": "</span>, <span class="va">.y</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
@@ -730,7 +730,7 @@ multiple values.</p></li>
 <li>
 <p>What’s missing in the following data frame? How does <code><a href="https://rdrr.io/r/stats/quantile.html">quantile()</a></code> return
 that missing piece? Why isn’t that helpful here?</p>
-<div class="sourceCode" id="cb719"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb720"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise.html">summarise</a></span><span class="op">(</span>q <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/quantile.html">quantile</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -749,7 +749,7 @@ that missing piece? Why isn’t that helpful here?</p>
 </li>
 <li>
 <p>What does this code do? Why might might it be useful?</p>
-<div class="sourceCode" id="cb720"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb721"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/group_by.html">group_by</a></span><span class="op">(</span><span class="va">cyl</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/summarise_all.html">summarise_all</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="va">list</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
@@ -774,7 +774,7 @@ to regular columns, repeating the rows as many times as necessary.</p></li>
 <span class="header-section-number">25.5.1</span> List to vector<a class="anchor" aria-label="anchor" href="#list-to-vector"><i class="fas fa-link"></i></a>
 </h3>
 <p>If you can reduce your list column to an atomic vector then it will be a regular column. For example, you can always summarise an object with its type and length, so this code will work regardless of what sort of list-column you have:</p>
-<div class="sourceCode" id="cb721"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb722"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">x</span>,</span>
 <span>  <span class="va">letters</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>,</span>
@@ -794,7 +794,7 @@ to regular columns, repeating the rows as many times as necessary.</p></li>
 <span><span class="co">#&gt; 3 &lt;dbl [5]&gt; double         5</span></span></code></pre></div>
 <p>This is the same basic information that you get from the default tbl print method, but now you can use it for filtering. This is a useful technique if you have a heterogeneous list, and want to filter out the parts aren’t working for you.</p>
 <p>Don’t forget about the <code>map_*()</code> shortcuts - you can use <code>map_chr(x, "apple")</code> to extract the string stored in <code>apple</code> for each element of <code>x</code>. This is useful for pulling apart nested lists into regular columns. Use the <code>.null</code> argument to provide a value to use if the element is missing (instead of returning <code>NULL</code>):</p>
-<div class="sourceCode" id="cb722"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb723"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">x</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>a <span class="op">=</span> <span class="fl">1</span>, b <span class="op">=</span> <span class="fl">2</span><span class="op">)</span>,</span>
@@ -815,7 +815,7 @@ to regular columns, repeating the rows as many times as necessary.</p></li>
 <span class="header-section-number">25.5.2</span> Unnesting<a class="anchor" aria-label="anchor" href="#unnesting-1"><i class="fas fa-link"></i></a>
 </h3>
 <p><code><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest()</a></code> works by repeating the regular columns once for each element of the list-column. For example, in the following very simple example we repeat the first row 4 times (because there the first element of <code>y</code> has length four), and the second row once:</p>
-<div class="sourceCode" id="cb723"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb724"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">2</span>, y <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html">unnest</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 5 x 2</span></span>
 <span><span class="co">#&gt;       x     y</span></span>
@@ -826,7 +826,7 @@ to regular columns, repeating the rows as many times as necessary.</p></li>
 <span><span class="co">#&gt; 4     1     4</span></span>
 <span><span class="co">#&gt; 5     2     1</span></span></code></pre></div>
 <p>This means that you can’t simultaneously unnest two columns that contain different number of elements:</p>
-<div class="sourceCode" id="cb724"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb725"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Ok, because y and z have the same number of elements in</span></span>
 <span><span class="co"># every row</span></span>
 <span><span class="va">df1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>

@@ -147,7 +147,7 @@ question of interest is “Is the model illuminating and useful?”.</p>
 <span class="header-section-number">23.1.1</span> Prerequisites<a class="anchor" aria-label="anchor" href="#prerequisites-15"><i class="fas fa-link"></i></a>
 </h3>
 <p>In this chapter we’ll use the modelr package which wraps around base R’s modelling functions to make them work naturally in a pipe.</p>
-<div class="sourceCode" id="cb606"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb607"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://modelr.tidyverse.org">modelr</a></span><span class="op">)</span></span>
@@ -159,12 +159,12 @@ question of interest is “Is the model illuminating and useful?”.</p>
 <span class="header-section-number">23.2</span> A simple model<a class="anchor" aria-label="anchor" href="#a-simple-model"><i class="fas fa-link"></i></a>
 </h2>
 <p>Lets take a look at the simulated dataset <code>sim1</code>, included with the modelr package. It contains two continuous variables, <code>x</code> and <code>y</code>. Let’s plot them to see how they’re related:</p>
-<div class="sourceCode" id="cb607"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sim1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-1-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>You can see a strong pattern in the data. Let’s use a model to capture that pattern and make it explicit. It’s our job to supply the basic form of the model. In this case, the relationship looks linear, i.e. <code>y = a_0 + a_1 * x</code>. Let’s start by getting a feel for what models from that family look like by randomly generating a few and overlaying them on the data. For this simple case, we can use <code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline()</a></code> which takes a slope and intercept as parameters. Later on we’ll learn more general techniques that work with any model.</p>
-<div class="sourceCode" id="cb608"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb609"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">models</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  a1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">250</span>, <span class="op">-</span><span class="fl">20</span>, <span class="fl">40</span><span class="op">)</span>,</span>
 <span>  a2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span><span class="op">(</span><span class="fl">250</span>, <span class="op">-</span><span class="fl">5</span>, <span class="fl">5</span><span class="op">)</span></span>
@@ -179,7 +179,7 @@ question of interest is “Is the model illuminating and useful?”.</p>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-3-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>This distance is just the difference between the y value given by the model (the <strong>prediction</strong>), and the actual y value in the data (the <strong>response</strong>).</p>
 <p>To compute this distance, we first turn our model family into an R function. This takes the model parameters and the data as inputs, and gives values predicted by the model as output:</p>
-<div class="sourceCode" id="cb609"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">a</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op">*</span> <span class="va">a</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span></span>
 <span><span class="op">}</span></span>
@@ -188,7 +188,7 @@ question of interest is “Is the model illuminating and useful?”.</p>
 <span><span class="co">#&gt; [16] 16.0 16.0 16.0 17.5 17.5 17.5 19.0 19.0 19.0 20.5 20.5 20.5 22.0 22.0 22.0</span></span></code></pre></div>
 <p>Next, we need some way to compute an overall distance between the predicted and actual values. In other words, the plot above shows 30 distances: how do we collapse that into a single number?</p>
 <p>One common way to do this in statistics to use the “root-mean-squared deviation”. We compute the difference between actual and predicted, square them, average them, and the take the square root. This distance has lots of appealing mathematical properties, which we’re not going to talk about here. You’ll just have to take my word for it!</p>
-<div class="sourceCode" id="cb610"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb611"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">measure_distance</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mod</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">diff</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">y</span> <span class="op">-</span> <span class="fu">model1</span><span class="op">(</span><span class="va">mod</span>, <span class="va">data</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="va">diff</span> <span class="op">^</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
@@ -196,7 +196,7 @@ question of interest is “Is the model illuminating and useful?”.</p>
 <span><span class="fu">measure_distance</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">7</span>, <span class="fl">1.5</span><span class="op">)</span>, <span class="va">sim1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 2.665212</span></span></code></pre></div>
 <p>Now we can use purrr to compute the distance for all the models defined above. We need a helper function because our distance function expects the model as a numeric vector of length 2.</p>
-<div class="sourceCode" id="cb611"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb612"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim1_dist</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a1</span>, <span class="va">a2</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu">measure_distance</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">a1</span>, <span class="va">a2</span><span class="op">)</span>, <span class="va">sim1</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
@@ -216,7 +216,7 @@ question of interest is “Is the model illuminating and useful?”.</p>
 <span><span class="co">#&gt; # ... with 244 more rows</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>Next, let’s overlay the 10 best models on to the data. I’ve coloured the models by <code>-dist</code>: this is an easy way to make sure that the best models (i.e. the ones with the smallest distance) get the brighest colours.</p>
-<div class="sourceCode" id="cb612"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb613"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sim1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"grey30"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span></span>
@@ -225,13 +225,13 @@ question of interest is “Is the model illuminating and useful?”.</p>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-7-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>We can also think about these models as observations, and visualising with a scatterplot of <code>a1</code> vs <code>a2</code>, again coloured by <code>-dist</code>. We can no longer directly see how the model compares to the data, but we can see many models at once. Again, I’ve highlighted the 10 best models, this time by drawing red circles underneath them.</p>
-<div class="sourceCode" id="cb613"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb614"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">models</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">a1</span>, <span class="va">a2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span><span class="op">(</span><span class="va">models</span>, <span class="fu"><a href="https://rdrr.io/r/base/rank.html">rank</a></span><span class="op">(</span><span class="va">dist</span><span class="op">)</span> <span class="op">&lt;=</span> <span class="fl">10</span><span class="op">)</span>, size <span class="op">=</span> <span class="fl">4</span>, colour <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="op">-</span><span class="va">dist</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-8-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Instead of trying lots of random models, we could be more systematic and generate an evenly spaced grid of points (this is called a grid search). I picked the parameters of the grid roughly by looking at where the best models were in the plot above.</p>
-<div class="sourceCode" id="cb614"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span></span>
 <span>  a1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="op">-</span><span class="fl">5</span>, <span class="fl">20</span>, length <span class="op">=</span> <span class="fl">25</span><span class="op">)</span>,</span>
 <span>  a2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span>, length <span class="op">=</span> <span class="fl">25</span><span class="op">)</span></span>
@@ -244,7 +244,7 @@ question of interest is “Is the model illuminating and useful?”.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="op">-</span><span class="va">dist</span><span class="op">)</span><span class="op">)</span> </span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-9-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>When you overlay the best 10 models back on the original data, they all look pretty good:</p>
-<div class="sourceCode" id="cb615"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb616"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sim1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>size <span class="op">=</span> <span class="fl">2</span>, colour <span class="op">=</span> <span class="st">"grey30"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline</a></span><span class="op">(</span></span>
@@ -253,7 +253,7 @@ question of interest is “Is the model illuminating and useful?”.</p>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-10-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>You could imagine iteratively making the grid finer and finer until you narrowed in on the best model. But there’s a better way to tackle that problem: a numerical minimisation tool called Newton-Raphson search. The intuition of Newton-Raphson is pretty simple: you pick a starting point and look around for the steepest slope. You then ski down that slope a little way, and then repeat again and again, until you can’t go any lower. In R, we can do that with <code><a href="https://rdrr.io/r/stats/optim.html">optim()</a></code>:</p>
-<div class="sourceCode" id="cb616"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">best</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/optim.html">optim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span>, <span class="va">measure_distance</span>, data <span class="op">=</span> <span class="va">sim1</span><span class="op">)</span></span>
 <span><span class="va">best</span><span class="op">$</span><span class="va">par</span></span>
 <span><span class="co">#&gt; [1] 4.222248 2.051204</span></span>
@@ -264,7 +264,7 @@ question of interest is “Is the model illuminating and useful?”.</p>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-11-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Don’t worry too much about the details of how <code><a href="https://rdrr.io/r/stats/optim.html">optim()</a></code> works. It’s the intuition that’s important here. If you have a function that defines the distance between a model and a dataset, an algorithm that can minimise that distance by modifying the parameters of the model, you can find the best model. The neat thing about this approach is that it will work for any family of models that you can write an equation for.</p>
 <p>There’s one more approach that we can use for this model, because it’s a special case of a broader family: linear models. A linear model has the general form <code>y = a_1 + a_2 * x_1 + a_3 * x_2 + ... + a_n * x_(n - 1)</code>. So this simple model is equivalent to a general linear model where n is 2 and <code>x_1</code> is <code>x</code>. R has a tool specifically designed for fitting linear models called <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code>. <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> has a special way to specify the model family: formulas. Formulas look like <code>y ~ x</code>, which <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> will translate to a function like <code>y = a_1 + a_2 * x</code>. We can fit the model and look at the output:</p>
-<div class="sourceCode" id="cb617"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb618"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim1_mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">sim1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/stats/coef.html">coef</a></span><span class="op">(</span><span class="va">sim1_mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; (Intercept)           x </span></span>
@@ -280,7 +280,7 @@ question of interest is “Is the model illuminating and useful?”.</p>
 because the distance incorporates a squared term. Fit a linear model to
 the simulated data below, and visualise the results. Rerun a few times to
 generate different simulated datasets. What do you notice about the model?</p>
-<div class="sourceCode" id="cb618"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim1a</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html">rep</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">10</span>, each <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
 <span>  y <span class="op">=</span> <span class="va">x</span> <span class="op">*</span> <span class="fl">1.5</span> <span class="op">+</span> <span class="fl">6</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/TDist.html">rt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span>, df <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span>
@@ -290,7 +290,7 @@ generate different simulated datasets. What do you notice about the model?</p>
 <p>One way to make linear models more robust is to use a different distance
 measure. For example, instead of root-mean-squared distance, you could use
 mean-absolute distance:</p>
-<div class="sourceCode" id="cb619"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb620"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">measure_distance</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">mod</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">diff</span> <span class="op">&lt;-</span> <span class="va">data</span><span class="op">$</span><span class="va">y</span> <span class="op">-</span> <span class="fu">model1</span><span class="op">(</span><span class="va">mod</span>, <span class="va">data</span><span class="op">)</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/mean.html">mean</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span><span class="op">(</span><span class="va">diff</span><span class="op">)</span><span class="op">)</span></span>
@@ -302,7 +302,7 @@ to the linear model.</p>
 <p>One challenge with performing numerical optimisation is that it’s only
 guaranteed to find one local optimum. What’s the problem with optimising
 a three parameter model like this?</p>
-<div class="sourceCode" id="cb620"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb621"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">model1</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">a</span>, <span class="va">data</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">a</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span> <span class="op">+</span> <span class="va">data</span><span class="op">$</span><span class="va">x</span> <span class="op">*</span> <span class="va">a</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span> <span class="op">+</span> <span class="va">a</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span></span>
 <span><span class="op">}</span></span></code></pre></div>
@@ -321,7 +321,7 @@ a three parameter model like this?</p>
 <span class="header-section-number">23.3.1</span> Predictions<a class="anchor" aria-label="anchor" href="#predictions"><i class="fas fa-link"></i></a>
 </h3>
 <p>To visualise the predictions from a model, we start by generating an evenly spaced grid of values that covers the region where our data lies. The easiest way to do that is to use <code><a href="https://modelr.tidyverse.org/reference/data_grid.html">modelr::data_grid()</a></code>. Its first argument is a data frame, and for each subsequent argument it finds the unique variables and then generates all combinations:</p>
-<div class="sourceCode" id="cb621"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb622"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="va">sim1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://modelr.tidyverse.org/reference/data_grid.html">data_grid</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> </span>
 <span><span class="va">grid</span></span>
@@ -338,7 +338,7 @@ a three parameter model like this?</p>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>(This will get more interesting when we start to add more variables to our model.)</p>
 <p>Next we add predictions. We’ll use <code><a href="https://modelr.tidyverse.org/reference/add_predictions.html">modelr::add_predictions()</a></code> which takes a data frame and a model. It adds the predictions from the model to a new column in the data frame:</p>
-<div class="sourceCode" id="cb622"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb623"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="va">grid</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://modelr.tidyverse.org/reference/add_predictions.html">add_predictions</a></span><span class="op">(</span><span class="va">sim1_mod</span><span class="op">)</span> </span>
 <span><span class="va">grid</span></span>
@@ -355,7 +355,7 @@ a three parameter model like this?</p>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>(You can also use this function to add predictions to your original dataset.)</p>
 <p>Next, we plot the predictions. You might wonder about all this extra work compared to just using <code><a href="https://ggplot2.tidyverse.org/reference/geom_abline.html">geom_abline()</a></code>. But the advantage of this approach is that it will work with <em>any</em> model in R, from the simplest to the most complex. You’re only limited by your visualisation skills. For more ideas about how to visualise more complex model types, you might try <a href="http://vita.had.co.nz/papers/model-vis.html" class="uri">http://vita.had.co.nz/papers/model-vis.html</a>.</p>
-<div class="sourceCode" id="cb623"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb624"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sim1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pred</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">grid</span>, colour <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
@@ -367,7 +367,7 @@ a three parameter model like this?</p>
 </h3>
 <p>The flip-side of predictions are <strong>residuals</strong>. The predictions tells you the pattern that the model has captured, and the residuals tell you what the model has missed. The residuals are just the distances between the observed and predicted values that we computed above.</p>
 <p>We add residuals to the data with <code><a href="https://modelr.tidyverse.org/reference/add_residuals.html">add_residuals()</a></code>, which works much like <code><a href="https://modelr.tidyverse.org/reference/add_predictions.html">add_predictions()</a></code>. Note, however, that we use the original dataset, not a manufactured grid. This is because to compute residuals we need actual y values.</p>
-<div class="sourceCode" id="cb624"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb625"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim1</span> <span class="op">&lt;-</span> <span class="va">sim1</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://modelr.tidyverse.org/reference/add_residuals.html">add_residuals</a></span><span class="op">(</span><span class="va">sim1_mod</span><span class="op">)</span></span>
 <span><span class="va">sim1</span></span>
@@ -383,13 +383,13 @@ a three parameter model like this?</p>
 <span><span class="co">#&gt; # ... with 24 more rows</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>There are a few different ways to understand what the residuals tell us about the model. One way is to simply draw a frequency polygon to help us understand the spread of the residuals:</p>
-<div class="sourceCode" id="cb625"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sim1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html">geom_freqpoly</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-20-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>This helps you calibrate the quality of the model: how far away are the predictions from the observed values? Note that the average of the residual will always be 0.</p>
 <p>You’ll often want to recreate plots using the residuals instead of the original predictor. You’ll see a lot of that in the next chapter.</p>
-<div class="sourceCode" id="cb626"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb627"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sim1</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">resid</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://modelr.tidyverse.org/reference/geom_ref_line.html">geom_ref_line</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">0</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> </span></code></pre></div>
@@ -422,7 +422,7 @@ What are the pros and cons compared to looking at the raw residuals?</p></li>
 </h2>
 <p>You’ve seen formulas before when using <code><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap()</a></code> and <code><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html">facet_grid()</a></code>. In R, formulas provide a general way of getting “special behaviour”. Rather than evaluating the values of the variables right away, they capture them so they can be interpreted by the function.</p>
 <p>The majority of modelling functions in R use a standard conversion from formulas to functions. You’ve seen one simple conversion already: <code>y ~ x</code> is translated to <code>y = a_1 + a_2 * x</code>. If you want to see what R actually does, you can use the <code><a href="https://modelr.tidyverse.org/reference/model_matrix.html">model_matrix()</a></code> function. It takes a data frame and a formula and returns a tibble that defines the model equation: each column in the output is associated with one coefficient in the model, the function is always <code>y = a_1 * out1 + a_2 * out_2</code>. For the simplest case of <code>y ~ x1</code> this shows us something interesting:</p>
-<div class="sourceCode" id="cb627"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb628"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">y</span>, <span class="op">~</span><span class="va">x1</span>, <span class="op">~</span><span class="va">x2</span>,</span>
 <span>  <span class="fl">4</span>, <span class="fl">2</span>, <span class="fl">5</span>,</span>
@@ -435,7 +435,7 @@ What are the pros and cons compared to looking at the raw residuals?</p></li>
 <span><span class="co">#&gt; 1             1     2</span></span>
 <span><span class="co">#&gt; 2             1     1</span></span></code></pre></div>
 <p>The way that R adds the intercept to the model is just by having a column that is full of ones. By default, R will always add this column. If you don’t want, you need to explicitly drop it with <code>-1</code>:</p>
-<div class="sourceCode" id="cb628"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb629"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://modelr.tidyverse.org/reference/model_matrix.html">model_matrix</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">-</span> <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 x 1</span></span>
 <span><span class="co">#&gt;      x1</span></span>
@@ -443,7 +443,7 @@ What are the pros and cons compared to looking at the raw residuals?</p></li>
 <span><span class="co">#&gt; 1     2</span></span>
 <span><span class="co">#&gt; 2     1</span></span></code></pre></div>
 <p>The model matrix grows in an unsurprising way when you add more variables to the the model:</p>
-<div class="sourceCode" id="cb629"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb630"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://modelr.tidyverse.org/reference/model_matrix.html">model_matrix</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 2 x 3</span></span>
 <span><span class="co">#&gt;   `(Intercept)`    x1    x2</span></span>
@@ -457,7 +457,7 @@ What are the pros and cons compared to looking at the raw residuals?</p></li>
 <span class="header-section-number">23.4.1</span> Categorical variables<a class="anchor" aria-label="anchor" href="#categorical-variables"><i class="fas fa-link"></i></a>
 </h3>
 <p>Generating a function from a formula is straight forward when the predictor is continuous, but things get a bit more complicated when the predictor is categorical. Imagine you have a formula like <code>y ~ sex</code>, where sex could either be male or female. It doesn’t make sense to convert that to a formula like <code>y = x_0 + x_1 * sex</code> because <code>sex</code> isn’t a number - you can’t multiply it! Instead what R does is convert it to <code>y = x_0 + x_1 * sex_male</code> where <code>sex_male</code> is one if <code>sex</code> is male and zero otherwise:</p>
-<div class="sourceCode" id="cb630"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb631"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span> <span class="va">sex</span>, <span class="op">~</span> <span class="va">response</span>,</span>
 <span>  <span class="st">"male"</span>, <span class="fl">1</span>,</span>
@@ -473,12 +473,12 @@ What are the pros and cons compared to looking at the raw residuals?</p></li>
 <span><span class="co">#&gt; 3             1       1</span></span></code></pre></div>
 <p>You might wonder why R also doesn’t create a <code>sexfemale</code> column. The problem is that would create a column that is perfectly predictable based on the other columns (i.e. <code>sexfemale = 1 - sexmale</code>). Unfortunately the exact details of why this is a problem is beyond the scope of this book, but basically it creates a model family that is too flexible, and will have infinitely many models that are equally close to the data.</p>
 <p>Fortunately, however, if you focus on visualising predictions you don’t need to worry about the exact parameterisation. Let’s look at some data and models to make that concrete. Here’s the <code>sim2</code> dataset from modelr:</p>
-<div class="sourceCode" id="cb631"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb632"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sim2</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-26-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>We can fit a model to it, and generate predictions:</p>
-<div class="sourceCode" id="cb632"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb633"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">sim2</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="va">sim2</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -493,13 +493,13 @@ What are the pros and cons compared to looking at the raw residuals?</p></li>
 <span><span class="co">#&gt; 3 c      6.13</span></span>
 <span><span class="co">#&gt; 4 d      1.91</span></span></code></pre></div>
 <p>Effectively, a model with a categorical <code>x</code> will predict the mean value for each category. (Why? Because the mean minimises the root-mean-squared distance.) That’s easy to see if we overlay the predictions on top of the original data:</p>
-<div class="sourceCode" id="cb633"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb634"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sim2</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">grid</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pred</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"red"</span>, size <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-28-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>You can’t make predictions about levels that you didn’t observe. Sometimes you’ll do this by accident so it’s good to recognise this error message:</p>
-<div class="sourceCode" id="cb634"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb635"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"e"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://modelr.tidyverse.org/reference/add_predictions.html">add_predictions</a></span><span class="op">(</span><span class="va">mod2</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error in model.frame.default(Terms, newdata, na.action = na.action, xlev = object$xlevels): factor x has new level e</span></span></code></pre></div>
@@ -509,12 +509,12 @@ What are the pros and cons compared to looking at the raw residuals?</p></li>
 <span class="header-section-number">23.4.2</span> Interactions (continuous and categorical)<a class="anchor" aria-label="anchor" href="#interactions-continuous-and-categorical"><i class="fas fa-link"></i></a>
 </h3>
 <p>What happens when you combine a continuous and a categorical variable? <code>sim3</code> contains a categorical predictor and a continuous predictor. We can visualise it with a simple plot:</p>
-<div class="sourceCode" id="cb635"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb636"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sim3</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">y</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>colour <span class="op">=</span> <span class="va">x2</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-30-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>There are two possible models you could fit to this data:</p>
-<div class="sourceCode" id="cb636"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb637"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span>, data <span class="op">=</span> <span class="va">sim3</span><span class="op">)</span></span>
 <span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">*</span> <span class="va">x2</span>, data <span class="op">=</span> <span class="va">sim3</span><span class="op">)</span></span></code></pre></div>
 <p>When you add variables with <code>+</code>, the model will estimate each effect independent of all the others. It’s possible to fit the so-called interaction by using <code>*</code>. For example, <code>y ~ x1 * x2</code> is translated to <code>y = a_0 + a_1 * x1 + a_2 * x2 + a_12 * x1 * x2</code>. Note that whenever you use <code>*</code>, both the interaction and the individual components are included in the model.</p>
@@ -529,7 +529,7 @@ complement of <code><a href="https://modelr.tidyverse.org/reference/add_predicti
 each prediction to a new column.</p></li>
 </ol>
 <p>Together this gives us:</p>
-<div class="sourceCode" id="cb637"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb638"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">grid</span> <span class="op">&lt;-</span> <span class="va">sim3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://modelr.tidyverse.org/reference/data_grid.html">data_grid</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://modelr.tidyverse.org/reference/add_predictions.html">gather_predictions</a></span><span class="op">(</span><span class="va">mod1</span>, <span class="va">mod2</span><span class="op">)</span></span>
@@ -546,7 +546,7 @@ each prediction to a new column.</p></li>
 <span><span class="co">#&gt; # ... with 74 more rows</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>We can visualise the results for both models on one plot using facetting:</p>
-<div class="sourceCode" id="cb638"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb639"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">sim3</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">y</span>, colour <span class="op">=</span> <span class="va">x2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">grid</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>y <span class="op">=</span> <span class="va">pred</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
@@ -554,7 +554,7 @@ each prediction to a new column.</p></li>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-33-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>Note that the model that uses <code>+</code> has the same slope for each line, but different intercepts. The model that uses <code>*</code> has a different slope and intercept for each line.</p>
 <p>Which model is better for this data? We can take look at the residuals. Here I’ve facetted by both model and <code>x2</code> because it makes it easier to see the pattern within each group.</p>
-<div class="sourceCode" id="cb639"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb640"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim3</span> <span class="op">&lt;-</span> <span class="va">sim3</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://modelr.tidyverse.org/reference/add_residuals.html">gather_residuals</a></span><span class="op">(</span><span class="va">mod1</span>, <span class="va">mod2</span><span class="op">)</span></span>
 <span></span>
@@ -569,7 +569,7 @@ each prediction to a new column.</p></li>
 <span class="header-section-number">23.4.3</span> Interactions (two continuous)<a class="anchor" aria-label="anchor" href="#interactions-two-continuous"><i class="fas fa-link"></i></a>
 </h3>
 <p>Let’s take a look at the equivalent model for two continuous variables. Initially things proceed almost identically to the previous example:</p>
-<div class="sourceCode" id="cb640"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb641"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span>, data <span class="op">=</span> <span class="va">sim4</span><span class="op">)</span></span>
 <span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">*</span> <span class="va">x2</span>, data <span class="op">=</span> <span class="va">sim4</span><span class="op">)</span></span>
 <span></span>
@@ -597,7 +597,7 @@ each prediction to a new column.</p></li>
 <p><code>pretty = TRUE</code> will generate a “pretty” sequence, i.e. something that looks
 nice to the human eye. This is useful if you want to produce tables of
 output:</p>
-<div class="sourceCode" id="cb641"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb642"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://modelr.tidyverse.org/reference/seq_range.html">seq_range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.0123</span>, <span class="fl">0.923423</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.0123000 0.2400808 0.4678615 0.6956423 0.9234230</span></span>
 <span><span class="fu"><a href="https://modelr.tidyverse.org/reference/seq_range.html">seq_range</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0.0123</span>, <span class="fl">0.923423</span><span class="op">)</span>, n <span class="op">=</span> <span class="fl">5</span>, pretty <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -607,7 +607,7 @@ output:</p>
 <p><code>trim = 0.1</code> will trim off 10% of the tail values. This is useful if the
 variables have a long tailed distribution and you want to focus on generating
 values near the center:</p>
-<div class="sourceCode" id="cb642"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb643"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Cauchy.html">rcauchy</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://modelr.tidyverse.org/reference/seq_range.html">seq_range</a></span><span class="op">(</span><span class="va">x1</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] -115.86934  -83.52130  -51.17325  -18.82520   13.52284</span></span>
@@ -621,7 +621,7 @@ values near the center:</p>
 <li>
 <p><code>expand = 0.1</code> is in some sense the opposite of <code>trim()</code> it expands the
 range by 10%.</p>
-<div class="sourceCode" id="cb643"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb644"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">x2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://modelr.tidyverse.org/reference/seq_range.html">seq_range</a></span><span class="op">(</span><span class="va">x2</span>, n <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 0.00 0.25 0.50 0.75 1.00</span></span>
@@ -634,13 +634,13 @@ range by 10%.</p>
 </li>
 </ul>
 <p>Next let’s try and visualise that model. We have two continuous predictors, so you can imagine the model like a 3d surface. We could display that using <code><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile()</a></code>:</p>
-<div class="sourceCode" id="cb644"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb645"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">grid</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">x2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html">geom_tile</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span>fill <span class="op">=</span> <span class="va">pred</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">model</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-39-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>That doesn’t suggest that the models are very different! But that’s partly an illusion: our eyes and brains are not very good at accurately comparing shades of colour. Instead of looking at the surface from the top, we could look at it from either side, showing multiple slices:</p>
-<div class="sourceCode" id="cb645"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb646"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html">ggplot</a></span><span class="op">(</span><span class="va">grid</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html">aes</a></span><span class="op">(</span><span class="va">x1</span>, <span class="va">pred</span>, colour <span class="op">=</span> <span class="va">x2</span>, group <span class="op">=</span> <span class="va">x2</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_path.html">geom_line</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_wrap.html">facet_wrap</a></span><span class="op">(</span><span class="op">~</span> <span class="va">model</span><span class="op">)</span></span>
@@ -658,7 +658,7 @@ range by 10%.</p>
 </h3>
 <p>You can also perform transformations inside the model formula. For example, <code>log(y) ~ sqrt(x1) + x2</code> is transformed to <code>log(y) = a_1 + a_2 * sqrt(x1) + a_3 * x2</code>. If your transformation involves <code>+</code>, <code>*</code>, <code>^</code>, or <code>-</code>, you’ll need to wrap it in <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code> so R doesn’t treat it like part of the model specification. For example, <code>y ~ x + I(x ^ 2)</code> is translated to <code>y = a_1 + a_2 * x + a_3 * x^2</code>. If you forget the <code><a href="https://rdrr.io/r/base/AsIs.html">I()</a></code> and specify <code>y ~ x ^ 2 + x</code>, R will compute <code>y ~ x * x + x</code>. <code>x * x</code> means the interaction of <code>x</code> with itself, which is the same as <code>x</code>. R automatically drops redundant variables so <code>x + x</code> become <code>x</code>, meaning that <code>y ~ x ^ 2 + x</code> specifies the function <code>y = a_1 + a_2 * x</code>. That’s probably not what you intended!</p>
 <p>Again, if you get confused about what your model is doing, you can always use <code><a href="https://modelr.tidyverse.org/reference/model_matrix.html">model_matrix()</a></code> to see exactly what equation <code><a href="https://rdrr.io/r/stats/lm.html">lm()</a></code> is fitting:</p>
-<div class="sourceCode" id="cb646"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb647"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">y</span>, <span class="op">~</span><span class="va">x</span>,</span>
 <span>   <span class="fl">1</span>,  <span class="fl">1</span>,</span>
@@ -680,7 +680,7 @@ range by 10%.</p>
 <span><span class="co">#&gt; 2             1        4     2</span></span>
 <span><span class="co">#&gt; 3             1        9     3</span></span></code></pre></div>
 <p>Transformations are useful because you can use them to approximate non-linear functions. If you’ve taken a calculus class, you may have heard of Taylor’s theorem which says you can approximate any smooth function with an infinite sum of polynomials. That means you can use a polynomial function to get arbitrarily close to a smooth function by fitting an equation like <code>y = a_1 + a_2 * x + a_3 * x^2 + a_4 * x ^ 3</code>. Typing that sequence by hand is tedious, so R provides a helper function: <code><a href="https://rdrr.io/r/stats/poly.html">poly()</a></code>:</p>
-<div class="sourceCode" id="cb647"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb648"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://modelr.tidyverse.org/reference/model_matrix.html">model_matrix</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/stats/poly.html">poly</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 x 3</span></span>
 <span><span class="co">#&gt;   `(Intercept)` `poly(x, 2)1` `poly(x, 2)2`</span></span>
@@ -689,7 +689,7 @@ range by 10%.</p>
 <span><span class="co">#&gt; 2             1     -7.85e-17        -0.816</span></span>
 <span><span class="co">#&gt; 3             1      7.07e- 1         0.408</span></span></code></pre></div>
 <p>However there’s one major problem with using <code><a href="https://rdrr.io/r/stats/poly.html">poly()</a></code>: outside the range of the data, polynomials rapidly shoot off to positive or negative infinity. One safer alternative is to use the natural spline, <code><a href="https://rdrr.io/r/splines/ns.html">splines::ns()</a></code>.</p>
-<div class="sourceCode" id="cb648"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb649"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">splines</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://modelr.tidyverse.org/reference/model_matrix.html">model_matrix</a></span><span class="op">(</span><span class="va">df</span>, <span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/splines/ns.html">ns</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 3 x 3</span></span>
@@ -699,7 +699,7 @@ range by 10%.</p>
 <span><span class="co">#&gt; 2             1       0.566      -0.211</span></span>
 <span><span class="co">#&gt; 3             1       0.344       0.771</span></span></code></pre></div>
 <p>Let’s see what that looks like when we try and approximate a non-linear function:</p>
-<div class="sourceCode" id="cb649"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb650"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sim5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3.5</span> <span class="op">*</span> <span class="va">pi</span>, length <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>,</span>
 <span>  y <span class="op">=</span> <span class="fl">4</span> <span class="op">*</span> <span class="fu"><a href="https://rdrr.io/r/base/Trig.html">sin</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">rnorm</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/length.html">length</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
@@ -709,7 +709,7 @@ range by 10%.</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_point.html">geom_point</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <div class="inline-figure"><img src="model-basics_files/figure-html/unnamed-chunk-44-1.png" width="70%" style="display: block; margin: auto;"></div>
 <p>I’m going to fit five models to this data.</p>
-<div class="sourceCode" id="cb650"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb651"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/splines/ns.html">ns</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">1</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sim5</span><span class="op">)</span></span>
 <span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/splines/ns.html">ns</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">2</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sim5</span><span class="op">)</span></span>
 <span><span class="va">mod3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/splines/ns.html">ns</a></span><span class="op">(</span><span class="va">x</span>, <span class="fl">3</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">sim5</span><span class="op">)</span></span>
@@ -741,7 +741,7 @@ I fit to <code>sim3</code> and <code>sim4</code>. Why is <code>*</code> a good s
 <p>Using the basic principles, convert the formulas in the following two
 models into functions. (Hint: start by converting the categorical variable
 into 0-1 variables.)</p>
-<div class="sourceCode" id="cb651"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb652"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">+</span> <span class="va">x2</span>, data <span class="op">=</span> <span class="va">sim3</span><span class="op">)</span></span>
 <span><span class="va">mod2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x1</span> <span class="op">*</span> <span class="va">x2</span>, data <span class="op">=</span> <span class="va">sim3</span><span class="op">)</span></span></code></pre></div>
 </li>
@@ -756,7 +756,7 @@ come up with a plot to support my claim?</p></li>
 <span class="header-section-number">23.5</span> Missing values<a class="anchor" aria-label="anchor" href="#missing-values-5"><i class="fas fa-link"></i></a>
 </h2>
 <p>Missing values obviously can not convey any information about the relationship between the variables, so modelling functions will drop any rows that contain missing values. R’s default behaviour is to silently drop them, but <code>options(na.action = na.warn)</code> (run in the prerequisites), makes sure you get a warning.</p>
-<div class="sourceCode" id="cb652"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb653"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tribble.html">tribble</a></span><span class="op">(</span></span>
 <span>  <span class="op">~</span><span class="va">x</span>, <span class="op">~</span><span class="va">y</span>,</span>
 <span>  <span class="fl">1</span>, <span class="fl">2.2</span>,</span>
@@ -769,10 +769,10 @@ come up with a plot to support my claim?</p></li>
 <span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">df</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning: Dropping 2 rows with missing values</span></span></code></pre></div>
 <p>To suppress the warning, set <code>na.action = na.exclude</code>:</p>
-<div class="sourceCode" id="cb653"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb654"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mod</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/lm.html">lm</a></span><span class="op">(</span><span class="va">y</span> <span class="op">~</span> <span class="va">x</span>, data <span class="op">=</span> <span class="va">df</span>, na.action <span class="op">=</span> <span class="va">na.exclude</span><span class="op">)</span></span></code></pre></div>
 <p>You can always see exactly how many observations were used with <code><a href="https://rdrr.io/r/stats/nobs.html">nobs()</a></code>:</p>
-<div class="sourceCode" id="cb654"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb655"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/stats/nobs.html">nobs</a></span><span class="op">(</span><span class="va">mod</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] 3</span></span></code></pre></div>
 </div>

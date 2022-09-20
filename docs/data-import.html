@@ -136,6 +136,9 @@ are separated by white space.</p></li>
 <a href="https://github.com/Ironholds/webreadr">webreadr</a> which is built on top
 of <code><a href="https://readr.tidyverse.org/reference/read_log.html">read_log()</a></code> and provides many more helpful tools.)</p></li>
 </ul>
+<p><span class="warning">
+(Dan) I’ve never used <code><a href="https://readr.tidyverse.org/reference/read_fwf.html">read_fwf()</a></code> or <code><a href="https://readr.tidyverse.org/reference/read_log.html">read_log()</a></code>, but it’s good to know about them!
+</span></p>
 <p>These functions all have similar syntax: once you’ve mastered one, you can use the others with ease. For the rest of this chapter we’ll focus on <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code>. Not only are csv files one of the most common forms of data storage, but once you understand <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code>, you can easily apply your knowledge to all the other functions in readr.</p>
 <p>The first argument to <code><a href="https://readr.tidyverse.org/reference/read_delim.html">read_csv()</a></code> is the most important: it’s the path to the file to read.</p>
 <div class="sourceCode" id="cb187"><pre class="downlit sourceCode r">
@@ -312,6 +315,9 @@ What happens when you run the code?</p>
 <h2>
 <span class="header-section-number">11.3</span> Parsing a vector<a class="anchor" aria-label="anchor" href="#parsing-a-vector"><i class="fas fa-link"></i></a>
 </h2>
+<p><span class="warning">
+Feel free to skip or skim this section
+</span></p>
 <p>Before we get into the details of how readr reads files from disk, we need to take a little detour to talk about the <code>parse_*()</code> functions. These functions take a character vector and return a more specialised vector like a logical, integer, or date:</p>
 <div class="sourceCode" id="cb195"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html">str</a></span><span class="op">(</span><span class="fu"><a href="https://readr.tidyverse.org/reference/parse_atomic.html">parse_logical</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"TRUE"</span>, <span class="st">"FALSE"</span>, <span class="st">"NA"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -626,6 +632,9 @@ dates and times:</p>
 <h2>
 <span class="header-section-number">11.4</span> Parsing a file<a class="anchor" aria-label="anchor" href="#parsing-a-file"><i class="fas fa-link"></i></a>
 </h2>
+<p><span class="warning">
+Feel free to skim this section
+</span></p>
 <p>Now that you’ve learned how to parse an individual vector, it’s time to return to the beginning and explore how readr parses a file. There are two new things that you’ll learn about in this section:</p>
 <ol style="list-style-type: decimal">
 <li>How readr automatically guesses the type of each column.</li>
@@ -662,9 +671,9 @@ dates and times:</p>
 </ul>
 <p>If none of these rules apply, then the column will stay as a vector of strings.</p>
 </div>
-<div id="problems" class="section level3" number="11.4.2">
+<div id="parsing-problems" class="section level3" number="11.4.2">
 <h3>
-<span class="header-section-number">11.4.2</span> Problems<a class="anchor" aria-label="anchor" href="#problems"><i class="fas fa-link"></i></a>
+<span class="header-section-number">11.4.2</span> Problems<a class="anchor" aria-label="anchor" href="#parsing-problems"><i class="fas fa-link"></i></a>
 </h3>
 <p>These defaults don’t always work for larger files. There are two basic problems:</p>
 <ol style="list-style-type: decimal">
@@ -737,6 +746,9 @@ specific.</p></li>
 <span><span class="co">#&gt; 6 0.608 2019-01-06</span></span></code></pre></div>
 <p>Every <code>parse_xyz()</code> function has a corresponding <code>col_xyz()</code> function. You use <code>parse_xyz()</code> when the data is in a character vector in R already; you use <code>col_xyz()</code> when you want to tell readr how to load the data.</p>
 <p>I highly recommend always supplying <code>col_types</code>, building up from the print-out provided by readr. This ensures that you have a consistent and reproducible data import script. If you rely on the default guesses and your data changes, readr will continue to read it in. If you want to be really strict, use <code><a href="https://readr.tidyverse.org/reference/problems.html">stop_for_problems()</a></code>: that will throw an error and stop your script if there are any parsing problems.</p>
+<p><span class="warning">
+For the <code>col_types</code> argument, you can also supply a compact string representation (e.g., <code>"dl"</code> for “double then logical”). See <code><a href="https://readr.tidyverse.org/reference/read_delim.html">?read_csv</a></code> for more info.
+</span></p>
 </div>
 <div id="other-strategies" class="section level3" number="11.4.3">
 <h3>
@@ -957,7 +969,7 @@ database and return a data frame.</p></li>
 <li>
 <a class="nav-link" href="#parsing-a-file"><span class="header-section-number">11.4</span> Parsing a file</a><ul class="nav navbar-nav">
 <li><a class="nav-link" href="#strategy"><span class="header-section-number">11.4.1</span> Strategy</a></li>
-<li><a class="nav-link" href="#problems"><span class="header-section-number">11.4.2</span> Problems</a></li>
+<li><a class="nav-link" href="#parsing-problems"><span class="header-section-number">11.4.2</span> Problems</a></li>
 <li><a class="nav-link" href="#other-strategies"><span class="header-section-number">11.4.3</span> Other strategies</a></li>
 </ul>
 </li>

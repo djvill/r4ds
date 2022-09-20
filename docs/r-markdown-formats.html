@@ -112,12 +112,12 @@
 <ol style="list-style-type: decimal">
 <li>
 <p>Permanently, by modifying the YAML header:</p>
-<div class="sourceCode" id="cb776"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb776-1"><a href="r-markdown-formats.html#cb776-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Viridis Demo"</span></span>
-<span id="cb776-2"><a href="r-markdown-formats.html#cb776-2" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span></code></pre></div>
+<div class="sourceCode" id="cb777"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb777-1"><a href="r-markdown-formats.html#cb777-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Viridis Demo"</span></span>
+<span id="cb777-2"><a href="r-markdown-formats.html#cb777-2" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span></code></pre></div>
 </li>
 <li>
 <p>Transiently, by calling <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">rmarkdown::render()</a></code> by hand:</p>
-<div class="sourceCode" id="cb777"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb778"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render</a></span><span class="op">(</span><span class="st">"diamond-sizes.Rmd"</span>, output_format <span class="op">=</span> <span class="st">"word_document"</span><span class="op">)</span></span></code></pre></div>
 <p>This is useful if you want to programmatically produce multiple types of
 output.</p>
@@ -132,16 +132,16 @@ output.</p>
 </h2>
 <p>Each output format is associated with an R function. You can either write <code>foo</code> or <code>pkg::foo</code>. If you omit <code>pkg</code>, the default is assumed to be rmarkdown. It’s important to know the name of the function that makes the output because that’s where you get help. For example, to figure out what parameters you can set with <code>html_document</code>, look at <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/html_document.html">?rmarkdown::html_document</a></code>.</p>
 <p>To override the default parameter values, you need to use an expanded <code>output</code> field. For example, if you wanted to render an <code>html_document</code> with a floating table of contents, you’d use:</p>
-<div class="sourceCode" id="cb778"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb778-1"><a href="r-markdown-formats.html#cb778-1" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
-<span id="cb778-2"><a href="r-markdown-formats.html#cb778-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
-<span id="cb778-3"><a href="r-markdown-formats.html#cb778-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb778-4"><a href="r-markdown-formats.html#cb778-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
-<p>You can even render to multiple outputs by supplying a list of formats:</p>
 <div class="sourceCode" id="cb779"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb779-1"><a href="r-markdown-formats.html#cb779-1" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
 <span id="cb779-2"><a href="r-markdown-formats.html#cb779-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
 <span id="cb779-3"><a href="r-markdown-formats.html#cb779-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb779-4"><a href="r-markdown-formats.html#cb779-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
-<span id="cb779-5"><a href="r-markdown-formats.html#cb779-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf_document</span><span class="kw">:</span><span class="at"> default</span></span></code></pre></div>
+<span id="cb779-4"><a href="r-markdown-formats.html#cb779-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div>
+<p>You can even render to multiple outputs by supplying a list of formats:</p>
+<div class="sourceCode" id="cb780"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb780-1"><a href="r-markdown-formats.html#cb780-1" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb780-2"><a href="r-markdown-formats.html#cb780-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
+<span id="cb780-3"><a href="r-markdown-formats.html#cb780-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb780-4"><a href="r-markdown-formats.html#cb780-4" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb780-5"><a href="r-markdown-formats.html#cb780-5" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">pdf_document</span><span class="kw">:</span><span class="at"> default</span></span></code></pre></div>
 <p>Note the special syntax if you don’t want to override any of the default options.</p>
 </div>
 <div id="documents" class="section level2" number="29.3">
@@ -163,12 +163,12 @@ lab wiki uses markdown.</p></li>
 designed for sharing on GitHub.</p></li>
 </ul>
 <p>Remember, when generating a document to share with decision makers, you can turn off the default display of code by setting global options in the setup chunk:</p>
-<div class="sourceCode" id="cb780"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb781"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span>echo <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 <p>For <code>html_document</code>s another option is to make the code chunks hidden by default, but visible with a click:</p>
-<div class="sourceCode" id="cb781"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb781-1"><a href="r-markdown-formats.html#cb781-1" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
-<span id="cb781-2"><a href="r-markdown-formats.html#cb781-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
-<span id="cb781-3"><a href="r-markdown-formats.html#cb781-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code_folding</span><span class="kw">:</span><span class="at"> hide</span></span></code></pre></div>
+<div class="sourceCode" id="cb782"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb782-1"><a href="r-markdown-formats.html#cb782-1" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb782-2"><a href="r-markdown-formats.html#cb782-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
+<span id="cb782-3"><a href="r-markdown-formats.html#cb782-3" aria-hidden="true" tabindex="-1"></a><span class="at">    </span><span class="fu">code_folding</span><span class="kw">:</span><span class="at"> hide</span></span></code></pre></div>
 </div>
 <div id="notebooks" class="section level2" number="29.4">
 <h2>
@@ -185,9 +185,9 @@ will also be able to include supporting files (e.g. <code>.csv</code> data file
 will be automatically extracted when needed.</p></li>
 </ol>
 <p>Emailing <code>.nb.html</code> files is a simple way to share analyses with your colleagues. But things will get painful as soon as they want to make changes. If this starts to happen, it’s a good time to learn Git and GitHub. Learning Git and GitHub is definitely painful at first, but the collaboration payoff is huge. As mentioned earlier, Git and GitHub are outside the scope of the book, but there’s one tip that’s useful if you’re already using them: use both <code>html_notebook</code> and <code>github_document</code> outputs:</p>
-<div class="sourceCode" id="cb782"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb782-1"><a href="r-markdown-formats.html#cb782-1" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
-<span id="cb782-2"><a href="r-markdown-formats.html#cb782-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_notebook</span><span class="kw">:</span><span class="at"> default</span></span>
-<span id="cb782-3"><a href="r-markdown-formats.html#cb782-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">github_document</span><span class="kw">:</span><span class="at"> default</span></span></code></pre></div>
+<div class="sourceCode" id="cb783"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb783-1"><a href="r-markdown-formats.html#cb783-1" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span></span>
+<span id="cb783-2"><a href="r-markdown-formats.html#cb783-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">html_notebook</span><span class="kw">:</span><span class="at"> default</span></span>
+<span id="cb783-3"><a href="r-markdown-formats.html#cb783-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">github_document</span><span class="kw">:</span><span class="at"> default</span></span></code></pre></div>
 <p><code>html_notebook</code> gives you a local preview, and a file that you can share via email. <code>github_document</code> creates a minimal md file that you can check into git. You can easily see how the results of your analysis (not just the code) change over time, and GitHub will render it for you nicely online.</p>
 </div>
 <div id="presentations" class="section level2" number="29.5">
@@ -277,7 +277,7 @@ diamonds %&gt;%
 <span class="header-section-number">29.7.1</span> htmlwidgets<a class="anchor" aria-label="anchor" href="#htmlwidgets"><i class="fas fa-link"></i></a>
 </h3>
 <p>HTML is an interactive format, and you can take advantage of that interactivity with <strong>htmlwidgets</strong>, R functions that produce interactive HTML visualisations. For example, take the <strong>leaflet</strong> map below. If you’re viewing this page on the web, you can drag the map around, zoom in and out, etc. You obviously can’t do that in a book, so rmarkdown automatically inserts a static screenshot for you.</p>
-<div class="sourceCode" id="cb784"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb785"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://rstudio.github.io/leaflet/">leaflet</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/leaflet.html">leaflet</a></span><span class="op">(</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/pkg/leaflet/man/map-methods.html">setView</a></span><span class="op">(</span><span class="fl">174.764</span>, <span class="op">-</span><span class="fl">36.877</span>, zoom <span class="op">=</span> <span class="fl">16</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
@@ -302,11 +302,11 @@ series visualisations.</p></li>
 </h3>
 <p>htmlwidgets provide <strong>client-side</strong> interactivity — all the interactivity happens in the browser, independently of R. On one hand, that’s great because you can distribute the HTML file without any connection to R. However, that fundamentally limits what you can do to things that have been implemented in HTML and JavaScript. An alternative approach is to use <strong>shiny</strong>, a package that allows you to create interactivity using R code, not JavaScript.</p>
 <p>To call Shiny code from an R Markdown document, add <code>runtime: shiny</code> to the header:</p>
-<div class="sourceCode" id="cb785"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb785-1"><a href="r-markdown-formats.html#cb785-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Shiny Web App"</span></span>
-<span id="cb785-2"><a href="r-markdown-formats.html#cb785-2" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span>
-<span id="cb785-3"><a href="r-markdown-formats.html#cb785-3" aria-hidden="true" tabindex="-1"></a><span class="fu">runtime</span><span class="kw">:</span><span class="at"> shiny</span></span></code></pre></div>
+<div class="sourceCode" id="cb786"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb786-1"><a href="r-markdown-formats.html#cb786-1" aria-hidden="true" tabindex="-1"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">"Shiny Web App"</span></span>
+<span id="cb786-2"><a href="r-markdown-formats.html#cb786-2" aria-hidden="true" tabindex="-1"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> html_document</span></span>
+<span id="cb786-3"><a href="r-markdown-formats.html#cb786-3" aria-hidden="true" tabindex="-1"></a><span class="fu">runtime</span><span class="kw">:</span><span class="at"> shiny</span></span></code></pre></div>
 <p>Then you can use the “input” functions to add interactive components to the document:</p>
-<div class="sourceCode" id="cb786"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb787"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/">shiny</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textInput.html">textInput</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"What is your name?"</span><span class="op">)</span></span>

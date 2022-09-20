@@ -139,7 +139,7 @@ readr-datetimes
 exercises-21
 parsing-a-file
 strategy
-problems
+parsing-problems
 other-strategies
 writing-to-a-file
 other-types-of-data

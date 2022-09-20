@@ -431,7 +431,7 @@ knitting to fail if there is a single error in the document.</p></li>
 <span class="header-section-number">27.4.3</span> Table<a class="anchor" aria-label="anchor" href="#table"><i class="fas fa-link"></i></a>
 </h3>
 <p>By default, R Markdown prints data frames and matrices as you’d see them in the console:</p>
-<div class="sourceCode" id="cb727"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb728"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span></span>
 <span><span class="co">#&gt;                    mpg cyl disp  hp drat    wt  qsec vs am gear carb</span></span>
 <span><span class="co">#&gt; Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4</span></span>
@@ -440,7 +440,7 @@ knitting to fail if there is a single error in the document.</p></li>
 <span><span class="co">#&gt; Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1</span></span>
 <span><span class="co">#&gt; Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2</span></span></code></pre></div>
 <p>If you prefer that data be displayed with additional formatting you can use the <code><a href="https://rdrr.io/pkg/knitr/man/kable.html">knitr::kable</a></code> function. The code below generates Table <a href="r-markdown.html#tab:kable">27.1</a>.</p>
-<div class="sourceCode" id="cb728"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb729"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span></span>
 <span>  <span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span>, <span class="op">]</span>, </span>
 <span>  caption <span class="op">=</span> <span class="st">"A knitr kable."</span></span>
@@ -586,13 +586,13 @@ rawdata &lt;- readr::read_csv("a_very_large_file.csv")
 <span class="header-section-number">27.4.5</span> Global options<a class="anchor" aria-label="anchor" href="#global-options"><i class="fas fa-link"></i></a>
 </h3>
 <p>As you work more with knitr, you will discover that some of the default chunk options don’t fit your needs and you want to change them. You can do this by calling <code>knitr::opts_chunk$set()</code> in a code chunk. For example, when writing books and tutorials I set:</p>
-<div class="sourceCode" id="cb732"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb733"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span></span>
 <span>  comment <span class="op">=</span> <span class="st">"#&gt;"</span>,</span>
 <span>  collapse <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>This uses my preferred comment formatting, and ensures that the code and output are kept closely entwined. On the other hand, if you were preparing a report, you might set:</p>
-<div class="sourceCode" id="cb733"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb734"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="va"><a href="https://rdrr.io/pkg/knitr/man/opts_chunk.html">opts_chunk</a></span><span class="op">$</span><span class="fu">set</span><span class="op">(</span></span>
 <span>  echo <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -614,7 +614,7 @@ than 2.5 carats. The distribution of the remainder is shown below:</p>
 2.5 carats. The distribution of the remainder is shown below:</p>
 </blockquote>
 <p>When inserting numbers into text, <code><a href="https://rdrr.io/r/base/format.html">format()</a></code> is your friend. It allows you to set the number of <code>digits</code> so you don’t print to a ridiculous degree of accuracy, and a <code>big.mark</code> to make numbers easier to read. I’ll often combine these into a helper function:</p>
-<div class="sourceCode" id="cb734"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb735"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">comma</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="fu"><a href="https://rdrr.io/r/base/format.html">format</a></span><span class="op">(</span><span class="va">x</span>, digits <span class="op">=</span> <span class="fl">2</span>, big.mark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span>
 <span><span class="fu">comma</span><span class="op">(</span><span class="fl">3452345</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "3,452,345"</span></span>
@@ -685,15 +685,15 @@ ggplot(class, aes(displ, hwy)) +
 </code></pre>
 <p>As you can see, parameters are available within the code chunks as a read-only list named <code>params</code>.</p>
 <p>You can write atomic vectors directly into the YAML header. You can also run arbitrary R expressions by prefacing the parameter value with <code>!r</code>. This is a good way to specify date/time parameters.</p>
-<div class="sourceCode" id="cb736"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb736-1"><a href="r-markdown.html#cb736-1" aria-hidden="true" tabindex="-1"></a><span class="fu">params</span><span class="kw">:</span></span>
-<span id="cb736-2"><a href="r-markdown.html#cb736-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">start</span><span class="kw">:</span><span class="at"> !r lubridate::ymd("2015-01-01")</span></span>
-<span id="cb736-3"><a href="r-markdown.html#cb736-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">snapshot</span><span class="kw">:</span><span class="at"> !r lubridate::ymd_hms("2015-01-01 12:30:00")</span></span></code></pre></div>
+<div class="sourceCode" id="cb737"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb737-1"><a href="r-markdown.html#cb737-1" aria-hidden="true" tabindex="-1"></a><span class="fu">params</span><span class="kw">:</span></span>
+<span id="cb737-2"><a href="r-markdown.html#cb737-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">start</span><span class="kw">:</span><span class="at"> !r lubridate::ymd("2015-01-01")</span></span>
+<span id="cb737-3"><a href="r-markdown.html#cb737-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">snapshot</span><span class="kw">:</span><span class="at"> !r lubridate::ymd_hms("2015-01-01 12:30:00")</span></span></code></pre></div>
 <p>In RStudio, you can click the “Knit with Parameters” option in the Knit dropdown menu to set parameters, render, and preview the report in a single user friendly step. You can customise the dialog by setting other options in the header. See <a href="http://rmarkdown.rstudio.com/developer_parameterized_reports.html#parameter_user_interfaces" class="uri">http://rmarkdown.rstudio.com/developer_parameterized_reports.html#parameter_user_interfaces</a> for more details.</p>
 <p>Alternatively, if you need to produce many such parameterised reports, you can call <code><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">rmarkdown::render()</a></code> with a list of <code>params</code>:</p>
-<div class="sourceCode" id="cb737"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb738"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="fu"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render</a></span><span class="op">(</span><span class="st">"fuel-economy.Rmd"</span>, params <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>my_class <span class="op">=</span> <span class="st">"suv"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>This is particularly powerful in conjunction with <code>purrr:pwalk()</code>. The following example creates a report for each value of <code>class</code> found in <code>mpg</code>. First we create a data frame that has one row for each class, giving the <code>filename</code> of the report and the <code>params</code>:</p>
-<div class="sourceCode" id="cb738"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb739"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">reports</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html">tibble</a></span><span class="op">(</span></span>
 <span>  class <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/unique.html">unique</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">$</span><span class="va">class</span><span class="op">)</span>,</span>
 <span>  filename <span class="op">=</span> <span class="fu">stringr</span><span class="fu">::</span><span class="fu"><a href="https://stringr.tidyverse.org/reference/str_c.html">str_c</a></span><span class="op">(</span><span class="st">"fuel-economy-"</span>, <span class="va">class</span>, <span class="st">".html"</span><span class="op">)</span>,</span>
@@ -712,7 +712,7 @@ ggplot(class, aes(displ, hwy)) +
 <span><span class="co">#&gt; # ... with 1 more row</span></span>
 <span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre></div>
 <p>Then we match the column names to the argument names of <code>render()</code>, and use purrr’s <strong>parallel</strong> walk to call <code>render()</code> once for each row:</p>
-<div class="sourceCode" id="cb739"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb740"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">reports</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span><span class="op">(</span>output_file <span class="op">=</span> <span class="va">filename</span>, <span class="va">params</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> </span>
 <span>  <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map2.html">pwalk</a></span><span class="op">(</span><span class="fu">rmarkdown</span><span class="fu">::</span><span class="va"><a href="https://pkgs.rstudio.com/rmarkdown/reference/render.html">render</a></span>, input <span class="op">=</span> <span class="st">"fuel-economy.Rmd"</span><span class="op">)</span></span></code></pre></div>
@@ -722,23 +722,23 @@ ggplot(class, aes(displ, hwy)) +
 <span class="header-section-number">27.6.2</span> Bibliographies and Citations<a class="anchor" aria-label="anchor" href="#bibliographies-and-citations"><i class="fas fa-link"></i></a>
 </h3>
 <p>Pandoc can automatically generate citations and a bibliography in a number of styles. To use this feature, specify a bibliography file using the <code>bibliography</code> field in your file’s header. The field should contain a path from the directory that contains your .Rmd file to the file that contains the bibliography file:</p>
-<div class="sourceCode" id="cb740"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb740-1"><a href="r-markdown.html#cb740-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> rmarkdown.bib</span></span></code></pre></div>
+<div class="sourceCode" id="cb741"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb741-1"><a href="r-markdown.html#cb741-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> rmarkdown.bib</span></span></code></pre></div>
 <p>You can use many common bibliography formats including BibLaTeX, BibTeX, endnote, medline.</p>
 <p>To create a citation within your .Rmd file, use a key composed of ‘@’ + the citation identifier from the bibliography file. Then place the citation in square brackets. Here are some examples:</p>
-<div class="sourceCode" id="cb741"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb741-1"><a href="r-markdown.html#cb741-1" aria-hidden="true" tabindex="-1"></a>Separate multiple citations with a <span class="in">`;`</span>: Blah blah <span class="co">[</span><span class="ot">@smith04; @doe99</span><span class="co">]</span>.</span>
-<span id="cb741-2"><a href="r-markdown.html#cb741-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb741-3"><a href="r-markdown.html#cb741-3" aria-hidden="true" tabindex="-1"></a>You can add arbitrary comments inside the square brackets: </span>
-<span id="cb741-4"><a href="r-markdown.html#cb741-4" aria-hidden="true" tabindex="-1"></a>Blah blah <span class="co">[</span><span class="ot">see @doe99, pp. 33-35; also @smith04, ch. 1</span><span class="co">]</span>.</span>
-<span id="cb741-5"><a href="r-markdown.html#cb741-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb741-6"><a href="r-markdown.html#cb741-6" aria-hidden="true" tabindex="-1"></a>Remove the square brackets to create an in-text citation: @smith04 </span>
-<span id="cb741-7"><a href="r-markdown.html#cb741-7" aria-hidden="true" tabindex="-1"></a>says blah, or @smith04 <span class="co">[</span><span class="ot">p. 33</span><span class="co">]</span> says blah.</span>
-<span id="cb741-8"><a href="r-markdown.html#cb741-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb741-9"><a href="r-markdown.html#cb741-9" aria-hidden="true" tabindex="-1"></a>Add a <span class="in">`-`</span> before the citation to suppress the author's name: </span>
-<span id="cb741-10"><a href="r-markdown.html#cb741-10" aria-hidden="true" tabindex="-1"></a>Smith says blah <span class="co">[</span><span class="ot">-@smith04</span><span class="co">]</span>.</span></code></pre></div>
+<div class="sourceCode" id="cb742"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb742-1"><a href="r-markdown.html#cb742-1" aria-hidden="true" tabindex="-1"></a>Separate multiple citations with a <span class="in">`;`</span>: Blah blah <span class="co">[</span><span class="ot">@smith04; @doe99</span><span class="co">]</span>.</span>
+<span id="cb742-2"><a href="r-markdown.html#cb742-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb742-3"><a href="r-markdown.html#cb742-3" aria-hidden="true" tabindex="-1"></a>You can add arbitrary comments inside the square brackets: </span>
+<span id="cb742-4"><a href="r-markdown.html#cb742-4" aria-hidden="true" tabindex="-1"></a>Blah blah <span class="co">[</span><span class="ot">see @doe99, pp. 33-35; also @smith04, ch. 1</span><span class="co">]</span>.</span>
+<span id="cb742-5"><a href="r-markdown.html#cb742-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb742-6"><a href="r-markdown.html#cb742-6" aria-hidden="true" tabindex="-1"></a>Remove the square brackets to create an in-text citation: @smith04 </span>
+<span id="cb742-7"><a href="r-markdown.html#cb742-7" aria-hidden="true" tabindex="-1"></a>says blah, or @smith04 <span class="co">[</span><span class="ot">p. 33</span><span class="co">]</span> says blah.</span>
+<span id="cb742-8"><a href="r-markdown.html#cb742-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb742-9"><a href="r-markdown.html#cb742-9" aria-hidden="true" tabindex="-1"></a>Add a <span class="in">`-`</span> before the citation to suppress the author's name: </span>
+<span id="cb742-10"><a href="r-markdown.html#cb742-10" aria-hidden="true" tabindex="-1"></a>Smith says blah <span class="co">[</span><span class="ot">-@smith04</span><span class="co">]</span>.</span></code></pre></div>
 <p>When R Markdown renders your file, it will build and append a bibliography to the end of your document. The bibliography will contain each of the cited references from your bibliography file, but it will not contain a section heading. As a result it is common practice to end your file with a section header for the bibliography, such as <code># References</code> or <code># Bibliography</code>.</p>
 <p>You can change the style of your citations and bibliography by referencing a CSL (citation style language) file in the <code>csl</code> field:</p>
-<div class="sourceCode" id="cb742"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb742-1"><a href="r-markdown.html#cb742-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> rmarkdown.bib</span></span>
-<span id="cb742-2"><a href="r-markdown.html#cb742-2" aria-hidden="true" tabindex="-1"></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> apa.csl</span></span></code></pre></div>
+<div class="sourceCode" id="cb743"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb743-1"><a href="r-markdown.html#cb743-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bibliography</span><span class="kw">:</span><span class="at"> rmarkdown.bib</span></span>
+<span id="cb743-2"><a href="r-markdown.html#cb743-2" aria-hidden="true" tabindex="-1"></a><span class="fu">csl</span><span class="kw">:</span><span class="at"> apa.csl</span></span></code></pre></div>
 <p>As with the bibliography field, your csl file should contain a path to the file. Here I assume that the csl file is in the same directory as the .Rmd file. A good place to find CSL style files for common bibliography styles is <a href="http://github.com/citation-style-language/styles" class="uri">http://github.com/citation-style-language/styles</a>.</p>
 </div>
 </div>
