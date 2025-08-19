@@ -8,6 +8,7 @@ _book
 !CODE_OF_CONDUCT.md
 /*.html
 !plausible.html
+!author.html
 search_index.json
 libs
 *.rds
