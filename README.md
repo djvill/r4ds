@@ -2,11 +2,10 @@
 
 <!-- badges: start -->
 
-[![Render and deploy Book to Netlify](https://github.com/hadley/r4ds/actions/workflows/build_book.yaml/badge.svg)](https://github.com/hadley/r4ds/actions/workflows/build_book.yaml)
 
 <!-- badges: end -->
 
-This repository contains the source of [R for Data Science](http://r4ds.hadley.nz) book.
+This repository contains the source of Dan Villarreal's fork of [_R for Data Science_](http://github.djvill.io/r4ds) (2nd ed.), originally written by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund (https://r4ds.hadley.nz/), and lightly modified for the purpose of Dan's Data Science in Linguistics class at the University of Pittsburgh.
 The book is built using [Quarto](https://quarto.org/).
 
 ## Images

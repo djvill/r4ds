@@ -9,15 +9,16 @@ book:
   page-footer:
     left: |
       R for Data Science (2e) was written by Hadley Wickham, Mine
-      Çetinkaya-Rundel, and Garrett Grolemund.
+      Çetinkaya-Rundel, and Garrett Grolemund, then forked and lightly
+      edited by Dan Villarreal.
     right: |
       This book was built with <a href="https://quarto.org/">Quarto</a>.
   cover-image: cover.jpg
   favicon: cover.jpg
-  site-url: https://r4ds.hadley.nz/
-  repo-url: https://github.com/hadley/r4ds/
+  site-url: https://djvill.github.io/r4ds/
+  repo-url: https://github.com/djvill/r4ds/
   repo-branch: main
-  repo-actions: [edit, issue]
+  repo-actions: [issue]
   chapters:
     - index.qmd
 
@@ -79,7 +80,7 @@ format:
     code-link: true
 
     author-meta: "Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund"
-    include-in-header: "plausible.html"
+    include-in-header: "author.html"
     callout-appearance: simple
 
 editor: source
