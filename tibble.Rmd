@@ -22,8 +22,6 @@ Almost all of the functions that you'll use in this book produce tibbles, as tib
 as_tibble(iris)
 ```
 
-<span class="warning">`iris` is one of the datasets built-into R (without needing to load any data or packages). You can check out all the datasets available from all loaded packages by running `data()`</span>
-
 You can create a new tibble from individual vectors with `tibble()`. `tibble()` will automatically recycle inputs of length 1, and allows you to refer to variables that you just created, as shown below.
 
 ```{r}
@@ -33,10 +31,6 @@ tibble(
   z = x ^ 2 + y
 )
 ```
-
-<span class="warning">
-`data.frame()` does _not_ allow you to refer to variables that you just created. Try running the code above with `data.frame()` in place of `tibble()` to see for yourself.
-</span>
 
 If you're already familiar with `data.frame()`, note that `tibble()` does much less: it never changes the type of the inputs (e.g. it never converts strings to factors!), it never changes the names of variables, and it never creates row names.
 
@@ -101,10 +95,6 @@ You can also control the default print behaviour by setting options:
 
 * Use `options(tibble.width = Inf)` to always print all columns, regardless
   of the width of the screen.
-  
-* Use `options(pillar.min_title_chars = Inf)` to never abbreviate column
-  names, regardless of their length (`pillar` is imported automatically when 
-  you load `tibble`)
 
 You can see a complete list of options by looking at the package help with `package?tibble`.
 
@@ -139,11 +129,6 @@ To use these in a pipe, you'll need to use the special placeholder `.`:
 df %>% .$x
 df %>% .[["x"]]
 ```
-
-<span class="warning">
-A better option is to use `dplyr`'s `pull()`, which works like `$` in that it extracts by name: `df %>% pull(x)` is the same as `df$x`. The `magrittr` package also has the `[[` alias `extract2()` (2 for a double square bracket): `df %>% magrittr::extract2("x")` is the same as `df[["x"]]`.
-</span>
-
 
 Compared to a `data.frame`, tibbles are more strict: they never do partial matching, and they will generate a warning if the column you are trying to access does not exist.
 

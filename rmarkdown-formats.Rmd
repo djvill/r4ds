@@ -256,7 +256,7 @@ See <http://rmarkdown.rstudio.com/formats.html> for a list of even more formats.
 To learn more about effective communication in these different formats I recommend the following resources:
 
 * To improve your presentation skills, I recommend 
-  [_Presentation Patterns_](https://presentationpatterns.com/book/), by Neal Ford,
+  [_Presentation Patterns_](https://amzn.com/0321820800), by Neal Ford,
   Matthew McCollough, and Nathaniel Schutta. It provides a set of effective
   patterns (both low- and high-level) that you can apply to improve your 
   presentations.
@@ -269,11 +269,11 @@ To learn more about effective communication in these different formats I recomme
   <https://www.coursera.org/learn/public-speaking>.
 
 * If you are creating a lot of dashboards, make sure to read Stephen Few's
-  [_Information Dashboard Design: The Effective Visual Communication 
-  of Data_](https://www.academia.edu/1380138/Information_dashboard_design_The_effective_visual_communication_of_data). It will help you create dashboards
+  [Information Dashboard Design: The Effective Visual Communication 
+  of Data](https://amzn.com/0596100167). It will help you create dashboards
   that are truly useful, not just pretty to look at.
 
 * Effectively communicating your ideas often benefits from some
   knowledge of graphic design. [_The Non-Designer's Design
-  Book_](https://bookshop.org/books/the-non-designer-s-design-book/9780133966152) is a great place to start.
+  Book_](http://amzn.com/0133966151) is a great place to start.
 

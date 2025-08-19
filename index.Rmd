@@ -3,37 +3,20 @@ knit: "bookdown::render_book"
 title: "R for Data Science"
 author: "Hadley Wickham and Garrett Grolemund"
 description: "This book will teach you how to do data science with R: You'll learn how to get your data into R, get it into the most useful structure, transform it, visualise it and model it. In this book, you will find a practicum of skills for data science. Just as a chemist learns how to clean test tubes and stock a lab, you'll learn how to clean data and draw plots---and many other things besides. These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R. You'll learn how to use the grammar of graphics, literate programming, and reproducible research to save time. You'll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualising, and exploring data."
-# url: 'https\://r4ds.had.co.nz/'
-url: 'https\://djvill.github.io/r4ds/'
-# github-repo: hadley/r4ds
-github-repo: djvill/r4ds
+url: 'https\://r4ds.had.co.nz/'
+github-repo: hadley/r4ds
+twitter-handle: hadley
 cover-image: cover.png
 site: bookdown::bookdown_site
 documentclass: book
 ---
 
-```{r versCheck, include=FALSE}
-rVers <- with(R.version, paste0(major, ".", minor))
-needed <- "4.2.1"
-if (rVers != needed) {
-  stop("Knit this book with R version ", needed)
-}
-```
-
 # Welcome {-} 
 
-<span class="warning">
-What you're reading is a lightly modified version of _R for Data Science_ (1st edition) for the class [Data Science for Linguists](https://djvill.github.io/Data-Sci-2022/) at the University of Pittsburgh. 
-_R4DS_ was originally written by Hadley Wickham and Garrett Grolemund ([book site](http://r4ds.had.co.nz), [GitHub](https://github.com/hadley/r4ds/releases/tag/first-ed)). 
-It was released under a Creative Commons BY-NC-ND 3.0 License, and this version is being made available under that same license.
-<br><br>
-Text in yellow boxes like this one are from Dan. 99% of the rest is by the original authors.
-</span>
+<a href="http://amzn.to/2aHLAQ1"><img src="cover.png" width="250" height="375" alt="Buy from amazon" class="cover" /></a> This is the website for __"R for Data Science"__. This book will teach you how to do data science with R: You'll learn how to get your data into R, get it into the most useful structure, transform it, visualise it and model it. In this book, you will find a practicum of skills for data science. Just as a chemist learns how to clean test tubes and stock a lab, you'll learn how to clean data and draw plots---and many other things besides. These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R. You'll learn how to use the grammar of graphics, literate programming, and reproducible research to save time. You'll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualising, and exploring data. 
 
-<a href="https://bookshop.org/books/r-for-data-science-import-tidy-transform-visualize-and-model-data/9781491910399"><img src="cover.png" width="250" height="375" alt="Buy from Bookshop.org" class="cover" /></a> This is the website for __"R for Data Science"__. This book will teach you how to do data science with R: You'll learn how to get your data into R, get it into the most useful structure, transform it, visualise it and model it. In this book, you will find a practicum of skills for data science. Just as a chemist learns how to clean test tubes and stock a lab, you'll learn how to clean data and draw plots---and many other things besides. These are the skills that allow data science to happen, and here you will find the best practices for doing each of these things with R. You'll learn how to use the grammar of graphics, literate programming, and reproducible research to save time. You'll also learn how to manage cognitive resources to facilitate discoveries when wrangling, visualising, and exploring data. 
-
-This website is (and will always be) __free to use__, and is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivs 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/us/) License.  If you'd like a __physical copy__ of the book, you can order it from [bookshop.org](https://bookshop.org/books/r-for-data-science-import-tidy-transform-visualize-and-model-data/9781491910399); it was published by O'Reilly in January 2017. If you'd like to __give back__
-please make a donation to [Kākāpō Recovery](https://www.doc.govt.nz/kakapo-donate): the [kākāpō](https://www.youtube.com/watch?v=9T1vfsHYiKY) (which appears on the cover of R4DS) is a critically endangered native NZ parrot; there are only 252 left.
+This website is (and will always be) __free to use__, and is licensed under the [Creative Commons Attribution-NonCommercial-NoDerivs 3.0](http://creativecommons.org/licenses/by-nc-nd/3.0/us/) License.  If you'd like a __physical copy__ of the book, you can order it from [amazon](http://amzn.to/2aHLAQ1); it was published by O'Reilly in January 2017. If you'd like to __give back__
+please make a donation to [Kākāpō Recovery](https://www.doc.govt.nz/kakapo-donate): the [kākāpō](https://www.youtube.com/watch?v=9T1vfsHYiKY) (which appears on the cover of R4DS) is a critically endangered native NZ parrot; there are only 213 left.
 
 Please note that R4DS uses a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this book, you agree to abide by its terms.
 
@@ -52,4 +35,4 @@ cat("R4DS is a collaborative effort and many people have contributed fixes and i
 cat(paste0(contributors$desc, collapse = ", "))
 ```
 
-The original _R4DS_ is hosted by <https://www.netlify.com> as part of their support of open source software and communities.
+R4DS is hosted by <https://www.netlify.com> as part of their support of open source software and communities.

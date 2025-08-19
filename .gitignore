@@ -1,19 +1,17 @@
 .Rproj.user
 .Rhistory
 *_cache
-# *_files
-_bookdown_files
+*_files
 _main.rds
 _book
 *.md
 !CODE_OF_CONDUCT.md
-# *.html
+*.html
 !ga_script.html
 search_index.json
-# libs
+libs
 *.rds
 _main.*
 bookdown*
 tmp-pdfcrop-*
 figures
-Sandbox*

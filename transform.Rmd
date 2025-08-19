@@ -23,46 +23,8 @@ To explore the basic data manipulation verbs of dplyr, we'll use `nycflights13::
 flights
 ```
 
-
-Depending on how you view this data frame, it prints a little differently than you might expect. If you're running this code in RStudio's __source pane__, then you'll see a version that allows you to scroll left and right through columns (triangles to the left and/or right of the column names) and up and down through rows ("Previous", numbers, and "Next" at the bottom right):
-
-```{r, echo = FALSE, out.width = NULL}
-knitr::include_graphics("screenshots/transform-print.tibble-source.pane.png")
-```
-
-RStudio changes the number of columns you can see based on the width of your source pane. In fact, if you make the source pane narrower (by dragging the vertical divider line to the left), RStudio will update the view to show fewer columns:
-
-```{r, echo = FALSE, out.width = NULL}
-knitr::include_graphics("screenshots/transform-print.tibble-source.pane-narrow.png")
-```
-
-
-If you're running this code in RStudio's __console pane__, then you'll only see the first few rows and all the columns that fit on one screen:
-
-```{r, echo = FALSE, out.width = NULL}
-knitr::include_graphics("screenshots/transform-print.tibble-console.pane.png")
-```
-
-
-RStudio won't automatically resize the columns that you've already printed in the console pane, but it'll print fewer columns if you run `flights` again:
-
-```{r, echo = FALSE, out.width = NULL}
-knitr::include_graphics("screenshots/transform-print.tibble-console.pane-narrow.png")
-```
-
-
-Finally, if you're not viewing this code in RStudio at all, but as an HTML file in your browser, it'll look a lot like the console-pane version without color:
-
-```{r, echo = FALSE, out.width = NULL}
-knitr::include_graphics("screenshots/transform-print.tibble-knitted.png")
-```
-
-
-These differences in appearance are just that: superficial differences that are only about how `flights` is _printed_. For example, in all 5 screenshots you can see that the entire data frame has 336,776 rows and 19 columns (the first few being `year`, `month`, `day`, `dep_time`, etc.). The underlying data doesn't change, just the way R or RStudio is showing it to you. While this may seem maddening, it's actually an advantage of __tibbles__ like `flights`. Tibbles are data frames, but slightly tweaked to work better in the tidyverse (e.g., when you print data frames that aren't tibbles, you get a huge output that isn't particularly helpful). For now, you don't need to worry about the differences; we'll come back to tibbles in more detail in [wrangle](#wrangle-intro).
-
-<span class="warning">Understanding the difference between what's actually in an object vs. how it's printed is one of the toughest things for people who are new to using R. When you tell R `flights`, you're really telling it "Print `flights` in a way that's suited for the type of thing that `flights` is".</span>
-
-
+You might notice that this data frame prints a little differently from other data frames you might have used in the past: it only shows the first few rows and all the columns that fit on one screen. (To see the whole dataset, you can run `View(flights)` which will open the dataset in the RStudio viewer). It prints differently because it's a __tibble__. Tibbles are data frames, but slightly tweaked to work better in the tidyverse. For now, you don't need to worry about the differences; we'll come back to tibbles in more detail in [wrangle](#wrangle-intro).
+ 
 You might also have noticed the row of three (or four) letter abbreviations under the column names. These describe the type of each variable:
 
 * `int` stands for integers.
@@ -81,17 +43,6 @@ There are three other common types of variables that aren't used in this dataset
   with fixed possible values.
 
 * `date` stands for dates.
-
-
-Finally, we'll tweak how tibbles are printed to make them a little friendlier to read in the console/HTML views (it won't change the source pane view). We'll override a default so tibbles are printed with un-abbreviated column names. In the HTML file, compare the abbreviated 5th column name above (`sched_dep~1`) with the un-abbreviated column name after we override the default (`sched_dep_time`):
-
-```{r}
-##Don't abbreviate column names when printing tibbles
-options(pillar.min_title_chars = Inf)
-##Print flights again---note column names are un-abbreviated so fewer columns fit
-flights
-```
-
 
 ### dplyr basics
 
@@ -116,7 +67,7 @@ All verbs work similarly:
 
 Together these properties make it easy to chain together multiple simple steps to achieve a complex result. Let's dive in and see how these verbs work.
 
-## `filter()` and `slice()`: Return a subset of rows
+## Filter rows with `filter()`
 
 `filter()` allows you to subset observations based on their values. The first argument is the name of the data frame. The second and subsequent arguments are the expressions that filter the data frame. For example, we can select all flights on January 1st with:
 
@@ -135,27 +86,6 @@ R either prints out the results, or saves them to a variable. If you want to do 
 ```{r}
 (dec25 <- filter(flights, month == 12, day == 25))
 ```
-
-<span class="warning">
-This is an important point: Running `filter(flights, month == 1, day == 1)` by itself only **displays the output** of the filtering operation; it **_does not_ change the original dataframe**. See [exercise 1](#filter-exx) at the bottom of this section.
-</span>
-
-Finally, `slice()` allows you to subset observations based on their row number:
-
-```{r}
-slice(flights, 10000:10005)
-```
-
-This is occasionally useful when you're just exploring your data, but you should almost never count on it when you're formulating data-wrangling code. Row numbers can change, so any code that relies on them to uniquely identify observations is easily breakable. It also makes for code that's harder to understand; when you look at your code 6 months later, it's easy to work backwards and figure out why you `filter()`ed by a particular attribute, but very difficult to identify why you `slice()`d by some random row numbers!
-
-If you simply want a random sampling of rows, use `slice_sample()`. If you want to ensure that you get the _same_ random sampling each time, set a random seed beforehand:
-
-```{r}
-set.seed(404)
-slice_sample(flights, n=5)
-```
-
-
 
 ### Comparisons
 
@@ -259,19 +189,7 @@ filter(df, x > 1)
 filter(df, is.na(x) | x > 1)
 ```
 
-### Exercises {#filter-exx}
-
-1.  If you have a dataframe named `df`, `nrow(df)` returns the number of rows in `df`. The author of the following code wanted to alter `mpg` (a dataframe built into R for demonstration purposes) so it would contain only rows where `manufacturer == "audi"`. However, `nrow(mpg)` returned the same number of rows after running `filter(mpg, manufacturer == "audi")` that it did before running `filter(...)`. Explain why.
-    
-    ```{r}
-    ##Check number of rows
-    nrow(mpg)
-    ##Only rows where manufacturer is audi
-    filter(mpg, manufacturer == "audi")
-    ##Check number of rows
-    nrow(mpg)
-    ```
-
+### Exercises
 
 1.  Find all flights that
 
@@ -294,7 +212,7 @@ filter(df, is.na(x) | x > 1)
     Why is `FALSE & NA` not missing? Can you figure out the general
     rule?  (`NA * 0` is a tricky counterexample!)
 
-## `arrange()`: Change the order of rows
+## Arrange rows with `arrange()`
 
 `arrange()` works similarly to `filter()` except that instead of selecting rows, it changes their order. It takes a data frame and a set of column names (or more complicated expressions) to order by. If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns:
 
@@ -328,7 +246,7 @@ arrange(df, desc(x))
 
 1.  Which flights travelled the farthest? Which travelled the shortest?
 
-## `select()`, `rename()`, and `relocate()`: Operate on existing variables {#select}
+## Select columns with `select()` {#select}
 
 It's not uncommon to get datasets with hundreds or even thousands of variables. In this case, the first challenge is often narrowing in on the variables you're actually interested in. `select()` allows you to rapidly zoom in on a useful subset using operations based on the names of the variables.
 
@@ -359,19 +277,16 @@ There are a number of helper functions you can use within `select()`:
    
 See `?select` for more details.
 
-`select()` can be used to rename variables, but this functionality is rarely useful because it drops all of the variables not explicitly mentioned. Instead, use `rename()`, which is a variant of `select()` that keeps all the variables that aren't explicitly mentioned:
+`select()` can be used to rename variables, but it's rarely useful because it drops all of the variables not explicitly mentioned. Instead, use `rename()`, which is a variant of `select()` that keeps all the variables that aren't explicitly mentioned:
 
 ```{r}
 rename(flights, tail_num = tailnum)
 ```
 
-Another option is to use `relocate()`, which moves variables elsewhere in the data frame:
+Another option is to use `select()` in conjunction with the `everything()` helper. This is useful if you have a handful of variables you'd like to move to the start of the data frame.
 
 ```{r}
-##Move time_hour & air_time after month
-relocate(flights, time_hour, air_time, .after=month)
-##Move time_hour & air_time to the left of the data frame (before the current 1st column)
-relocate(flights, time_hour, air_time, .before=1)
+select(flights, time_hour, air_time, everything())
 ```
 
 ### Exercises
@@ -396,11 +311,11 @@ relocate(flights, time_hour, air_time, .before=1)
     select(flights, contains("TIME"))
     ```
 
-## `mutate()` and `transmute()`: Add new variables or change existing variables
+## Add new variables with `mutate()`
 
 Besides selecting sets of existing columns, it's often useful to add new columns that are functions of existing columns. That's the job of `mutate()`. 
 
-By default, `mutate()` adds new columns at the end of your dataset so we'll start by creating a narrower dataset so we can see the new variables. Remember that when you're in RStudio, the easiest way to see all the columns is `View()`.
+`mutate()` always adds new columns at the end of your dataset so we'll start by creating a narrower dataset so we can see the new variables. Remember that when you're in RStudio, the easiest way to see all the columns is `View()`.
 
 ```{r}
 flights_sml <- select(flights, 
@@ -434,18 +349,6 @@ transmute(flights,
   gain_per_hour = gain / hours
 )
 ```
-
-In addition to adding _new_ variables, `mutate()` and `transmute()` can also change _existing_ variables. For example, you can convert `distance` from miles to kilometers:
-
-```{r}
-mutate(flights_sml,
-       ##1.609344 km in a mile
-       distance = 1.609344 * distance)
-```
-
-Note that when `mutate()` changes existing variables, it keeps the changed variable in place (as opposed to new variables, which go at the end of the dataset)
-
-
 
 ### Useful creation functions {#mutate-funs}
 
@@ -534,9 +437,6 @@ There are many functions for creating new variables that you can use with `mutat
     cume_dist(y)
     ```
 
-
-
-
 ### Exercises
 
 ```{r, eval = FALSE, echo = FALSE}
@@ -570,7 +470,7 @@ ggplot(flights, aes(air_time - airtime2)) + geom_histogram()
 
 1.  What trigonometric functions does R provide?
 
-## `summarise()`, `group_by()`, and `ungroup()`: Collapse the data frame to a row per group
+## Grouped summaries with `summarise()`
 
 The last key verb is `summarise()`. It collapses a data frame to a single row:
 
@@ -587,12 +487,7 @@ by_day <- group_by(flights, year, month, day)
 summarise(by_day, delay = mean(dep_delay, na.rm = TRUE))
 ```
 
-<span class="warning">
-You might've noticed the message `summarise() has grouped output by 'year', 'month'. You can override using the .groups argument`. Since `summarise()` is typically used with groups, it has special ways to handle data with multiple groups; for more details, see `?summarise` under the "Arguments" heading. If the message annoys you, add the argument `.groups = "drop_last"` to `summarise()`
-</span>
-
-
-Together `group_by()` and `summarise()` provide one of the tools that you'll use most commonly when working with dplyr: grouped summaries. But before we go any further with this, we need to introduce a powerful new idea: the [pipe](#pipes).
+Together `group_by()` and `summarise()` provide one of the tools that you'll use most commonly when working with dplyr: grouped summaries. But before we go any further with this, we need to introduce a powerful new idea: the pipe.
 
 ### Combining multiple operations with the pipe
 
@@ -643,15 +538,7 @@ This focuses on the transformations, not what's being transformed, which makes t
 
 Behind the scenes, `x %>% f(y)` turns into `f(x, y)`, and `x %>% f(y) %>% g(z)` turns into `g(f(x, y), z)` and so on. You can use the pipe to rewrite multiple operations in a way that you can read left-to-right, top-to-bottom. We'll use piping frequently from now on because it considerably improves the readability of code, and we'll come back to it in more detail in [pipes].
 
-<span class="warning">
-The `%>%` pipe is awkward to type, so there's a shortcut for it in RStudio: Ctrl+Shift+M (Windows) or Cmd+Shift+M (Mac). Being comfortable with keyboard shortcuts is an important part of programming!
-</span>
-
 Working with the pipe is one of the key criteria for belonging to the tidyverse. The only exception is ggplot2: it was written before the pipe was discovered. Unfortunately, the next iteration of ggplot2, ggvis, which does use the pipe, isn't quite ready for prime time yet. 
-
-<span class="warning">
-The `%>%` pipe is not part of base R. It was introduced by the `magrittr` package---the name is a reference to René Magritte's painting [The Treachery of Images](https://en.wikipedia.org/wiki/The_Treachery_of_Images). The pipe has since been adopted by all the `tidyverse` packages, so when you load `library(tidyverse)`, the `%>%` pipe is automatically loaded too.<br>As of R version 4.1, base R also now has a 'native' pipe operator `|>`, which works slightly differently than the `%>%` pipe. We'll be working with the `%>%` pipe because the base R pipe is fairly new and the `%>%` pipe is so established; however, you should be aware of the `|>` pipe when you're googling pipes in R.
-</span>
 
 ### Missing values
 
@@ -899,10 +786,6 @@ daily <- group_by(flights, year, month, day)
 (per_month <- summarise(per_day, flights = sum(flights)))
 (per_year  <- summarise(per_month, flights = sum(flights)))
 ```
-
-<span class="warning">
-By default, `summarise()` uses `.groups = "drop_last"`, which peels off one level of the grouping. This isn't true if you use a different setting for `.groups`, though.
-</span>
 
 Be careful when progressively rolling up summaries: it's OK for sums and counts, but you need to think about weighting means and variances, and it's not possible to do it exactly for rank-based statistics like the median. In other words, the sum of groupwise sums is the overall sum, but the median of groupwise medians is not the overall median.
 

@@ -119,13 +119,7 @@ The distinction between integers and doubles is not usually important, but there
 
 Character vectors are the most complex type of atomic vector, because each element of a character vector is a string, and a string can contain an arbitrary amount of data. 
 
-You've already learned a lot about working with strings in [strings]. 
-
-<span class="warning">
-(Dan) We'll talk about strings in a few weeks!
-</span>
-Here I wanted to mention one important feature of the underlying string implementation: R uses a global string pool. This means that each unique string is only stored in memory once, and every use of the string points to that representation. This reduces the amount of memory needed by duplicated strings. You can see this behaviour in practice with `pryr::object_size()`:
-
+You've already learned a lot about working with strings in [strings]. Here I wanted to mention one important feature of the underlying string implementation: R uses a global string pool. This means that each unique string is only stored in memory once, and every use of the string points to that representation. This reduces the amount of memory needed by duplicated strings. You can see this behaviour in practice with `pryr::object_size()`:
 
 ```{r}
 x <- "This is a reasonably long string."
@@ -149,22 +143,6 @@ NA_character_ # character
 ```
 
 Normally you don't need to know about these different types because you can always use `NA` and it will be converted to the correct type using the implicit coercion rules described next. However, there are some functions that are strict about their inputs, so it's useful to have this knowledge sitting in your back pocket so you can be specific when needed.
-
-<span class="warning">
-Tidyverse functions tend to be stricter about inputs so you don't accidentally use the wrong inputs (we've already seen this with `pivot_longer()` and data types). Compare the following:
-</span>
-    
-```{r, error=TRUE}
-##base ifelse: Okay with mixing character & logical
-ifelse(2 < 3, "Less", NA)
-
-##dplyr ifelse: Not okay with mixing character & logical
-dplyr::if_else(2 < 3, "Less", NA)
-
-##To avoid error, specify which NA:
-dplyr::if_else(2 < 3, "Less", NA_character_)
-```
-    
 
 ### Exercises
 
@@ -207,7 +185,7 @@ There are two ways to convert, or coerce, one type of vector to another:
     yourself using explicit coercion, you should always check whether you can
     make the fix upstream, so that the vector never had the wrong type in 
     the first place. For example, you may need to tweak your readr 
-    `col_types` specification .
+    `col_types` specification.
 
 1.  Implicit coercion happens when you use a vector in a specific context
     that expects a certain type of vector. For example, when you use a logical
@@ -259,10 +237,6 @@ Sometimes you want to do different things based on the type of vector. One optio
 | `is_atomic()`    |  x  |  x  |  x  |  x  |      |
 | `is_list()`      |     |     |     |     |  x   |
 | `is_vector()`    |  x  |  x  |  x  |  x  |  x   |
-
-<span class="warning">
-Not all the base R `is.*()` functions have `purrr::is_*()` counterparts (e.g., `is.na()`).
-</span>
 
 ### Scalars and recycling rules
 
@@ -356,10 +330,6 @@ So far we've used `dplyr::filter()` to filter the rows in a tibble. `filter()` o
     
     This is not useful very often, but it can be helpful if you want to create 
     unusual data structures to test your functions with.
-    
-    <span class="warning">
-    FYI, `character(0)` or `character(0L)` just means "a character vector of length zero". Atomic vectors can have types even if there's nothing in them!
-    </span>
   
 1.  Subsetting with a logical vector keeps all values corresponding to a
     `TRUE` value. This is most often useful in conjunction with the 
@@ -553,7 +523,7 @@ knitr::include_graphics("images/pepper-3.jpg")
 
 ### Exercises
 
-1.  Draw the following lists as nested sets (by hand):
+1.  Draw the following lists as nested sets:
 
     1.  `list(a, b, list(c, d), list(e, f))`
     1.  `list(list(list(list(list(list(a))))))`
@@ -562,10 +532,6 @@ knitr::include_graphics("images/pepper-3.jpg")
     What are the key differences between a list and a tibble?
 
 ## Attributes
-
-<span class="warning">
-(Dan) Feel free to skip or skim this section
-</span>
 
 Any vector can contain arbitrary additional metadata through its __attributes__. You can think of attributes as named list of vectors that can be attached to any object. 
 You can get and set individual attribute values with `attr()` or see them all at once with `attributes()`.
@@ -610,10 +576,6 @@ getS3method("as.Date", "numeric")
 The most important S3 generic is `print()`: it controls how the object is printed when you type its name at the console. Other important generics are the subsetting functions `[`, `[[`, and `$`. 
 
 ## Augmented vectors
-
-<span class="warning">
-(Dan) Feel free to skip or skim this section, except for the subsection on tibbles
-</span>
 
 Atomic vectors and lists are the building blocks for other important vector types like factors and dates. I call these __augmented vectors__, because they are vectors with additional __attributes__, including class. Because augmented vectors have a class, they behave differently to the atomic vector on which they are built. In this book, we make use of four important augmented vectors:
 
