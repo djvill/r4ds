@@ -1,0 +1,14 @@
+<script>
+  window.onload = function() {
+    //Change left-side navigation
+    const r4dsTitle = document.querySelector(".sidebar-header"),
+          titleLink = r4dsTitle.querySelector(".sidebar-title > a"),
+          newTitle = document.createElement("div");
+    r4dsTitle.appendChild(newTitle);
+    titleLink.removeAttribute("href");
+    titleLink.style.color = "var(--bs-body-color)";
+    newTitle.innerHTML = '<ul class="list-unstyled"><li><a class="fw-bold" href="https://r4ds.hadley.nz">Original</a>: Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund</li><li><a class="fw-bold" href="https://github.com/djvill/r4ds/">Forked &amp; lightly edited</a>: Dan Villarreal</li></ul>'
+    newTitle.style.paddingLeft = '10px';
+    newTitle.querySelectorAll("a").forEach(a => a.style.color = "var(--bs-link-color)");
+  }
+</script>
