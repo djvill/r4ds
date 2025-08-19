@@ -9,6 +9,16 @@ Data science is an exciting discipline that allows you to transform raw data int
 The goal of "R for Data Science" is to help you learn the most important tools in R that will allow you to do data science efficiently and reproducibly, and to have some fun along the way 😃.
 After reading this book, you'll have the tools to tackle a wide variety of data science challenges using the best parts of R.
 
+::: callout-warning
+# This book and callouts
+
+What you're reading is a lightly modified version of *R for Data Science* (2nd edition) for Dan Villarreal's [Data Science for Linguists](https://djvill.github.io/Data-Sci-2025/) class at the University of Pittsburgh.
+*R4DS* (2nd ed.) was originally written by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund ([book site](http://r4ds.hadley.nz), [GitHub repo](https://github.com/hadley/r4ds/)).
+
+Text in yellow "callout" boxes like this are from Dan---pay attention to them, since they have helpful context!
+99% of the rest is by the original authors.
+:::
+
 ## What you will learn
 
 Data science is a vast field, and there's no way you can master it all by reading a single book.
