@@ -140,7 +140,12 @@ To download R, go to CRAN, the **c**omprehensive **R** **a**rchive **n**etwork, 
 A new major version of R comes out once a year, and there are 2-3 minor releases each year.
 It's a good idea to update regularly.
 Upgrading can be a bit of a hassle, especially for major versions that require you to re-install all your packages, but putting it off only makes it worse.
-We recommend R 4.2.0 or later for this book.
+
+::: callout-warning
+# Update to R 4.5.1
+
+If you haven't yet, please remember to update R to version 4.5.1 (see instructions [here](https://djvill.github.io/Data-Sci-2025/#update-r)).
+:::
 
 ### RStudio
 
