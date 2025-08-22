@@ -203,6 +203,13 @@ These are considered the **core** of the tidyverse because you'll use them in al
 Packages in the tidyverse change fairly frequently.
 You can see if updates are available by running `tidyverse_update()`.
 
+::: callout-note
+# Send me your tidyverse info
+
+I want to double-check that everyone's reading the class version of this textbook!
+In R, run `tidyverse::tidyverse_deps()`, and include the output in your To-do 1 submission.
+:::
+
 ### Other packages
 
 There are many other excellent packages that are not part of the tidyverse because they solve problems in a different domain or are designed with a different set of underlying principles.
