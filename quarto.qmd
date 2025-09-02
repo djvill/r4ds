@@ -27,7 +27,7 @@ You're not wrong!
 Quarto unifies the functionality of many packages from the R Markdown ecosystem (rmarkdown, bookdown, distill, xaringan, etc.) into a single consistent system as well as extends it with native support for multiple programming languages like Python and Julia in addition to R.
 In a way, Quarto reflects everything that was learned from expanding and supporting the R Markdown ecosystem over a decade.
 
-::: callout-note
+::: callout-warning
 If you're used to R Markdown, please try Quarto for at least 2 weeks' worth of assignments.
 If you can't get used to the differences, you can switch back to R Markdown.
 :::
@@ -58,7 +58,7 @@ It contains three important types of content:
 2.  **Chunks** of R code surrounded by ```` ``` ````.
 3.  Text mixed with simple text formatting like `# heading` and `_italics_`.
 
-::: callout-note
+::: callout-warning
 Download the file (<https://github.com/djvill/r4ds/blob/main/quarto/diamond-sizes.qmd>) and open it in RStudio.
 Make sure the editor is on "Source" mode rather than "Visual".
 :::
@@ -102,7 +102,7 @@ If you don't like seeing your plots and output in your document and would rather
 knitr::include_graphics("quarto/diamond-sizes-console-output.png")
 ```
 
-::: callout-note
+::: callout-warning
 I much prefer the first option, "Chunk Output Inline", since it's easier to keep track of which code produced which output.
 [Your mileage may vary.](https://en.wiktionary.org/wiki/your_mileage_may_vary#Phrase)
 :::
@@ -177,7 +177,7 @@ The following sections dive into the three components of a Quarto document in mo
 
 ## Visual editor
 
-::: callout-note
+::: callout-warning
 Please don't use Visual editor.
 It reformats your code in annoying ways, and it's not an effective bridge to learning how to author literate-programming documents.
 I'm leaving this section in for your reference.
@@ -710,7 +710,7 @@ format:
 
 The resulting file will be self-contained, such that it will need no external files and no internet access to be displayed properly by a browser.
 
-::: callout-note
+::: callout-warning
 I would recommend using this setting while you're still learning Quarto, since it makes it easier to send output HTML documents.
 :::
 
