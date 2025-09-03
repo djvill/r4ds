@@ -109,22 +109,22 @@ I much prefer the first option, "Chunk Output Inline", since it's easier to keep
 
 To produce a complete report containing all text, code, and results, click "Render" or press Cmd/Ctrl + Shift + K.
 You can also do this programmatically with `quarto::quarto_render("diamond-sizes.qmd")`.
-This will create an HTML file, `diamond-sizes.html`, that you can open in your browser, as shown in @fig-diamond-sizes-report-viewer.
+This will create an HTML file, `diamond-sizes.html`, that you can open in your browser, as shown in @fig-diamond-sizes-report.
 
 ```{r}
-#| label: fig-diamond-sizes-report-viewer
+#| label: fig-diamond-sizes-report
 #| echo: false
 #| out-width: "90%"
 #| fig-cap: |
 #|   A rendered Quarto document in the Chrome browser.
-knitr::include_graphics("quarto/diamond-sizes-report-viewer.png")
+knitr::include_graphics("quarto/diamond-sizes-report.png")
 ```
 
 If you would prefer to display the report in the Viewer pane, you can click on the gear icon next to "Render" and switch to "Preview in Viewer Pane".
-Then when you render (click "Render" or press Cmd/Ctrl + Shift + K), the report will appear as shown in @fig-diamond-sizes-report.
+Then when you render (click "Render" or press Cmd/Ctrl + Shift + K), the report will appear as shown in @fig-diamond-sizes-report-viewer.
 
 ```{r}
-#| label: fig-diamond-sizes-report
+#| label: fig-diamond-sizes-report-viewer
 #| echo: false
 #| out-width: "90%"
 #| fig-cap: |
@@ -135,7 +135,7 @@ Then when you render (click "Render" or press Cmd/Ctrl + Shift + K), the report 
 #|   on the left and the Plot pane on the bottom right. The rendered 
 #|   document does not show any of the code, but the code is visible 
 #|   in the source document.
-knitr::include_graphics("quarto/diamond-sizes-report.png")
+knitr::include_graphics("quarto/diamond-sizes-report-viewer.png")
 ```
 
 When you render the document, Quarto sends the `.qmd` file to **knitr**, <https://yihui.org/knitr/>, which executes all of the code chunks and creates a new markdown (`.md`) document which includes the code and its output.
