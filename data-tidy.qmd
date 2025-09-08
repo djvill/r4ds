@@ -430,7 +430,7 @@ So far we've used `pivot_longer()` to solve the common class of problems where v
 Next we'll pivot (HA HA) to `pivot_wider()`, which makes datasets **wider** by increasing columns and reducing rows and helps when one observation is spread across multiple rows.
 This seems to arise less commonly in the wild, but it does seem to crop up a lot when dealing with governmental data.
 
-We'll start by looking at `cms_patient_experience`, a dataset from the Centers of Medicare and Medicaid services that collects data about patient experiences:
+We'll start by looking at `cms_patient_experience`, a dataset from the Centers of Medicare and Medicaid Services that collects data about patient experiences:
 
 ```{r}
 cms_patient_experience
@@ -564,6 +564,17 @@ df |>
 
 It's then up to you to figure out what's gone wrong with your data and either repair the underlying damage or use your grouping and summarizing skills to ensure that each combination of row and column values only has a single row.
 
+## Multiple values per cell
+
+We haven't yet discussed how to handle the situation of multiple values per cell, such as `table3`:
+
+```{r}
+table3
+```
+
+For situations like these, we use functions from the `tidyr::separate_*()` family, such as `separate_wider_delim()`.
+These functions will make more sense once we've introduced strings in @sec-strings and regular expressions in @sec-regular-expressions, so we'll return to them then.
+
 ## Summary
 
 In this chapter you learned about tidy data: data that has variables in columns and observations in rows.
@@ -574,6 +585,8 @@ The examples we presented here are a selection of those from `vignette("pivot", 
 Another challenge is that, for a given dataset, it can be impossible to label the longer or the wider version as the "tidy" one.
 This is partly a reflection of our definition of tidy data, where we said tidy data has one variable in each column, but we didn't actually define what a variable is (and it's surprisingly hard to do so).
 It's totally fine to be pragmatic and to say a variable is whatever makes your analysis easiest.
+Moreover, what counts as an observation can differ from one situation to the next;
+this is part of what motivates the idea of relational data and joins, which you'll learn more about in @sec-joins.
 So if you're stuck figuring out how to do some computation, consider switching up the organisation of your data; don't be afraid to untidy, transform, and re-tidy as needed!
 
 If you enjoyed this chapter and want to learn more about the underlying theory, you can learn more about the history and theoretical underpinnings in the [Tidy Data](https://www.jstatsoft.org/article/view/v059i10) paper published in the Journal of Statistical Software.
