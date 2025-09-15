@@ -182,7 +182,7 @@ Surrogate keys can be particularly useful when communicating to other humans: it
 2.  `weather` only contains information for the three origin airports in NYC.
     If it contained weather records for all airports in the USA, what additional connection would it make to `flights`?
 
-3.  The `year`, `month`, `day`, `hour`, and `origin` variables almost form a compound key for `weather`, but there's one hour that has duplicate observations.
+3.  The `year`, `month`, `day`, `hour`, and `origin` variables almost form a compound key for `weather`, but there's one hour on one day that has duplicate observations.
     Can you figure out what's special about that hour?
 
 4.  We know that some days of the year are special and fewer people than usual fly on them (e.g., Christmas eve and Christmas day).
