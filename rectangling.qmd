@@ -83,10 +83,34 @@ x5 <- list(1, list(2, list(3, list(4, list(5)))))
 str(x5)
 ```
 
-As lists get even larger and more complex, `str()` eventually starts to fail, and you'll need to switch to `View()`[^rectangling-1].
+For list elements that are atomic vectors, `str()` prints a compact view:
+
+```{r}
+set.seed(12345)
+x6 <- list(a = 1:10000,
+           b = sample(LETTERS, 200, replace=TRUE))
+str(x6)
+```
+
+By default, `str()` prints all sub-lists (list elements that are lists) at all depths, but you can use the `list.len` and `max.level` arguments to make this more compact:
+
+```{r}
+str(gh_users, max.level = 1)
+str(gh_users, max.level = 2, list.len = 4)
+```
+
+`str()` also prints attributes (metadata) by default, but you can suppress this with `give.attr = FALSE`:
+
+```{r}
+x7 <- read_csv("https://github.com/djvill/r4ds/raw/main/data/01-sales.csv",
+               show_col_types = FALSE)
+str(x7, give.attr = FALSE)
+```
+
+As lists get even larger and more complex, `str()` eventually starts to fail, and you may want to switch to `View()`[^rectangling-1].
 @fig-view-collapsed shows the result of calling `View(x5)`. The viewer starts by showing just the top level of the list, but you can interactively expand any of the components to see more, as in @fig-view-expand-1. RStudio will also show you the code you need to access that element, as in @fig-view-expand-2. We'll come back to how this code works in @sec-subset-one.
 
-[^rectangling-1]: This is an RStudio feature.
+[^rectangling-1]: `View()` only works in RStudio.
 
 ```{r}
 #| label: fig-view-collapsed
@@ -130,6 +154,28 @@ knitr::include_graphics("screenshots/View-2.png", dpi = 220)
 #| echo: false
 #| out-width: NULL
 knitr::include_graphics("screenshots/View-3.png", dpi = 220)
+```
+
+Finally, you can use `pluck()` to access list elements by index or (if applicable) name.
+You can supply a series of accessors to go deeper into the list's hierarchy.
+
+```{r}
+pluck(x5, 2, 2, 2)
+```
+
+`pluck()` provides a more consistent way to specify accessors than in base R (see @sec-subset-one), which uses a mix of `[[` and `$`
+
+```{r}
+identical(pluck(gh_repos, 1, 1, "owner", 1),
+          gh_repos[[1]][[1]]$owner[[1]])
+```
+
+The combination of `pluck()` and `str()` can be useful way to explore lists, especially if you're not using RStudio (so `View()` isn't an option):
+
+```{r}
+gh_repos |>
+  pluck(1, 1, "owner") |>
+  str(max.level = 1)
 ```
 
 ### List-columns
@@ -640,7 +686,7 @@ In real life, you'll use `read_json()` to read a JSON file from disk.
 For example, the repurrsive package also provides the source for `gh_user` as a JSON file and you can read it with `read_json()`:
 
 ```{r}
-# A path to a json file inside the package:
+# A path to a json file inside the package (it'll look different on different computers):
 gh_users_json()
 
 # Read it with read_json()
