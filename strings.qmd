@@ -12,8 +12,8 @@ Now it's time to dive into them, learn what makes strings tick, and master some 
 
 We'll begin with the details of creating strings and character vectors.
 You'll then dive into creating strings from data, then the opposite: extracting strings from data.
-We'll then discuss tools that work with individual letters.
-The chapter finishes with functions that work with individual letters and a brief discussion of where your expectations from English might steer you wrong when working with other languages.
+We'll then discuss tools that work with individual characters.
+The chapter finishes with a brief discussion of where your expectations from English might steer you wrong when working with other languages.
 
 We'll keep working with strings in the next chapter, where you'll learn more about the power of regular expressions.
 
@@ -53,7 +53,7 @@ string1 <- "This is a string"
 string2 <- 'If I want to include a "quote" inside a string, I use single quotes'
 ```
 
-If you forget to close a quote, you'll see `+`, the continuation prompt:
+If you forget to close a string, you'll see `+`, the continuation prompt, in the R console:
 
 ```         
 > "This is a string without a closing quote
@@ -63,6 +63,14 @@ If you forget to close a quote, you'll see `+`, the continuation prompt:
 ```
 
 If this happens to you and you can't figure out which quote to close, press Escape to cancel and try again.
+
+In RStudio, if your Quarto code chunk has an unclosed string, you might see no error, an error like `Error: Incomplete expression: "This is a string without a closing quote`, or an error like this:
+
+```         
+Error: unexpected symbol in:
+""This is a string without a closing quote
+"This"
+```
 
 ### Escapes
 
@@ -79,7 +87,8 @@ So if you want to include a literal backslash in your string, you'll need to esc
 backslash <- "\\"
 ```
 
-Beware that the printed representation of a string is not the same as the string itself because the printed representation shows the escapes (in other words, when you print a string, you can copy and paste the output to recreate that string).
+Beware that the printed representation of a string (i.e., what you see when you just run the name of the string) is not the same as the string itself.
+When R prints a string, it shows the escapes so that you can copy and paste the output to recreate that string.
 To see the raw contents of the string, use `str_view()`[^strings-1]:
 
 [^strings-1]: Or use the base R function `writeLines()`.
@@ -90,7 +99,15 @@ x
 str_view(x)
 ```
 
+::: callout-warning
+Don't worry too much about the distinction between "the printed representation of a string" and "the string itself" if it's confusing!
+:::
+
 ### Raw strings {#sec-raw-strings}
+
+::: callout-warning
+I've never used raw strings (they're fairly new in R), but I'm leaving this in for your reference.
+:::
 
 Creating a string with multiple quotes or backslashes gets confusing quickly.
 To illustrate the problem, let's create a string that contains the contents of the code block where we define the `double_quote` and `single_quote` variables:
@@ -125,7 +142,7 @@ x
 str_view(x)
 ```
 
-Note that `str_view()` uses curly braces for tabs to make them easier to spot[^strings-3].
+Note that `str_view()` uses curly braces for tab characters to make them easier to spot[^strings-3].
 One of the challenges of working with text is that there's a variety of ways that white space can end up in the text, so this background helps you recognize that something strange is going on.
 
 [^strings-3]: `str_view()` also uses color to bring tabs, spaces, matches, etc. to your attention.
@@ -215,9 +232,9 @@ That's the job of `str_flatten()`[^strings-5]: it takes a character vector and c
 [^strings-5]: The base R equivalent is `paste()` used with the `collapse` argument.
 
 ```{r}
-str_flatten(c("x", "y", "z"))
-str_flatten(c("x", "y", "z"), ", ")
-str_flatten(c("x", "y", "z"), ", ", last = ", and ")
+str_flatten(c("lions", "tigers", "bears", "oh my!"))
+str_flatten(c("lions", "tigers", "bears", "oh my!"), " and ")
+str_flatten(c("lions", "tigers", "bears", "oh my!"), " and ", last = ", ")
 ```
 
 This makes it work well with `summarize()`:
@@ -448,26 +465,29 @@ df |>
   )
 ```
 
-## Letters
+## Individual characters
 
-In this section, we'll introduce you to functions that allow you to work with the individual letters within a string.
+In this section, we'll introduce you to functions that allow you to work with the individual characters within a string.
 You'll learn how to find the length of a string, extract substrings, and handle long strings in plots and tables.
 
 ### Length
 
-`str_length()` tells you the number of letters in the string:
+`str_length()` tells you the number of characters in the string[^strings-7]:
+
+[^strings-7]: Most of the time; see [below](#letter-variations)
 
 ```{r}
-str_length(c("a", "R for data science", NA))
+str_length(c("a", "R for data science", "", NA))
 ```
 
-You could use this with `count()` to find the distribution of lengths of US babynames and then with `filter()` to look at the longest names, which happen to have 15 letters[^strings-7]:
+You could use this with `count()` to find the distribution of lengths of US babynames and then with `filter()` to look at the longest names, which happen to have 15 characters[^strings-8]:
 
-[^strings-7]: Looking at these entries, we'd guess that the babynames data drops spaces or hyphens and truncates after 15 letters.
+[^strings-8]: Looking at these entries, we'd guess that the babynames data drops spaces or hyphens and truncates after 15 characters.
 
 ```{r}
 babynames |>
-  count(length = str_length(name), wt = n)
+  count(length = str_length(name), wt = n) |>
+  print(n = Inf)
 
 babynames |> 
   filter(str_length(name) == 15) |> 
@@ -496,7 +516,7 @@ Note that `str_sub()` won't fail if the string is too short: it will just return
 str_sub("a", 1, 5)
 ```
 
-We could use `str_sub()` with `mutate()` to find the first and last letter of each name:
+We could use `str_sub()` with `mutate()` to find the first and last character of each name:
 
 ```{r}
 babynames |> 
@@ -509,8 +529,8 @@ babynames |>
 ### Exercises
 
 1.  When computing the distribution of the length of babynames, why did we use `wt = n`?
-2.  Use `str_length()` and `str_sub()` to extract the middle letter from each baby name. What will you do if the string has an even number of characters?
-3.  Are there any major trends in the length of babynames over time? What about the popularity of first and last letters?
+2.  Use `str_length()` and `str_sub()` to extract the middle character from each baby name. What will you do if the string has an even number of characters?
+3.  Are there any major trends in the length of babynames over time? What about the popularity of first and last characters?
 
 ## Non-English text {#sec-other-languages}
 
@@ -530,7 +550,7 @@ In R, we can get at the underlying representation of a string using `charToRaw()
 charToRaw("Hadley")
 ```
 
-Each of these six hexadecimal numbers represents one letter: `48` is H, `61` is a, and so on.
+Each of these six hexadecimal numbers represents one character: `48` is H, `61` is a, and so on.
 The mapping from hexadecimal number to character is called the encoding, and in this case, the encoding is called ASCII.
 ASCII does a great job of representing English characters because it's the **American** Standard Code for Information Interchange.
 
@@ -545,9 +565,9 @@ readr uses UTF-8 everywhere.
 This is a good default but will fail for data produced by older systems that don't use UTF-8.
 If this happens, your strings will look weird when you print them.
 Sometimes just one or two characters might be messed up; other times, you'll get complete gibberish.
-For example here are two inline CSVs with unusual encodings[^strings-8]:
+For example here are two inline CSVs with unusual encodings[^strings-9]:
 
-[^strings-8]: Here I'm using the special `\x` to encode binary data directly into a string.
+[^strings-9]: Here I'm using the special `\x` to encode binary data directly into a string.
 
 ```{r}
 #| eval: false
@@ -581,9 +601,9 @@ Expect to try a few different encodings before you find the right one.
 Encodings are a rich and complex topic; we've only scratched the surface here.
 If you'd like to learn more, we recommend reading the detailed explanation at <http://kunststube.net/encoding/>.
 
-### Letter variations
+### Letter variations {#letter-variations}
 
-Working in languages with accents poses a significant challenge when determining the position of letters (e.g., with `str_length()` and `str_sub()`) as accented letters might be encoded as a single individual character (e.g., ü) or as two characters by combining an unaccented letter (e.g., u) with a diacritic mark (e.g., ¨).
+Working in languages with accents poses a significant challenge when determining the position of characters (e.g., with `str_length()` and `str_sub()`) as accented letters might be encoded as a single individual character (e.g., ü) or as two characters by combining an unaccented character (e.g., u) with a diacritic mark (e.g., ¨).
 For example, this code shows two ways of representing ü that look identical:
 
 ```{r}
@@ -628,10 +648,10 @@ str_to_upper(c("i", "ı"))
 str_to_upper(c("i", "ı"), locale = "tr")
 ```
 
-Sorting strings depends on the order of the alphabet, and the order of the alphabet is not the same in every language[^strings-9]!
+Sorting strings depends on the order of the alphabet, and the order of the alphabet is not the same in every language[^strings-10]!
 Here's an example: in Czech, "ch" is a compound letter that appears after `h` in the alphabet.
 
-[^strings-9]: Sorting in languages that don't have an alphabet, like Chinese, is more complicated still.
+[^strings-10]: Sorting in languages that don't have an alphabet, like Chinese, is more complicated still.
 
 ```{r}
 str_sort(c("a", "c", "ch", "h", "z"))
