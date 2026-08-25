@@ -89,7 +89,7 @@ If you do need to scrape original content (like text or images), you may still b
 Fair use is not a hard and fast rule, but weighs up a number of factors.
 It's more likely to apply if you are collecting the data for research or non-commercial purposes and if you limit what you scrape to just what you need.
 
-## HTML basics
+## HTML basics {#sec-html}
 
 To scrape webpages, you need to first understand a little bit about **HTML**, the language that describes web pages.
 HTML stands for **H**yper**T**ext **M**arkup **L**anguage and looks something like this:
