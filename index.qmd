@@ -6,7 +6,7 @@ This book will teach you how to do data science with R: You'll learn how to get 
 ::: callout-warning
 # This book and callouts
 
-What you're reading is a lightly modified version of *R for Data Science* (2nd edition) for Dan Villarreal's [Data Science for Linguists](https://djvill.github.io/Data-Sci-2025/) class at the University of Pittsburgh.
+What you're reading is a lightly modified version of *R for Data Science* (2nd edition) for Dan Villarreal's [Data Science for Linguists](https://djvill.github.io/Data-Sci-2026/) class at the University of Pittsburgh.
 *R4DS* (2nd ed.) was originally written by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund ([book site](http://r4ds.hadley.nz), [GitHub repo](https://github.com/hadley/r4ds/)).
 
 Text in yellow "callout" boxes like this are from Dan.

@@ -12,7 +12,7 @@ After reading this book, you'll have the tools to tackle a wide variety of data 
 ::: callout-warning
 # This book and callouts
 
-What you're reading is a lightly modified version of *R for Data Science* (2nd edition) for Dan Villarreal's [Data Science for Linguists](https://djvill.github.io/Data-Sci-2025/) class at the University of Pittsburgh.
+What you're reading is a lightly modified version of *R for Data Science* (2nd edition) for Dan Villarreal's [Data Science for Linguists](https://djvill.github.io/Data-Sci-2026/) class at the University of Pittsburgh.
 *R4DS* (2nd ed.) was originally written by Hadley Wickham, Mine Çetinkaya-Rundel, and Garrett Grolemund ([book site](http://r4ds.hadley.nz), [GitHub repo](https://github.com/hadley/r4ds/)).
 
 Text in yellow "callout" boxes like this are from Dan---pay attention to them, since they have helpful context!
@@ -142,9 +142,9 @@ It's a good idea to update regularly.
 Upgrading can be a bit of a hassle, especially for major versions that require you to re-install all your packages, but putting it off only makes it worse.
 
 ::: callout-warning
-# Update to R 4.5.1
+# Update to R 4.6.1
 
-If you haven't yet, please remember to update R to version 4.5.1 (see instructions [here](https://djvill.github.io/Data-Sci-2025/#update-r)).
+If you haven't yet, please remember to update R to version 4.6.1 (see instructions [here](https://djvill.github.io/Data-Sci-2026/#update-r)).
 :::
 
 ### RStudio
