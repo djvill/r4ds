@@ -172,6 +172,10 @@ You'll learn more as we go along![^intro-1]
 knitr::include_graphics("diagrams/rstudio/console.png", dpi = 270)
 ```
 
+::: callout-warning
+For an even-more-detailed breakdown of all the buttons and functionalities of RStudio, see the [RStudio cheatsheet](https://rstudio.github.io/cheatsheets/rstudio-ide.pdf).
+:::
+
 ### The tidyverse
 
 You'll also need to install some R packages.
@@ -203,11 +207,11 @@ These are considered the **core** of the tidyverse because you'll use them in al
 Packages in the tidyverse change fairly frequently.
 You can see if updates are available by running `tidyverse_update()`.
 
-::: callout-note
+::: callout-warning
 # Send me your tidyverse info
 
 I want to double-check that everyone's reading the class version of this textbook!
-In R, run `tidyverse::tidyverse_deps()`, and include the output in your To-do 1 submission.
+In R, run `tidyverse::tidyverse_deps()`, and include the output in your To-do 1 submission as `tidyverse-deps_YOURNAME.txt`
 :::
 
 ### Other packages
@@ -271,6 +275,26 @@ Throughout the book, we use a consistent set of conventions to refer to code:
 
 -   Sometimes, to make it clear which package an object comes from, we'll use the package name followed by two colons, like `dplyr::mutate()` or `nycflights13::flights`.
     This is also valid R code.
+
+### Getting help in R
+
+Functions, packages, and other built-in R objects are documented via **help pages**.
+To access a help page, type the name of an object (like a function) in the RStudio console and press F1.
+You can also place your cursor in or immediately before/after the name of an object and press F1;
+or you can run the command `?<name of object>` (e.g., `?table`).
+RStudio will then load the object's help page in the Help tab.
+
+Unfortunately, reading help pages is an art in and of itself.
+Fortunately, Kieran Healy provides a helpful breakdown at <https://socviz.co/09-appendix.html#how-to-read-an-r-help-page>.
+I recommend reading it and keeping it handy as you continue to explore new functions in your data science learning journey.
+
+If you prefer a bigger-screen version of a help page, you can find those at CRAN.
+For example, the CRAN page for ggplot2 is <https://cran.r-project.org/package=ggplot2>.
+Midway down the page, you'll find a reference manual in HTML and PDF formats (I find the HTML format much more readable than the PDF);
+for ggplot2, the HTML manual is <https://cran.r-project.org/web/packages/ggplot2/refman/ggplot2.html>.
+In addition, tidyverse packages have nice websites where you can see help pages' example code in action.
+The package site for ggplot2 is <https://ggplot2.tidyverse.org/>, with functions listed on the [Reference page](https://ggplot2.tidyverse.org/reference/index.html).
+By visiting the help page for `ggplot2::geom_bin_2d()`, for example, you can see [example plots](https://ggplot2.tidyverse.org/reference/geom_bin_2d.html#ref-examples) without having to run the code yourself.
 
 ## Acknowledgments
 
