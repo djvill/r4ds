@@ -195,7 +195,7 @@ We'll come back to cover missing values in more depth in @sec-missing-values.
 Once you have multiple logical vectors, you can combine them together using Boolean algebra.
 In R, `&` is "and", `|` is "or", `!` is "not", and `xor()` is exclusive or[^logicals-2].
 For example, `df |> filter(!is.na(x))` finds all rows where `x` is not missing and `df |> filter(x < -10 | x > 0)` finds all rows where `x` is smaller than -10 or bigger than 0.
-@fig-bool-ops shows the complete set of Boolean operations and how they work.
+@fig-bool-ops shows examples of commonly used Boolean operations and how they work.
 
 [^logicals-2]: That is, `xor(x, y)` is true if x is true, or y is true, but not both.
     This is how we usually use "or" In English.
@@ -206,7 +206,7 @@ For example, `df |> filter(!is.na(x))` finds all rows where `x` is not missing a
 #| echo: false
 #| out-width: NULL
 #| fig-cap: | 
-#|    The complete set of Boolean operations. `x` is the left-hand
+#|    A set of commonly used Boolean operations. `x` is the left-hand
 #|    circle, `y` is the right-hand circle, and the shaded regions show 
 #|    which parts each operator selects.
 #| fig-alt: |
@@ -415,10 +415,10 @@ There are two important tools for this: `if_else()` and `case_when()`.
 ### `if_else()`
 
 If you want to use one value when a condition is `TRUE` and another value when it's `FALSE`, you can use `dplyr::if_else()`[^logicals-4].
-You'll always use the first three argument of `if_else()`. The first argument, `condition`, is a logical vector, the second, `true`, gives the output when the condition is true, and the third, `false`, gives the output if the condition is false.
+You'll always use the first three arguments of `if_else()`. The first argument, `condition`, is a logical vector, the second, `true`, gives the output when the condition is true, and the third, `false`, gives the output if the condition is false.
 
 [^logicals-4]: dplyr's `if_else()` is very similar to base R's `ifelse()`.
-    There are two main advantages of `if_else()`over `ifelse()`: you can choose what should happen to missing values, and `if_else()` is much more likely to give you a meaningful error if your variables have incompatible types.
+    There are two main advantages of `if_else()` over `ifelse()`: you can choose what should happen to missing values, and `if_else()` is much more likely to give you a meaningful error if your variables have incompatible types.
 
 Let's begin with a simple example of labeling a numeric vector as either "+ve" (positive) or "-ve" (negative):
 

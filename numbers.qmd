@@ -403,7 +403,7 @@ dplyr provides a number of ranking functions inspired by SQL, but you should alw
 It uses the typical method for dealing with ties, e.g., 1st, 2nd, 2nd, 4th.
 
 ```{r}
-x <- c(1, 2, 2, 3, 4, NA)
+x <- c(1, 5, 5, 17, 22, NA)
 min_rank(x)
 ```
 
@@ -741,7 +741,7 @@ flights |>
 ### With `mutate()`
 
 As the names suggest, the summary functions are typically paired with `summarize()`.
-However, because of the recycling rules we discussed in @sec-recycling they can also be usefully paired with `mutate()`, particularly when you want do some sort of group standardization.
+However, because of the recycling rules we discussed in @sec-recycling they can also be paired usefully with `mutate()`, particularly when you want to do some sort of group standardization.
 For example:
 
 -   `x / sum(x)` calculates the proportion of a total.

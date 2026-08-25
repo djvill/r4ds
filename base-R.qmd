@@ -16,7 +16,7 @@ It's not possible to use the tidyverse without using base R, so we've actually a
 What we haven't focused on so far is base R workflows, so we will highlight a few of those in this chapter.
 
 After you read this book, you'll learn other approaches to the same problems using base R, data.table, and other packages.
-You'll undoubtedly encounter these other approaches when you start reading R code written by others, particularly if you're using StackOverflow.
+You'll undoubtedly encounter these other approaches when you start reading R code written by others, particularly if you're using Stack Overflow.
 It's 100% okay to write code that uses a mix of approaches, and don't let anyone tell you otherwise!
 
 In this chapter, we'll focus on four big topics: subsetting with `[`, subsetting with `[[` and `$`, the apply family of functions, and `for` loops.
@@ -125,7 +125,7 @@ We need to use it here because `[` doesn't use tidy evaluation, so you need to b
 There's an important difference between tibbles and data frames when it comes to `[`.
 In this book, we've mainly used tibbles, which *are* data frames, but they tweak some behaviors to make your life a little easier.
 In most places, you can use "tibble" and "data frame" interchangeably, so when we want to draw particular attention to R's built-in data frame, we'll write `data.frame`.
-If `df` is a `data.frame`, then `df[, cols]` will return a vector if `col` selects a single column and a data frame if it selects more than one column.
+If `df` is a `data.frame`, then `df[, cols]` will return a vector if `cols` selects a single column and a data frame if it selects more than one column.
 If `df` is a tibble, then `[` will always return a tibble.
 
 ```{r}
