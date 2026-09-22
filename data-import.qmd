@@ -147,14 +147,16 @@ You will learn more about `if_else()` and logical vectors in @sec-logicals.
 
 ### Other arguments
 
-There are a couple of other important arguments that we need to mention, and they'll be easier to demonstrate if we first show you a handy trick: `read_csv()` can read text strings that you've created and formatted like a CSV file:
+There are a couple of other important arguments that we need to mention, and they'll be easier to demonstrate if we first show you a handy trick: `read_csv()` can read text strings (enclosed in `I()`) that you've created and formatted like a CSV file:
 
 ```{r}
 #| message: false
 read_csv(
-  "a,b,c
-  1,2,3
-  4,5,6"
+  I(
+    "a,b,c
+    1,2,3
+    4,5,6"
+  )
 )
 ```
 
@@ -165,17 +167,21 @@ You can use `skip = n` to skip the first `n` lines or use `comment = "#"` to dro
 ```{r}
 #| message: false
 read_csv(
-  "The first line of metadata
-  The second line of metadata
-  x,y,z
-  1,2,3",
+  I(
+    "The first line of metadata
+    The second line of metadata
+    x,y,z
+    1,2,3"
+  ),
   skip = 2
 )
 
 read_csv(
-  "# A comment I want to skip
-  x,y,z
-  1,2,3",
+  I(
+    "# A comment I want to skip
+    x,y,z
+    1,2,3"
+  ),
   comment = "#"
 )
 ```
@@ -186,8 +192,10 @@ You can use `col_names = FALSE` to tell `read_csv()` not to treat the first row 
 ```{r}
 #| message: false
 read_csv(
-  "1,2,3
-  4,5,6",
+  I(
+    "1,2,3
+    4,5,6"
+  ),
   col_names = FALSE
 )
 ```
@@ -197,8 +205,10 @@ Alternatively, you can pass `col_names` a character vector which will be used as
 ```{r}
 #| message: false
 read_csv(
-  "1,2,3
-  4,5,6",
+  I(
+    "1,2,3
+    4,5,6"
+  ),
   col_names = c("x", "y", "z")
 )
 ```
@@ -246,11 +256,11 @@ Once you've mastered `read_csv()`, using readr's other functions is straightforw
 
     ```{r}
     #| eval: false
-    read_csv("a,b\n1,2,3\n4,5,6")
-    read_csv("a,b,c\n1,2\n1,2,3,4")
-    read_csv("a,b\n\"1")
-    read_csv("a,b\n1,2\na,b")
-    read_csv("a;b\n1;3")
+    read_csv(I("a,b\n1,2,3\n4,5,6"))
+    read_csv(I("a,b,c\n1,2\n1,2,3,4"))
+    read_csv(I("a,b\n\"1"))
+    read_csv(I("a,b\n1,2\na,b"))
+    read_csv(I("a;b\n1;3"))
     ```
 
 6.  Practice referring to non-syntactic names in the following data frame by:
@@ -290,12 +300,14 @@ You can see that behavior in action in this simple example:
 
 ```{r}
 #| message: false
-read_csv("
-  logical,numeric,date,string
-  TRUE,1,2021-01-15,abc
-  false,4.5,2021-02-15,def
-  T,Inf,2021-02-16,ghi
-")
+read_csv(
+  I(
+    "logical,numeric,date,string
+    TRUE,1,2021-01-15,abc
+    false,4.5,2021-02-15,def
+    T,Inf,2021-02-16,ghi"
+  )
+)
 ```
 
 This heuristic works well if you have a clean dataset, but in real life, you'll encounter a selection of weird and beautiful failures.
@@ -320,7 +332,7 @@ If we read it without any additional arguments, `x` becomes a character column:
 
 ```{r}
 #| message: false
-read_csv(simple_csv)
+read_csv(I(simple_csv))
 ```
 
 In this very small case, you can easily see the missing value `.`.
@@ -330,7 +342,7 @@ You can do that with the `col_types` argument, which takes a named list where th
 
 ```{r}
 df <- read_csv(
-  simple_csv, 
+  I(simple_csv),
   col_types = list(x = col_double())
 )
 ```
@@ -347,7 +359,7 @@ So then we set `na = "."`, the automatic guessing succeeds, giving us the numeri
 
 ```{r}
 #| message: false
-read_csv(simple_csv, na = ".")
+read_csv(I(simple_csv), na = ".")
 ```
 
 ### Column types
@@ -369,7 +381,7 @@ x,y,z
 1,2,3"
 
 read_csv(
-  another_csv, 
+  I(another_csv), 
   col_types = cols(.default = col_character())
 )
 ```
@@ -378,7 +390,7 @@ Another useful helper is `cols_only()` which will read in only the columns you s
 
 ```{r}
 read_csv(
-  another_csv,
+  I(another_csv),
   col_types = cols_only(x = col_character())
 )
 ```
