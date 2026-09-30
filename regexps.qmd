@@ -833,11 +833,11 @@ It's much simpler to combine five calls to `str_subset()`:
 
 ```{r}
 words |>
-  str_subset(words, "a") |>
-  str_subset(words, "e") |>
-  str_subset(words, "i") |>
-  str_subset(words, "o") |>
-  str_subset(words, "u")
+  str_subset("a") |>
+  str_subset("e") |>
+  str_subset("i") |>
+  str_subset("o") |>
+  str_subset("u")
 ```
 
 In general, if you get stuck trying to create a single regexp that solves your problem, take a step back and think if you could break the problem down into smaller pieces, solving each challenge before moving onto the next one.
