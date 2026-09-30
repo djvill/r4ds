@@ -11,7 +11,7 @@ In @sec-strings, you learned a whole bunch of useful functions for working with 
 This chapter will focus on functions that use **regular expressions**, a concise and powerful language for describing patterns within strings.
 The term "regular expression" is a bit of a mouthful, so most people abbreviate it to "regex"[^regexps-1] or "regexp".
 
-[^regexps-1]: You can pronounce it with either a hard-g (reg-x) or a soft-g (rej-x).
+[^regexps-1]: I usually hear it pronounced [ˈɹɛ.ɡɛks], but [ˈɹɛ.dʒɛks] is also attested.
 
 The chapter starts with the basics of regular expressions and the most useful stringr functions for data analysis.
 We'll then expand your knowledge of patterns and cover seven important new topics (escaping, anchoring, character classes, shorthand classes, quantifiers, precedence, and grouping).
@@ -104,12 +104,38 @@ Regular expressions are very compact and use a lot of punctuation characters, so
 Don't worry; you'll get better with practice, and simple patterns will soon become second nature.
 Let's kick off that process by practicing with some useful stringr functions.
 
+::: callout-warning
+`str_view()` is just for interactive use while you're learning how regex patterns work or testing specific regexes.
+It should never be used in polished data-wrangling code.
+
+Instead, use one of the functions described in the following section:
+
+* To return just the elements in a character vector that match a pattern, use `str_subset()` (@sec-return-matching-elements):
+  ```{r}
+  str_subset(fruit, "berry")
+  ```
+* To return the indices of these elements, use `str_which()` (@sec-return-matching-elements):
+  ```{r}
+  str_which(fruit, "berry")
+  ```
+* To return the first matching substring in each element, use `str_extract()` (@sec-extract-matches):
+  ```{r}
+  str_extract(fruit, "berry")
+  ```
+* To return the first matching substring in each of the matching elements, use `str_subset()` then pipe the result to `str_extract()`:
+  ```{r}
+  str_subset(fruit, "berry") |>
+    str_extract("berry")
+  ```
+
+:::
+
 ## Key functions {#sec-stringr-regex-funs}
 
 Now that you've got the basics of regular expressions under your belt, let's use them with some stringr and tidyr functions.
 In the following section, you'll learn how to detect the presence or absence of a match, how to count the number of matches, how to replace a match with fixed text, and how to extract text using a pattern.
 
-### Detect matches
+### Detect matches {#sec-detect-matches}
 
 `str_detect()` returns a logical vector that is `TRUE` if the pattern matches an element of the character vector and `FALSE` otherwise:
 
@@ -123,10 +149,22 @@ For example, this code finds all the most popular names containing a lower-case 
 ```{r}
 babynames |> 
   filter(str_detect(name, "x")) |> 
-  count(name, wt = n, sort = TRUE)
+  summarise(n = sum(n),
+            .by = name) |>
+  arrange(desc(n))
 ```
 
-We can also use `str_detect()` with `summarize()` by pairing it with `sum()` or `mean()`: `sum(str_detect(x, pattern))` tells you the number of observations that match and `mean(str_detect(x, pattern))` tells you the proportion that match.
+Recall from @sec-numeric-summaries-of-logicals that for a logical vector `x`, `sum(x)` gives the number of `TRUE`s and `mean(x)` gives the proportion of `TRUE`s.
+This gives rise to a very useful application of `str_detect()`: `sum(str_detect(x, pattern))` tells you the number of observations that match and `mean(str_detect(x, pattern))` tells you the proportion that match.
+You might find yourself using this in early exploration of a dataset, such as trying to determine whether all strings in a vector fit an expected pattern.
+The following code, for example, demonstrates that all the elements in `fruit` have at least one `a`, `e`, `i`, `o`, or `u`:
+
+```{r}
+str_detect(fruit, "[aeiou]") |>
+  mean()
+```
+
+This pattern can also be useful with `summarize()`.
 For example, the following snippet computes and visualizes the proportion of baby names[^regexps-4] that contain "x", broken down by year.
 It looks like they've radically increased in popularity lately!
 
@@ -144,9 +182,32 @@ babynames |>
   geom_line()
 ```
 
+
+### Return matching elements {#sec-return-matching-elements}
+
 There are two functions that are closely related to `str_detect()`: `str_subset()` and `str_which()`.
-`str_subset()` returns a character vector containing only the strings that match.
-`str_which()` returns an integer vector giving the positions of the strings that match.
+`str_subset()` returns a character vector containing only the elements that match the pattern.
+`str_which()` returns an integer vector giving the indices of the elements that match.[^regexps-3.5]
+
+```{r}
+str_subset(fruit, "apple|melon|nut")
+str_which(fruit, "apple|melon|nut")
+```
+
+[^regexps-3.5]: These are really just handy shorthands for `x[str_detect(x, re)]` and `which(str_detect(x, re))`.
+
+::: callout-note
+`str_subset()` returns the _entire_ matching string, not just the _substring_ that matches (e.g., `"canary melon"` rather than just `"melon"` for the regex `apple|melon|nut`).
+To extract just the matching substring, use `str_extract()` (@sec-extract-matches).
+:::
+
+At times, it's easier to specify a regex that you want to _not_ match.
+For example, it's [surprisingly difficult](https://stackoverflow.com/questions/406230/) to write a regex that matches strings that do _not_ contain a substring.
+Fortunately, `str_subset()` and `str_which()` include an optional argument, `negate`, which (when set to `TRUE`) will invert the match:
+
+```{r}
+str_subset(c("fig", "pig", "tip", "zip"), "ig", negate=TRUE)
+```
 
 ### Count matches
 
@@ -220,9 +281,49 @@ str_remove_all(x, "[aeiou]")
 
 These functions are naturally paired with `mutate()` when doing data cleaning, and you'll often apply them repeatedly to peel off layers of inconsistent formatting.
 
+### Extract matches {#sec-extract-matches}
+
+We can use `str_extract()` to extract, for each element of a character vector, the first match for a pattern:
+
+```{r}
+str_extract(c("apple", "pear", "banana"), "[ae]")
+```
+
+The output of `str_extract()` is a character vector of the same length as the input.
+As a result, elements in the input that do not match the pattern have `NA` in the output:
+
+```{r}
+str_extract(fruit, "apple|melon|nut")
+```
+
+To extract the first match from only the elements that have a match, first use `str_subset()` then pipe the result to `str_extract()`:
+
+```{r}
+str_subset(fruit, "apple|melon|nut") |>
+  str_extract("apple|melon|nut")
+```
+
+Whereas `str_extract()` returns just the first match (or `NA` if none) from each element, `str_extract_all()` returns all matches from each element.
+Because the number of matches can vary between elements, these matches are returned as a list of character vectors, one per element in the input.
+Elements that do not have a match have a length-0 character vector in the output (notated `character(0)`):
+
+```{r}
+str_extract_all(c("apple", "pear", "banana", "fig"), "[ae]")
+```
+
+To get this output as a character vector, simply pipe the result to `purrr::list_c()`:
+
+```{r}
+str_extract_all(c("apple", "pear", "banana", "fig"), "[ae]") |>
+  list_c()
+```
+
+(`str_match()` and `str_match_all()` use a slightly different approach, capturing groups, which, as discussed in @sec-grouping-and-capturing, is arguably less useful than `str_extract()` and `str_extract_all()`.)
+
 ### Extract variables {#sec-extract-variables}
 
-The last function we'll discuss uses regular expressions to extract data out of one column into one or more new columns: `separate_wider_regex()`.
+The last function we'll discuss works on tibbles rather than character vectors.
+`separate_wider_regex()` uses regular expressions to extract data out of one column into one or more new columns.
 It's a peer of the `separate_wider_position()` and `separate_wider_delim()` functions that you learned about in @sec-string-columns.
 These functions live in tidyr because they operate on (columns of) data frames, rather than individual vectors.
 
@@ -455,7 +556,7 @@ Similarly, regular expressions have their own precedence rules: quantifiers have
 Just like with algebra, you can use parentheses to override the usual order.
 But unlike algebra you're unlikely to remember the precedence rules for regexes, so feel free to use parentheses liberally.
 
-### Grouping and capturing
+### Grouping and capturing {#sec-grouping-and-capturing}
 
 As well as overriding operator precedence, parentheses have another important effect: they create **capturing groups** that allow you to use sub-components of the match.
 
@@ -691,14 +792,14 @@ Imagine we want to find words that only contain consonants.
 One technique is to create a character class that contains all letters except for the vowels (`[^aeiou]`), then allow that to match any number of letters (`[^aeiou]+`), then force it to match the whole string by anchoring to the beginning and the end (`^[^aeiou]+$`):
 
 ```{r}
-str_view(words, "^[^aeiou]+$")
+str_subset(words, "^[^aeiou]+$")
 ```
 
 But you can make this problem a bit easier by flipping the problem around.
 Instead of looking for words that contain only consonants, we could look for words that don't contain any vowels:
 
 ```{r}
-str_view(words[!str_detect(words, "[aeiou]")])
+str_subset(words, "[aeiou]", negate=TRUE)
 ```
 
 This is a useful technique whenever you're dealing with logical combinations, particularly those involving "and" or "not".
@@ -706,13 +807,14 @@ For example, imagine if you want to find all words that contain "a" and "b".
 There's no "and" operator built in to regular expressions so we have to tackle it by looking for all words that contain an "a" followed by a "b", or a "b" followed by an "a":
 
 ```{r}
-str_view(words, "a.*b|b.*a")
+str_subset(words, "a.*b|b.*a")
 ```
 
-It's simpler to combine the results of two calls to `str_detect()`:
+It's simpler to combine the results of two calls to `str_subset()`:
 
 ```{r}
-words[str_detect(words, "a") & str_detect(words, "b")]
+str_subset(words, "a") |>
+  str_subset("b")
 ```
 
 What if we wanted to see if there was a word that contains all vowels?
@@ -721,21 +823,21 @@ If we did it with patterns we'd need to generate 5!
 
 ```{r}
 #| results: false
-words[str_detect(words, "a.*e.*i.*o.*u")]
+str_subset(words, "a.*e.*i.*o.*u")
+str_subset(words, "e.*a.*i.*o.*u")
 # ...
-words[str_detect(words, "u.*o.*i.*e.*a")]
+str_subset(words, "u.*o.*i.*e.*a")
 ```
 
-It's much simpler to combine five calls to `str_detect()`:
+It's much simpler to combine five calls to `str_subset()`:
 
 ```{r}
-words[
-  str_detect(words, "a") &
-  str_detect(words, "e") &
-  str_detect(words, "i") &
-  str_detect(words, "o") &
-  str_detect(words, "u")
-]
+words |>
+  str_subset(words, "a") |>
+  str_subset(words, "e") |>
+  str_subset(words, "i") |>
+  str_subset(words, "o") |>
+  str_subset(words, "u")
 ```
 
 In general, if you get stuck trying to create a single regexp that solves your problem, take a step back and think if you could break the problem down into smaller pieces, solving each challenge before moving onto the next one.
@@ -774,7 +876,7 @@ But lets first eliminate the numbered variants:
 
 ```{r}
 cols <- colors()
-cols <- cols[!str_detect(cols, "\\d")]
+cols <- str_subset(cols, "\\d", negate=TRUE)
 str_view(cols)
 ```
 
