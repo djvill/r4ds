@@ -252,8 +252,8 @@ df <- tribble(
   "Terence", "mandarin"
 )
 df |>
-  group_by(name) |> 
-  summarize(fruits = str_flatten(fruit, ", "))
+  summarize(fruits = str_flatten(fruit, ", "),
+            .by = name)
 ```
 
 ### Exercises

@@ -46,8 +46,8 @@ not_cancelled <- flights |>
   filter(!is.na(dep_delay)█, !is.na(arr_delay))
 
 not_cancelled |> 
-  group_by(year, month, day) |> 
-  summarize(mean = mean(dep_delay))
+  summarize(mean = mean(dep_delay),
+            .by = c(year, month, day))
 ```
 
 If your cursor is at █, pressing Cmd/Ctrl + Enter will run the complete command that generates `not_cancelled`.

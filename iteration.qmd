@@ -15,7 +15,7 @@ In most other languages, you'd need to explicitly double each element of `x` usi
 This book has already given you a small but powerful number of tools that perform the same action for multiple "things":
 
 -   `facet_wrap()` and `facet_grid()` draws a plot for each subset.
--   `group_by()` plus `summarize()` computes summary statistics for each subset.
+-   `summarize()` with its `.by` argument computes summary statistics for each subset.
 -   `unnest_wider()` and `unnest_longer()` create new rows and columns for each element of a list-column.
 
 Now it's time to learn some more general tools, often called **functional programming** tools because they are built around functions that take other functions as inputs.
@@ -93,8 +93,8 @@ df <- tibble(
 )
 
 df |> 
-  group_by(grp) |> 
-  summarize(across(everything(), median))
+  summarize(across(everything(), median),
+            .by = grp)
 ```
 
 Note grouping columns (`grp` here) are not included in `across()`, because they're automatically preserved by `summarize()`.
@@ -124,8 +124,8 @@ If you forget, you'll get an error:
 ```{r}
 #| error: true
 df |> 
-  group_by(grp) |> 
-  summarize(across(everything(), median()))
+  summarize(across(everything(), median()),
+            .by = grp)
 ```
 
 This error arises because you're calling the function with no input, e.g.:
@@ -303,24 +303,22 @@ df_date |>
 
 `across()` also makes it easy to supply multiple columns in a single argument because the first argument uses tidy-select; you just need to remember to embrace that argument, as we discussed in @sec-embracing.
 For example, this function will compute the means of numeric columns by default.
-But by supplying the second argument you can choose to summarize just selected columns:
+But by supplying the third argument you can choose to summarize just selected columns:
 
 ```{r}
-summarize_means <- function(df, summary_vars = where(is.numeric)) {
+summarize_means <- function(df, by = NULL, summary_vars = where(is.numeric)) {
   df |> 
     summarize(
       across({{ summary_vars }}, \(x) mean(x, na.rm = TRUE)),
       n = n(),
-      .groups = "drop"
+      .by = {{ by }}
     )
 }
 diamonds |> 
-  group_by(cut) |> 
-  summarize_means()
+  summarize_means(cut)
 
 diamonds |> 
-  group_by(cut) |> 
-  summarize_means(c(carat, x:z))
+  summarize_means(cut, c(carat, x:z))
 ```
 
 ### Compare with `pivot_longer()`
@@ -339,10 +337,10 @@ We could compute the same values by pivoting longer and then summarizing:
 ```{r}
 long <- df |> 
   pivot_longer(a:d) |> 
-  group_by(name) |> 
   summarize(
     median = median(value),
-    mean = mean(value)
+    mean = mean(value),
+    .by = name
   )
 long
 ```
@@ -390,8 +388,8 @@ df_long <- df_paired |>
 df_long
 
 df_long |> 
-  group_by(group) |> 
-  summarize(mean = weighted.mean(val, wts))
+  summarize(mean = weighted.mean(val, wts),
+            .by = group)
 ```
 
 If needed, you could `pivot_wider()` this back to the original form.
@@ -419,10 +417,9 @@ If needed, you could `pivot_wider()` this back to the original form.
     #| results: false
     show_missing <- function(df, group_vars, summary_vars = everything()) {
       df |> 
-        group_by(pick({{ group_vars }})) |> 
         summarize(
           across({{ summary_vars }}, \(x) sum(is.na(x))),
-          .groups = "drop"
+	  .by = {{ group_vars }})
         ) |>
         select(where(\(x) any(x > 0)))
     }

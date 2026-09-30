@@ -394,8 +394,8 @@ flights2 |>
     #| include: false
     worst <- filter(flights, !is.na(dep_time), month == 6, day == 13)
     worst |>
-      group_by(dest) |>
-      summarize(delay = mean(arr_delay), n = n()) |>
+      summarize(delay = mean(arr_delay), n = n(),
+		.by = dest) |>
       filter(n > 5) |>
       inner_join(airports, join_by(dest == faa)) |>
       ggplot(aes(x = lon, y = lat)) +

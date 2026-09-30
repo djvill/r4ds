@@ -106,8 +106,8 @@ table1 |>
 
 # Compute total cases per year
 table1 |> 
-  group_by(year) |> 
-  summarize(total_cases = sum(cases))
+  summarize(total_cases = sum(cases),
+            .by = year)
 
 # Visualize changes over time
 ggplot(table1, aes(x = year, y = cases)) +
@@ -557,8 +557,8 @@ Since you don't know how to work with this sort of data yet, you'll want to foll
 
 ```{r}
 df |> 
-  group_by(id, measurement) |> 
-  summarize(n = n(), .groups = "drop") |> 
+  summarize(n = n(),
+            .by = c(id, measurement)) |>
   filter(n > 1)
 ```
 
