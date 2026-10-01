@@ -419,7 +419,7 @@ If needed, you could `pivot_wider()` this back to the original form.
       df |> 
         summarize(
           across({{ summary_vars }}, \(x) sum(is.na(x))),
-	  .by = {{ group_vars }})
+	  .by = {{ group_vars }}
         ) |>
         select(where(\(x) any(x > 0)))
     }
